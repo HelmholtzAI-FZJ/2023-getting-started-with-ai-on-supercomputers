@@ -47,7 +47,8 @@ section {
 }
 .reveal h1,
 .reveal h2,
-.reveal h3 {
+.reveal h3,
+.reveal h4 {
     font-family: "Arial", "sans-serif";
     text-transform: Uppercase;
     color: #023d6b;
