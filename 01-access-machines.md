@@ -92,11 +92,36 @@ Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.d
 
 ---
 
+## How do I use a Supercomputer?
+
+- Interactively: E.g. Jupyter
+- Batch: For heavy compute, ML training
+
+---
+
 ### You don't use the whole supercomputer
 
-#### You submit jobs to a queue
+#### You submit jobs to a queue asking for resources
 
 ![](images/supercomputer-queue.svg)
+
+---
+
+### You don't use the whole supercomputer
+
+
+
+::: {.container}
+:::: {.col}
+- Your job(s) enter the queue, and wait for its turn
+- When there are enough resources for that job, it runs
+::::
+:::: {.col}
+![](images/midjourney-queue.png)
+::::
+:::
+
+![]()
 
 ---
 
