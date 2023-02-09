@@ -56,6 +56,7 @@ section {
 
 .reveal h1 {
     color: #023d6b;
+    font-size: 250%;
 }
 
 
@@ -87,6 +88,7 @@ div.dateauthor {
 div.prompt {
     width:0;
 }
+
 
 div#footer {
     position: fixed;

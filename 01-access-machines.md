@@ -1,13 +1,16 @@
 ---
 author: Alexandre Strube // Sabrina Benassou
-title: How do I get access to the machines? 
-subtitle: A primer in supercomputers`
+title: Getting Started with AI on Supercomputers 
+# subtitle: A primer in supercomputers`
 date: February 29, 2023
 ---
 ## Communication:
 
 - Zoom: [TODO]
 - Slack: [TODO]
+
+![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
+
 
 ---
 
@@ -16,7 +19,10 @@ date: February 29, 2023
 - Make sure you know how to access and use our machines
 - Distribute your ML workload.
 
+![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
+
 ---
+
 
 ## Team:
 
@@ -28,6 +34,9 @@ date: February 29, 2023
 ![Sabrina Benassou](pics/sabrina.jpg)
 ::::
 :::
+
+![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
+
 
 ---
 
@@ -80,6 +89,22 @@ date: February 29, 2023
 TL;DR: 89856 cores, 3744 GPUs, 468 TB RAM 💪
 
 Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.de/jsc/hps/juwels/booster-overview.html)
+
+---
+
+### You don't use the whole supercomputer
+
+#### You submit jobs to a queue
+
+![](images/supercomputer-queue.svg)
+
+---
+
+### You don't use the whole supercomputer
+
+#### And get results back
+
+![](images/queue-finished.svg)
 
 ---
 

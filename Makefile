@@ -9,9 +9,16 @@ RM=/bin/rm
 
 PANDOC=/usr/local/bin/pandoc
 
-PANDOC_OPTIONS=-t revealjs -s -V revealjs-url=https://unpkg.com/reveal.js --include-in-header=slides.css --embed-resources  -V hlss=zenburn -V theme=sky  # --no-highlight
+PANDOC_OPTIONS=-t revealjs -s \
+	-V revealjs-url=https://unpkg.com/reveal.js \
+	--include-in-header=slides.css \
+	-V hlss=zenburn \
+	-V theme=sky \
+	-V transition=fade \
+	# --embed-resources \ 
+	# -A footer.html # The footer is just too big
 
-%.html : %.md
+%.html : %.md *.css
 	$(PANDOC) $(PANDOC_OPTIONS) -o $@ $<
 
 .PHONY: all clean
