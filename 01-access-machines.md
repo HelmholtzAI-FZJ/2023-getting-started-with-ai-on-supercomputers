@@ -6,8 +6,8 @@ date: February 29, 2023
 ---
 ## Communication:
 
-- Zoom: [TODO]
-- Slack: [TODO]
+- [Zoom](https://fz-juelich-de.zoom.us/j/98120874933?pwd=NXJJNXo1Nkx4OGNVNEhkWXBNTWlZUT09)
+- [Slack](https://introscfeb2023.slack.com)
 
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
 
@@ -44,9 +44,11 @@ date: February 29, 2023
 
 | Time          | Title        |
 | ------------- | -----------  |
-| 09:00         | Introduction |
-| [TODO]        | [TODO]       |
-| 12:00 - 13:00 | [TODO]       |
+| 09:00 - 09:15 | Welcome      |
+| 09:15 - 10:00 | Introduction |
+| 10:00 - 11:00 | Judoor, Keys |
+| 11:00 - 12:00 | SSH, Jupyter, VS Code |
+| 12:00 - 13:00 | Sync (everyone should be at the same point) |
 
 ---
 
@@ -109,6 +111,38 @@ Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.d
 
 ### You don't use the whole supercomputer
 
+#### And get results back
+
+![](images/supercomputer-queue-2.svg)
+
+---
+
+### You don't use the whole supercomputer
+
+#### You are just submitting jobs via the login node
+
+![](images/supercomputer-queue-3.svg)
+
+---
+
+### You don't use the whole supercomputer
+
+#### You are just submitting jobs via the login node
+
+![](images/supercomputer-queue-4.svg)
+
+---
+
+### You don't use the whole supercomputer
+
+#### You are just submitting jobs via the login node
+
+![](images/supercomputer-queue-5.svg)
+
+---
+
+### You don't use the whole supercomputer
+
 
 
 ::: {.container}
@@ -136,26 +170,61 @@ Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.d
 ### Supercomputer Usage Model
 - Using the the supercomputer means submitting a job to a batch system.
 - No node-sharing. The smallest allocation for jobs is one compute node (4 GPUs).
-- Maximum runtime of a job: 24h. Please implement checkpointing; or make your code faster 😉.
+- Maximum runtime of a job: 24h.
 - Solution for long-running tasks: Job arrays.
 
 ---
 
+### Recap:
+
+- Login nodes are for submitting jobs, move files, compile, etc
+- NOT FOR TRAINING NEURAL NETS
+
+---
+
+### Recap:
+
+- User submit jobs
+- Job enters the queue
+- When it can, it runs
+- Sends results back to user
+
+---
+
+
 ### Connecting to JUWELS BOOSTER
 
 #### Getting compute time
-- Go to [http://judoor.fz-juelich.de](http://judoor.fz-juelich.de)
-- Join the course project
+- Go to [https://judoor.fz-juelich.de/projects/join/training2303](https://judoor.fz-juelich.de/projects/join/training2303)
+- Join the course project `training2303`
 - Compute time allocation is based on compute projects. For every compute job, a compute project pays.
 
 ---
 
-### Connecting to JUWELS BOOSTER
+### Connecting to JUWELS BOOSTER and JUSUF
 
 #### SSH
-- [TODO]
+- SSH is a secure shell (terminal) connection to another computer
+- You connect from your computer to the LOGIN NODE
 
 ---
+
+### SSH
+
+- Security is given by public/private keys
+- You connect from your computer to the LOGIN NODE
+
+---
+
+### SSH
+
+- Jülich Supercomputing Centre restricts where you can login from
+- This is done at the "Manage SSH keys" on Judoor
+
+![](images/manage-ssh-keys.png)
+
+---
+
 
 
 ## Backup slides
