@@ -171,7 +171,6 @@ Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.d
 - Using the the supercomputer means submitting a job to a batch system.
 - No node-sharing. The smallest allocation for jobs is one compute node (4 GPUs).
 - Maximum runtime of a job: 24h.
-- Solution for long-running tasks: Job arrays.
 
 ---
 
@@ -214,6 +213,110 @@ Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.d
 - Security is given by public/private keys
 - You connect from your computer to the LOGIN NODE
 
+--- 
+
+### SSH
+
+#### Create key
+
+```bash
+ssh-keygen -a 100 -t ed25519 -f ~/.ssh/id_ed25519-JSC
+```
+---
+
+### SSH
+
+#### Configure SSH session
+
+```bash
+code ~$HOME/.ssh/config
+```
+
+---
+
+### SSH
+
+#### Configure SSH session
+
+```bash
+Host jusuf
+        HostName jusuf.fz-juelich.de
+        User [MY_USERNAME]
+        IdentityFile ~/.ssh/id_ed25519-JSC
+
+Host booster
+        HostName juwels-booster.fz-juelich.de
+        User [MY_USERNAME]
+        IdentityFile ~/.ssh/id_ed25519-JSC
+
+```
+
+
+
+---
+
+### SSH
+
+#### Find your ip/name range
+
+- Terminal: `curl ifconfig.me`
+
+```bash
+$ curl ifconfig.me 
+93.199.55.160%
+```
+
+(Ignore the `%` sign)
+
+---
+
+### SSH
+
+#### Find your ip/name range
+
+- Browser: [https://www.whatismyip.com](https://www.whatismyip.com)
+
+---
+
+
+### SSH
+
+#### Find your ip/name range
+
+![](images/whatismyip.png)
+
+---
+
+### SSH - Example: `93.199.55.160`
+
+- Let's make it simpler: `93.199.0.0`
+
+(because the last numbers change)
+
+---
+
+### SSH - Example: `93.199.0.0`
+
+#### Copy your ssh key
+- Terminal: 
+```bash
+$ cat ~/.ssh/id_ed25519-JSC.pub
+ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
+```
+- Copy this line to the clipboard
+
+---
+
+### SSH
+
+#### Example: `93.199.0.0`
+
+- Put them together:
+
+```bash
+from="93.199.0.0" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
+```
+
 ---
 
 ### SSH
@@ -225,7 +328,13 @@ Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.d
 
 ---
 
+### SSH
 
+#### Add new key to judoor
+
+![](images/manage-ssh-keys-from-and-key.png)
+
+---
 
 ## Backup slides
 
