@@ -212,13 +212,8 @@ Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps
 
 ## VSCode
 
+### Now with the remote explorer tab
 ![](images/vscode-welcome.png)
-
----
-
-## VSCode
-
-![](images/vscode-remotes.png)
 
 ---
 ### Connecting to JUWELS BOOSTER
@@ -252,6 +247,31 @@ Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps
 ```bash
 ssh-keygen -a 100 -t ed25519 -f ~/.ssh/id_ed25519-JSC
 ```
+
+```bash
+$ ssh-keygen -a 100 -t ed25519 -f ~/.ssh/id_ed25519-JSC
+Generating public/private ed25519 key pair.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /Users/strube1/.ssh/id_ed25519-JSC
+Your public key has been saved in /Users/strube1/.ssh/id_ed25519-JSC.pub
+The key fingerprint is:
+SHA256:EGNNC1NTaN8fHwpfuZRPa50qXHmGcQjxp0JuU0ZA86U strube1@Strube-16
+The keys randomart image is:
++--[ED25519 256]--+
+|      *++oo=o. . |
+|     . =+o .= o  |
+|      .... o.E..o|
+|       .  +.+o+B.|
+|        S  =o.o+B|
+|          . o*.B+|
+|          . . =  |
+|           o .   |
+|            .    |
++----[SHA256]-----+
+```
+
+
 ---
 
 ### SSH
@@ -287,7 +307,7 @@ Host booster
 ####  Jülich Supercomputing Centre restricts where you can login from
 #### So we need to:
 1. Find our ip range
-2. Add the range and key to Judoor
+2. Add the range and key to (Judoor)[http://judoor.fz-juelich.de]
 
 ![](images/manage-ssh-keys.png)
 
@@ -394,7 +414,8 @@ strube1@jusuf ~ $
 
 ---
 
-### SSH: Exercise
+### SSH: Exercise 
+#### Make sure you are connected to the supercomputer
 
 ```bash
 # Create a shortcut for the project on the home folder
@@ -445,7 +466,7 @@ strube1$ module spider PyTorch
 ## Module hierarchy
 
 - Compiler
-- Mpi
+- MPI
 - Module
 
 Eg: `module load GCC OpenMPI PyTorch`
@@ -499,17 +520,22 @@ $ python
 
 ## Example: PyTorch
 
+Copy and paste these lines
+```bash
+python
+module load Stages/2023
+module load GCC OpenMPI PyTorch
+python -c "import torch ; print(torch.__version__)" 
+```
+
+Should look like this:
 ```bash
 $ python
 -bash: python: command not found
 $ module load Stages/2023
 $ module load GCC OpenMPI PyTorch
-$ python
-Python 3.10.4 (main, Oct  4 2022, 08:48:14) [GCC 11.3.0] on linux
-Type "help", "copyright", "credits" or "license" for more information.
->>> import torch
->>> torch.__version__
-'1.12.0'
+$ python -c "import torch ; print(torch.__version__)" 
+1.12.0
 ```
 ---
 
@@ -537,11 +563,24 @@ The following modules match your search criteria: "toml"
 ---
 
 ## VSCode
+#### Editing files on the supercomputers
+
+![](images/vscode-remotes.png)
+
+---
+
+## VSCode
 
 ![](images/vscode-jusuf.png)
 
 ---
 
+
+## VSCode
+
+- From the ssh connection, 
+
+---
 
 ## SLURM
 

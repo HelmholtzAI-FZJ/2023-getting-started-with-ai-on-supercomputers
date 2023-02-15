@@ -25,10 +25,17 @@ https://join.slack.com/t/introscfeb2023/shared_invite/zt-1ozf2340j-Nnq~sqkObUgJf
 
 What is necessary for this course?
 
-- A terminal. On Linux and Mac, it's just called "Terminal". Little familiarity with it is required. On windows, one can install bash following instructions such as https://itsfoss.com/install-bash-on-windows/
-- The `ssh` command. It's installed by default on Mac and Linux, and should be on Windows after the aforementioned steps.
 - Visual Studio Code: it's a free editor which we will demo on this course. Get it from https://code.visualstudio.com/download
 
+- Visual Studio Code Remote Development: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack
+
+- (WINDOWS ONLY): WSL. This installs the WSL support for Visual Studio Code, which will install WSL itself (And Ubuntu). https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl - This is a long install, take your time.
+
+- A terminal. On Linux and Mac, it's just called "Terminal". Little familiarity with it is required. On windows, the WSL installs it.
+
+- The `ssh` command. It's installed by default on Mac and Linux, and should be on Windows after the aforementioned steps.
+
+- Some knowledge of the python language
 
 
 The material is available at https://mldl_fzj.pages.jsc.fz-juelich.de/juhaicu/jsc_public/sharedspace/teaching/2023-getting-started-with-ai-on-supercomputers/
