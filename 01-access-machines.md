@@ -360,7 +360,7 @@ $ curl ifconfig.me
 $ cat ~/.ssh/id_ed25519-JSC.pub
 ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
 ```
-- Copy this line to the clipboard
+- Copy this line to the clipboard (or to an empty file on VS Code: `code key.txt`)
 
 ---
 
@@ -368,7 +368,7 @@ ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F
 
 #### Example: `93.199.0.0`
 
-- Put them together:
+- Put them together and copy again:
 
 ```bash
 from="93.199.0.0" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
@@ -386,7 +386,7 @@ Do it for JUWELS, JUSUF and JUDAC with the same key
 
 ### SSH
 
-#### Add new key to judoor
+#### Add new key to (Judoor)[http://judoor.fz-juelich.de]
 
 ![](images/manage-ssh-keys-from-and-key.png)
 
