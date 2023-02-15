@@ -579,7 +579,8 @@ The following modules match your search criteria: "toml"
 
 ## VSCode
 
-- From the ssh connection, 
+- From the ssh connection, navigate to your "course" folder and to the name you created earlier.
+- This is out working directory. We do everything here.
 
 ---
 
