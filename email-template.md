@@ -22,3 +22,4 @@ We will use Slack for communication.
 
 https://join.slack.com/t/introscfeb2023/shared_invite/zt-1ozf2340j-Nnq~sqkObUgJfViVjWsHNw
 
+The material is available at https://mldl_fzj.pages.jsc.fz-juelich.de/juhaicu/jsc_public/sharedspace/teaching/2023-getting-started-with-ai-on-supercomputers/

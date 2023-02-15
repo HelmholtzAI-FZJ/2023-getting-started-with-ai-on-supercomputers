@@ -265,6 +265,17 @@ Host booster
 
 ### SSH
 
+####  Jülich Supercomputing Centre restricts where you can login from
+#### So we need to:
+1. Find our ip range
+2. Add the range and key to Judoor
+
+![](images/manage-ssh-keys.png)
+
+---
+
+### SSH
+
 #### Find your ip/name range
 
 - Terminal: `curl ifconfig.me`
@@ -328,9 +339,6 @@ from="93.199.0.0" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2
 
 ### SSH
 
-- Jülich Supercomputing Centre restricts where you can login from
-- This is done at the "Manage SSH keys" on Judoor
-
 ![](images/manage-ssh-keys.png)
 
 Do it for JUWELS, JUSUF and JUDAC with the same key
@@ -347,7 +355,7 @@ This might take some minutes
 
 ---
 
-### SSH
+### SSH: Exercise
 
 That's it! Give it a try (and answer yes)
 
@@ -362,14 +370,24 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])? Yes
 **************************************************************************
 ...
 ...
-strube1@jusuf ~ $ ln -s $PROJECT_training2303 ./course
-strube1@jusuf ~ $ cd course
-strube1@jusuf training2303 $ mkdir $USER
-strube1@jusuf training2303 $ cd $USER
-strube1@jusuf strube1 $ pwd
-/p/project/training2303/strube1
-strube1@jusuf strube1 $
+strube1@jusuf ~ $ 
+```
 
+---
+
+### SSH: Exercise
+
+```bash
+# Create a shortcut for the project on the home folder
+ln -s $PROJECT_training2303 ./course
+
+# Enter course folder and create a folder for myself
+cd course
+mkdir $USER
+cd $USER
+
+# Where am I?
+pwd
 ```
 
 ---

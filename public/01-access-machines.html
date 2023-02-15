@@ -524,6 +524,19 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <section class="slide level2">
 
 <h3 id="ssh-5">SSH</h3>
+<h4
+id="jülich-supercomputing-centre-restricts-where-you-can-login-from">Jülich
+Supercomputing Centre restricts where you can login from</h4>
+<h4 id="so-we-need-to">So we need to:</h4>
+<ol type="1">
+<li>Find our ip range</li>
+<li>Add the range and key to Judoor</li>
+</ol>
+<p><img data-src="images/manage-ssh-keys.png" /></p>
+</section>
+<section class="slide level2">
+
+<h3 id="ssh-6">SSH</h3>
 <h4 id="find-your-ipname-range">Find your ip/name range</h4>
 <ul>
 <li>Terminal: <code>curl ifconfig.me</code></li>
@@ -535,7 +548,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 </section>
 <section class="slide level2">
 
-<h3 id="ssh-6">SSH</h3>
+<h3 id="ssh-7">SSH</h3>
 <h4 id="find-your-ipname-range-1">Find your ip/name range</h4>
 <ul>
 <li>Browser: <a
@@ -544,7 +557,7 @@ href="https://www.whatismyip.com">https://www.whatismyip.com</a></li>
 </section>
 <section class="slide level2">
 
-<h3 id="ssh-7">SSH</h3>
+<h3 id="ssh-8">SSH</h3>
 <h4 id="find-your-ipname-range-2">Find your ip/name range</h4>
 <p><img data-src="images/whatismyip.png" /></p>
 </section>
@@ -574,7 +587,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="
 </section>
 <section class="slide level2">
 
-<h3 id="ssh-8">SSH</h3>
+<h3 id="ssh-9">SSH</h3>
 <h4 id="example-93.199.0.0">Example: <code>93.199.0.0</code></h4>
 <ul>
 <li>Put them together:</li>
@@ -584,24 +597,20 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="
 </section>
 <section class="slide level2">
 
-<h3 id="ssh-9">SSH</h3>
-<ul>
-<li>Jülich Supercomputing Centre restricts where you can login from</li>
-<li>This is done at the “Manage SSH keys” on Judoor</li>
-</ul>
+<h3 id="ssh-10">SSH</h3>
 <p><img data-src="images/manage-ssh-keys.png" /></p>
 <p>Do it for JUWELS, JUSUF and JUDAC with the same key</p>
 </section>
 <section class="slide level2">
 
-<h3 id="ssh-10">SSH</h3>
+<h3 id="ssh-11">SSH</h3>
 <h4 id="add-new-key-to-judoor">Add new key to judoor</h4>
 <p><img data-src="images/manage-ssh-keys-from-and-key.png" /></p>
 <p>This might take some minutes</p>
 </section>
 <section class="slide level2">
 
-<h3 id="ssh-11">SSH</h3>
+<h3 id="ssh-exercise">SSH: Exercise</h3>
 <p>That’s it! Give it a try (and answer yes)</p>
 <div class="sourceCode" id="cb7"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ssh jusuf</span>
@@ -614,13 +623,22 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">**************************************************************************</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1@jusuf</span> ~ $ ln <span class="at">-s</span> <span class="va">$PROJECT_training2303</span> ./course</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1@jusuf</span> ~ $ cd course</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1@jusuf</span> training2303 $ mkdir <span class="va">$USER</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1@jusuf</span> training2303 $ cd <span class="va">$USER</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1@jusuf</span> strube1 $ pwd</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="ex">/p/project/training2303/strube1</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1@jusuf</span> strube1 $</span></code></pre></div>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1@jusuf</span> ~ $ </span></code></pre></div>
+</section>
+<section class="slide level2">
+
+<h3 id="ssh-exercise-1">SSH: Exercise</h3>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a shortcut for the project on the home folder</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="va">$PROJECT_training2303</span> ./course</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Enter course folder and create a folder for myself</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> course</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="va">$USER</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$USER</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Where am I?</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
 </section>
 <section id="working-with-the-supercomputers-software"
 class="slide level2">
@@ -632,23 +650,23 @@ the specifics of the supercomputer.</p>
 <h2>Software</h2>
 <h4 id="tool-for-finding-software-module-spider">Tool for finding
 software: <code>module spider</code></h4>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1$</span> module spider PyTorch</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PyTorch:</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Description:</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">Tensors</span> and Dynamic neural networks in Python with strong GPU acceleration. </span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      <span class="ex">PyTorch</span> is a deep learning framework that puts Python first.</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Versions:</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.7.0-Python-3.8.5</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.8.1-Python-3.8.5</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.11-CUDA-11.5</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.12.0-CUDA-11.7</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Other</span> possible modules matches:</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch-Geometric</span>  PyTorch-Lightning</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1$</span> module spider PyTorch</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PyTorch:</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Description:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">Tensors</span> and Dynamic neural networks in Python with strong GPU acceleration. </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      <span class="ex">PyTorch</span> is a deep learning framework that puts Python first.</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Versions:</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.7.0-Python-3.8.5</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.8.1-Python-3.8.5</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.11-CUDA-11.5</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.12.0-CUDA-11.7</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Other</span> possible modules matches:</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch-Geometric</span>  PyTorch-Lightning</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div>
 </section>
 <section id="module-hierarchy" class="slide level2">
 <h2>Module hierarchy</h2>
@@ -678,32 +696,32 @@ such software?</h4>
 </section>
 <section id="example-pytorch-2" class="slide level2">
 <h2>Example: PyTorch</h2>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-bash:</span> python: command not found</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
-</section>
-<section id="example-pytorch-3" class="slide level2">
-<h2>Example: PyTorch</h2>
 <div class="sourceCode" id="cb10"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-bash:</span> python: command not found</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> module load Stages/2023</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> module load GCC OpenMPI PyTorch</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Python</span> 3.10.4 <span class="er">(</span><span class="ex">main,</span> Oct  4 2022, 08:48:14<span class="kw">)</span> <span class="ex">[GCC</span> 11.3.0] on linux</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Type</span> <span class="st">&quot;help&quot;</span>, <span class="st">&quot;copyright&quot;</span>, <span class="st">&quot;credits&quot;</span> or <span class="st">&quot;license&quot;</span> for more information.</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> import <span class="ex">torch</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> torch.__version__</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;1.12.0&#39;</span></span></code></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+</section>
+<section id="example-pytorch-3" class="slide level2">
+<h2>Example: PyTorch</h2>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-bash:</span> python: command not found</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> module load Stages/2023</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> module load GCC OpenMPI PyTorch</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Python</span> 3.10.4 <span class="er">(</span><span class="ex">main,</span> Oct  4 2022, 08:48:14<span class="kw">)</span> <span class="ex">[GCC</span> 11.3.0] on linux</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Type</span> <span class="st">&quot;help&quot;</span>, <span class="st">&quot;copyright&quot;</span>, <span class="st">&quot;credits&quot;</span> or <span class="st">&quot;license&quot;</span> for more information.</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> import <span class="ex">torch</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> torch.__version__</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="st">&#39;1.12.0&#39;</span></span></code></pre></div>
 </section>
 <section id="python-modules" class="slide level2">
 <h2>Python Modules</h2>
@@ -711,22 +729,22 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href=
 id="some-of-the-python-softwares-are-part-of-python-itself-or-of-other-softwares.-use-module-key">Some
 of the python softwares are part of Python itself, or of other
 softwares. Use <code>module key</code></h4>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> key toml</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> following modules match your search criteria: <span class="st">&quot;toml&quot;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Jupyter:</span> Jupyter/2020.2.5-Python-3.8.5, Jupyter/2021.3.1-Python-3.8.5, Jupyter/2021.3.2-Python-3.8.5, Jupyter/2022.3.3, Jupyter/2022.3.4</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Project</span> Jupyter exists to develop open-source software, open-standards, and services for interactive computing across dozens of programming languages.</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PyQuil:</span> PyQuil/3.0.1</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">PyQuil</span> is a library for generating and executing Quil programs on the Rigetti Forest platform.</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Python:</span> Python/3.8.5, Python/3.9.6, Python/3.10.4</span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Python</span> is a programming language that lets you work more quickly and integrate your systems more effectively.</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> key toml</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> following modules match your search criteria: <span class="st">&quot;toml&quot;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Jupyter:</span> Jupyter/2020.2.5-Python-3.8.5, Jupyter/2021.3.1-Python-3.8.5, Jupyter/2021.3.2-Python-3.8.5, Jupyter/2022.3.3, Jupyter/2022.3.4</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Project</span> Jupyter exists to develop open-source software, open-standards, and services for interactive computing across dozens of programming languages.</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PyQuil:</span> PyQuil/3.0.1</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">PyQuil</span> is a library for generating and executing Quil programs on the Rigetti Forest platform.</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Python:</span> Python/3.8.5, Python/3.9.6, Python/3.10.4</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Python</span> is a programming language that lets you work more quickly and integrate your systems more effectively.</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span></code></pre></div>
 </section>
 <section id="vscode" class="slide level2">
 <h2>VSCode</h2>
@@ -768,30 +786,30 @@ href="https://jupyter-jsc.fz-juelich.de">jupyter-jsc.fz-juelich.de</a></p>
 <p><a
 href="https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template">Venv/Kernel
 template</a></p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> sc_venv_template</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> sc_venv_template</span></code></pre></div>
 </section>
 <section id="backup-slides" class="slide level2">
 <h2>Backup slides</h2>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode numberSource java number-lines"><code class="sourceCode java"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">// Some js</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a></span>
-<span id="cb13-3"><a href="#cb13-3"></a>    a <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb13-4"><a href="#cb13-4"></a>    b <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
-<span id="cb13-5"><a href="#cb13-5"></a>    let c <span class="op">=</span> x <span class="op">=&gt;</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">+</span> x<span class="op">;</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a>    <span class="fu">c</span><span class="op">(</span><span class="dv">3</span><span class="op">);</span></span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> n <span class="op">&lt;</span> <span class="dv">10</span>:</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> is even&quot;</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>:</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> is odd&quot;</span>)</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  n <span class="op">+=</span> <span class="dv">1</span></span></code></pre></div>
+class="sourceCode numberSource java number-lines"><code class="sourceCode java"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">// Some js</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a>    a <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>    b <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>    let c <span class="op">=</span> x <span class="op">=&gt;</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">+</span> x<span class="op">;</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>    <span class="fu">c</span><span class="op">(</span><span class="dv">3</span><span class="op">);</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> n <span class="op">&lt;</span> <span class="dv">10</span>:</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> n <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> is even&quot;</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>:</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> is odd&quot;</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  n <span class="op">+=</span> <span class="dv">1</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
