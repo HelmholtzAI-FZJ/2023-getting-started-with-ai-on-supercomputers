@@ -2,11 +2,9 @@ pages:
   tags:   
   - public-docker
   only:
-  - master
+  - main
   script:
     - echo "Hello"
-  # - mkdir public
-  # - echo 'my test' > public/index.html
   artifacts:
     paths:
     - public
