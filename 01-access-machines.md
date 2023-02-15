@@ -362,7 +362,8 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])? Yes
 **************************************************************************
 ...
 ...
-strube1@jusuf ~ $ cd $PROJECT_training2303
+strube1@jusuf ~ $ ln -s $PROJECT_training2303 ./course
+strube1@jusuf ~ $ cd course
 strube1@jusuf training2303 $ mkdir $USER
 strube1@jusuf training2303 $ cd $USER
 strube1@jusuf strube1 $ pwd
@@ -496,9 +497,56 @@ The following modules match your search criteria: "toml"
 
 ------------------------------------------------------------------------------------
 ```
+---
+
+## VSCode
+
+- [Download VScode: code.visualstudio.com](https://code.visualstudio.com/download)
+- Install it
+- Install [Remote Development Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+- On the local terminal, type `code`
+
+---
+
+## VSCode
+
+![](images/vscode-welcome.png)
+
+---
+
+## VSCode
+
+![](images/vscode-remotes.png)
+
+---
+
+## VSCode
+
+![](images/vscode-jusuf.png)
+
+---
 
 
+## SLURM
 
+---
+
+## Jupyter
+
+[jupyter-jsc.fz-juelich.de](https://jupyter-jsc.fz-juelich.de)
+
+- [TODO] Explain partitions, training, reservation
+
+---
+
+## Kernel and modules:
+
+[Venv/Kernel template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
+
+```bash
+git clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git
+cd sc_venv_template
+```
 
 ---
 
