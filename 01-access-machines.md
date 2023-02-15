@@ -23,7 +23,6 @@ date: February 29, 2023
 
 ---
 
-
 ## Team:
 
 ::: {.container}
@@ -36,7 +35,6 @@ date: February 29, 2023
 :::
 
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
-
 
 ---
 
@@ -94,10 +92,23 @@ Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.d
 
 ---
 
+### JUSUF
+
+- 205 Nodes
+- AMD EPYC Rome 7742 CPU 2.25 GHz (2 × 64 cores / node)
+- 256 GiB memory
+- 61 nodes with 4x NVIDIA V100 with 16gb.
+
+TL;DR: Smaller than JUWELS Booster, but still packs a punch 🤜
+
+Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps/jusuf/cluster/configuration.html)
+
+---
+
 ## How do I use a Supercomputer?
 
-- Interactively: E.g. Jupyter
 - Batch: For heavy compute, ML training
+- Interactively: Jupyter
 
 ---
 
@@ -250,9 +261,6 @@ Host booster
         IdentityFile ~/.ssh/id_ed25519-JSC
 
 ```
-
-
-
 ---
 
 ### SSH
@@ -277,7 +285,6 @@ $ curl ifconfig.me
 - Browser: [https://www.whatismyip.com](https://www.whatismyip.com)
 
 ---
-
 
 ### SSH
 
@@ -326,6 +333,8 @@ from="93.199.0.0" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2
 
 ![](images/manage-ssh-keys.png)
 
+Do it for JUWELS, JUSUF and JUDAC with the same key
+
 ---
 
 ### SSH
@@ -333,6 +342,163 @@ from="93.199.0.0" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2
 #### Add new key to judoor
 
 ![](images/manage-ssh-keys-from-and-key.png)
+
+This might take some minutes
+
+---
+
+### SSH
+
+That's it! Give it a try (and answer yes)
+
+```bash
+$ ssh jusuf
+The authenticity of host 'jusuf.fz-juelich.de (134.94.0.185)' cannot be established.
+ED25519 key fingerprint is SHA256:ASeu9MJbkFx3kL1FWrysz6+paaznGenChgEkUW8nRQU.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? Yes
+**************************************************************************
+*                            Welcome to JUSUF                            *
+**************************************************************************
+...
+...
+strube1@jusuf ~ $ cd $PROJECT_training2303
+strube1@jusuf training2303 $ mkdir $USER
+strube1@jusuf training2303 $ cd $USER
+strube1@jusuf strube1 $ pwd
+/p/project/training2303/strube1
+strube1@jusuf strube1 $
+
+```
+
+---
+
+## Working with the supercomputer's software
+
+We have literally thousands of software packages, hand-compiled for the specifics of the supercomputer.
+
+---
+
+## Software
+
+#### Tool for finding software: `module spider`
+
+```bash
+strube1$ module spider PyTorch
+------------------------------------------------------------------------------------
+  PyTorch:
+------------------------------------------------------------------------------------
+    Description:
+      Tensors and Dynamic neural networks in Python with strong GPU acceleration. 
+      PyTorch is a deep learning framework that puts Python first.
+
+     Versions:
+        PyTorch/1.7.0-Python-3.8.5
+        PyTorch/1.8.1-Python-3.8.5
+        PyTorch/1.11-CUDA-11.5
+        PyTorch/1.12.0-CUDA-11.7
+     Other possible modules matches:
+        PyTorch-Geometric  PyTorch-Lightning
+...
+```
+
+---
+
+## Module hierarchy
+
+- Compiler
+- Mpi
+- Module
+
+Eg: `module load GCC OpenMPI PyTorch`
+
+---
+
+## What do we have?
+
+`module avail` (Inside hierarchy)
+
+#### What do I need to load such software?
+
+`module spider Software/version`
+
+---
+
+## Example: PyTorch
+
+Search for the software itself - it will suggest a version
+
+![](images/module-spider-1.png)
+
+---
+
+## Example: PyTorch
+
+Search with the version - it will suggest the hierarchy
+
+![](images/module-spider-2.png)
+
+---
+
+## Example: PyTorch
+
+```bash
+$ python
+-bash: python: command not found
+
+
+
+
+
+
+
+
+
+
+```
+
+---
+
+## Example: PyTorch
+
+```bash
+$ python
+-bash: python: command not found
+$ module load Stages/2023
+$ module load GCC OpenMPI PyTorch
+$ python
+Python 3.10.4 (main, Oct  4 2022, 08:48:14) [GCC 11.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import torch
+>>> torch.__version__
+'1.12.0'
+```
+---
+
+## Python Modules
+
+#### Some of the python softwares are part of Python itself, or of other softwares. Use `module key`
+
+```bash
+module key toml
+The following modules match your search criteria: "toml"
+------------------------------------------------------------------------------------
+
+  Jupyter: Jupyter/2020.2.5-Python-3.8.5, Jupyter/2021.3.1-Python-3.8.5, Jupyter/2021.3.2-Python-3.8.5, Jupyter/2022.3.3, Jupyter/2022.3.4
+    Project Jupyter exists to develop open-source software, open-standards, and services for interactive computing across dozens of programming languages.
+    
+
+  PyQuil: PyQuil/3.0.1
+    PyQuil is a library for generating and executing Quil programs on the Rigetti Forest platform.
+
+  Python: Python/3.8.5, Python/3.9.6, Python/3.10.4
+    Python is a programming language that lets you work more quickly and integrate your systems more effectively.
+
+------------------------------------------------------------------------------------
+```
+
+
+
 
 ---
 
