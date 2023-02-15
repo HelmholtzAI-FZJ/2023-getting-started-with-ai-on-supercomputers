@@ -3,7 +3,7 @@
 SOURCE_DOCS := $(wildcard *.md)
 
 EXPORTED_DOCS=\
-  $(SOURCE_DOCS:.md=.html)
+  $(addprefix public/,$(SOURCE_DOCS:.md=.html))
 
 RM=/bin/rm
 
@@ -26,4 +26,4 @@ PANDOC_OPTIONS=-t revealjs -s \
 all : $(EXPORTED_DOCS)
 
 clean:
-	- $(RM) $(addprefix public/,$(EXPORTED_DOCS))
+	- $(RM) $(EXPORTED_DOCS)
