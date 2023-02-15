@@ -38,4 +38,4 @@ What is necessary for this course?
 - Some knowledge of the python language
 
 
-The material is available at https://mldl_fzj.pages.jsc.fz-juelich.de/juhaicu/jsc_public/sharedspace/teaching/2023-getting-started-with-ai-on-supercomputers/
+The material is available at https://go.fzj.de/intro-sc-ai-2023
