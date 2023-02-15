@@ -3,7 +3,8 @@ pages:
   - public-docker
   only:
   - master
-  # script:
+  script:
+    - echo "Hello"
   # - mkdir public
   # - echo 'my test' > public/index.html
   artifacts:
