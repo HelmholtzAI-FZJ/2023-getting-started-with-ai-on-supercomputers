@@ -201,7 +201,26 @@ Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps
 
 ---
 
+## VSCode
 
+- [Download VScode: code.visualstudio.com](https://code.visualstudio.com/download)
+- Install it
+- Install [Remote Development Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+- On the local terminal, type `code`
+
+---
+
+## VSCode
+
+![](images/vscode-welcome.png)
+
+---
+
+## VSCode
+
+![](images/vscode-remotes.png)
+
+---
 ### Connecting to JUWELS BOOSTER
 
 #### Getting compute time
@@ -240,7 +259,7 @@ ssh-keygen -a 100 -t ed25519 -f ~/.ssh/id_ed25519-JSC
 #### Configure SSH session
 
 ```bash
-code ~$HOME/.ssh/config
+code $HOME/.ssh/config
 ```
 
 ---
@@ -515,27 +534,6 @@ The following modules match your search criteria: "toml"
 
 ------------------------------------------------------------------------------------
 ```
----
-
-## VSCode
-
-- [Download VScode: code.visualstudio.com](https://code.visualstudio.com/download)
-- Install it
-- Install [Remote Development Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-- On the local terminal, type `code`
-
----
-
-## VSCode
-
-![](images/vscode-welcome.png)
-
----
-
-## VSCode
-
-![](images/vscode-remotes.png)
-
 ---
 
 ## VSCode

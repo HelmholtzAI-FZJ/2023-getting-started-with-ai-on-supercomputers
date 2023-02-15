@@ -18,8 +18,8 @@ PANDOC_OPTIONS=-t revealjs -s \
 	# --embed-resources \ 
 	# -A footer.html # The footer is just too big
 
-%.html : %.md *.css
-	$(PANDOC) $(PANDOC_OPTIONS) -o public/$@ $<
+public/%.html : %.md *.css
+	$(PANDOC) $(PANDOC_OPTIONS) -o $@ $<
 
 .PHONY: all clean
 
