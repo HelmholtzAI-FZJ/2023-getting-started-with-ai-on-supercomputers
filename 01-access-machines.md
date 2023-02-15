@@ -299,6 +299,7 @@ Host booster
         User [MY_USERNAME]
         IdentityFile ~/.ssh/id_ed25519-JSC
 
+
 ```
 ---
 
@@ -307,9 +308,7 @@ Host booster
 ####  Jülich Supercomputing Centre restricts where you can login from
 #### So we need to:
 1. Find our ip range
-2. Add the range and key to (Judoor)[http://judoor.fz-juelich.de]
-
-![](images/manage-ssh-keys.png)
+2. Add the range and key to [Judoor](https://judoor.fz-juelich.de)
 
 ---
 
@@ -325,6 +324,8 @@ $ curl ifconfig.me
 ```
 
 (Ignore the `%` sign)
+
+- Let's keep this inside vscode: `code key.txt`
 
 ---
 
@@ -346,13 +347,13 @@ $ curl ifconfig.me
 
 ### SSH - Example: `93.199.55.160`
 
-- Let's make it simpler: `93.199.0.0`
+- Let's make it simpler: `93.199.0.0/16`
 
 (because the last numbers change)
 
 ---
 
-### SSH - Example: `93.199.0.0`
+### SSH - Example: `93.199.0.0/16`
 
 #### Copy your ssh key
 - Terminal: 
@@ -366,12 +367,12 @@ ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F
 
 ### SSH
 
-#### Example: `93.199.0.0`
+#### Example: `93.199.0.0/16`
 
 - Put them together and copy again:
 
 ```bash
-from="93.199.0.0" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
+from="93.199.0.0/16" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
 ```
 
 ---
@@ -386,7 +387,7 @@ Do it for JUWELS, JUSUF and JUDAC with the same key
 
 ### SSH
 
-#### Add new key to (Judoor)[http://judoor.fz-juelich.de]
+#### Add new key to [Judoor](https://judoor.fz-juelich.de)
 
 ![](images/manage-ssh-keys-from-and-key.png)
 
