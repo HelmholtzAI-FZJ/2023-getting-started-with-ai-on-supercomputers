@@ -581,13 +581,104 @@ The following modules match your search criteria: "toml"
 
 ---
 
-Now we can edit some code and submit it to the queue....
+### Demo code
+#### Create a new file "`matrix.py`" on VSCode on Jusuf  
+
+``` {.python .number-lines}
+import torch
+
+matrix1 = torch.randn(3,3)
+print("The first matrix is", matrix1)
+
+matrix2 = torch.randn(3,3)
+print("The second matrix is", matrix2)
+
+result = torch.matmul(matrix1,matrix2)
+print("The result is:\n", result)
+```
+
 ---
 
-But we need to learn about the queue! 🤯
+### How to run it on the login node
+
+```
+module load Stages/2023
+module load GCC OpenMPI PyTorch
+python matrix.py
+```
+
 ---
 
-## SLURM
+### But that's not what we want... 😒
+
+---
+
+### So we send it to the queue!
+
+---
+
+## HOW?🤔
+
+---
+
+### SLURM 🤯
+![](images/slurm.jpg)
+
+---
+
+### Slurm submission file
+
+- Simple file which describes what we want and how much of it, for how long, and what to do with the results
+
+---
+
+### Slurm submission file example
+
+Save it as jusuf-matrix.batch
+
+``` {.bash .number-lines}
+#!/bin/bash -x
+#SBATCH --account=training2303           # Who pays?
+#SBATCH --nodes=1                        # How many compute nodes
+#SBATCH --job-name=matrix-multiplication
+#SBATCH --ntasks-per-node=1              # How many mpi processes/node
+#SBATCH --cpus-per-task=1                # How many cpus per mpi proc
+#SBATCH --output=output.%                # Where to write results
+#SBATCH --error=error.%j
+#SBATCH --time=00:01:00                  # For how long can it run?
+#SBATCH --partition=gpus                 # Machine partition
+
+module Stages/2023
+module load GCC OpenMPI PyTorch
+
+srun python matrix.py
+```
+
+---
+
+### Submitting a job
+
+```bash
+sbatch jusuf-matrix.batch
+```
+
+---
+
+### Are we there yet? 🐴
+
+```bash
+squeue --me
+   JOBID  PARTITION    NAME      USER    ST       TIME  NODES NODELIST(REASON)
+   412173 gpus         matrix-m  strube1 CF       0:02      1 jsfc013
+
+```
+
+#### ST is status:
+
+- PD (pending), 
+- R (running),   
+- CF(configuring), 
+- CG (completing)
 
 ---
 
@@ -606,32 +697,6 @@ But we need to learn about the queue! 🤯
 ```bash
 git clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git
 cd sc_venv_template
-```
-
----
-
-## Backup slides
-
----
-
-``` {.java .number-lines}
-// Some js
-
-    a = 1;
-    b = 2;
-    let c = x => 1 + 2 + x;
-    c(3);
-
-```
-
-```python
-n = 0
-while n < 10:
-  if n % 2 == 0:
-    print(f"{n} is even")
-  else:
-    print(f"{n} is odd")
-  n += 1
 ```
 
 ---
