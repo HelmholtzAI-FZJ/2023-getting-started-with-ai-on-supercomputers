@@ -505,17 +505,11 @@ Search with the version - it will suggest the hierarchy
 ```bash
 $ python
 -bash: python: command not found
-
-
-
-
-
-
-
-
-
-
 ```
+
+Oh noes! 🙈
+
+Let's bring Python together with PyTorch!
 
 ---
 
@@ -523,9 +517,12 @@ $ python
 
 Copy and paste these lines
 ```bash
-python
+# This command fails, as we have no proper python
+python 
+# So, we load the correct modules...
 module load Stages/2023
-module load GCC OpenMPI PyTorch
+module load GCC OpenMPI Python PyTorch
+# And we run a small test: import pytorch and ask its version
 python -c "import torch ; print(torch.__version__)" 
 ```
 
@@ -534,7 +531,7 @@ Should look like this:
 $ python
 -bash: python: command not found
 $ module load Stages/2023
-$ module load GCC OpenMPI PyTorch
+$ module load GCC OpenMPI Python PyTorch
 $ python -c "import torch ; print(torch.__version__)" 
 1.12.0
 ```
@@ -582,6 +579,12 @@ The following modules match your search criteria: "toml"
 - From the ssh connection, navigate to your "course" folder and to the name you created earlier.
 - This is out working directory. We do everything here.
 
+---
+
+Now we can edit some code and submit it to the queue....
+---
+
+But we need to learn about the queue! 🤯
 ---
 
 ## SLURM
