@@ -7,6 +7,6 @@ date: February 29, 2023
 
 # Topics:
 
-- [01-access machines, slurm, etc](01-access-machines.html)
-- [02-Speedup Data Loading](02-speedup-data-loading.html)
-- [03-Parallelize training](03-parallelize-training.html)
+- [Access machines, slurm, etc](01-access-machines.html)
+- [Speedup Data Loading](02-speedup-data-loading.html)
+- [Parallelize training](03-parallelize-training.html)

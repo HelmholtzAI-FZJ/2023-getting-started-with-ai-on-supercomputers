@@ -421,11 +421,14 @@ strube1@jusuf ~ $
 ```bash
 # Create a shortcut for the project on the home folder
 ln -s $PROJECT_training2303 ./course
+mkdir course/$USER
+
+# We well need those later
+ln -s .config ./course/$USER/
+ln -s .cache ./course/$USER/
 
 # Enter course folder and create a folder for myself
-cd course
-mkdir $USER
-cd $USER
+cd course/$USER
 
 # Where am I?
 pwd
@@ -577,17 +580,139 @@ The following modules match your search criteria: "toml"
 ## VSCode
 
 - From the ssh connection, navigate to your "course" folder and to the name you created earlier.
+
+```bash
+cd $HOME/course/$USER
+pwd
+```
+
 - This is out working directory. We do everything here.
 
 ---
 
-Now we can edit some code and submit it to the queue....
+### Demo code
+#### Create a new file "`matrix.py`" on VSCode on Jusuf  
+
+``` {.python .number-lines}
+import torch
+
+matrix1 = torch.randn(3,3)
+print("The first matrix is", matrix1)
+
+matrix2 = torch.randn(3,3)
+print("The second matrix is", matrix2)
+
+result = torch.matmul(matrix1,matrix2)
+print("The result is:\n", result)
+```
+
 ---
 
-But we need to learn about the queue! 🤯
+### How to run it on the login node
+
+```
+module load Stages/2023
+module load GCC OpenMPI PyTorch
+python matrix.py
+```
+
 ---
 
-## SLURM
+### But that's not what we want... 😒
+
+---
+
+### So we send it to the queue!
+
+---
+
+## HOW?🤔
+
+---
+
+### SLURM 🤯
+![](images/slurm.jpg)
+
+Simple Linux Utility for Resource Management
+
+---
+
+### Slurm submission file
+
+- Simple text file which describes what we want and how much of it, for how long, and what to do with the results
+
+---
+
+### Slurm submission file example
+
+Save it as jusuf-matrix.batch
+
+``` {.bash .number-lines}
+#!/bin/bash -x
+#SBATCH --account=training2303           # Who pays?
+#SBATCH --nodes=1                        # How many compute nodes
+#SBATCH --job-name=matrix-multiplication
+#SBATCH --ntasks-per-node=1              # How many mpi processes/node
+#SBATCH --cpus-per-task=1                # How many cpus per mpi proc
+#SBATCH --output=output.%        # Where to write results
+#SBATCH --error=error.%j
+#SBATCH --time=00:01:00          # For how long can it run?
+#SBATCH --partition=gpus         # Machine partition
+
+module Stages/2023
+module load GCC OpenMPI PyTorch  # Load the correct modules on the compute node(s)
+
+srun python matrix.py            # srun is tells the supercomputer how to run it
+```
+
+---
+
+### Submitting a job: SBATCH
+
+```bash
+sbatch jusuf-matrix.batch
+
+Submitted batch job 412169
+```
+
+---
+
+### Are we there yet? 🐴
+
+```bash
+squeue --me
+   JOBID  PARTITION    NAME      USER    ST       TIME  NODES NODELIST(REASON)
+   412169 gpus         matrix-m  strube1 CF       0:02      1 jsfc013
+
+```
+
+#### ST is status:
+
+- PD (pending), 
+- R (running),   
+- CF(configuring), 
+- CG (completing)
+
+---
+
+### Job is wrong, need to cancel
+
+```bash
+scancel <JOBID>
+```
+
+---
+
+### Check logs
+
+#### By now you should have output and error log files on your directory. Check them!
+
+```bash
+# Notice that this number is the job id. It's different for every job
+cat error.412169 
+```
+
+Or simply open it on VSCode!
 
 ---
 
@@ -595,11 +720,27 @@ But we need to learn about the queue! 🤯
 
 [jupyter-jsc.fz-juelich.de](https://jupyter-jsc.fz-juelich.de)
 
-- [TODO] Explain partitions, training, reservation
+- Jupyter-JSC calls slurm, just the same as your job
+- When you are working on it, you are using compute node time
+
+*Yes, if you are just thinking and looking at the 📺, you are burning project time*
+
+- It's useful for small tests - not for full-fledged development
+
+---
+
+## Jupyter
+
+#### Pay attention to the partition - DON'T RUN IT ON THE LOGIN NODE!!!
+
+![](images/jupyter-partition.png)
+
 
 ---
 
 ## Kernel and modules:
+
+#### You want that extra software from `pip`....
 
 [Venv/Kernel template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
 
@@ -610,28 +751,39 @@ cd sc_venv_template
 
 ---
 
-## Backup slides
+## Example: MLflow
+
+Link: [MLflow quickstart](https://mlflow.org/docs/latest/quickstart.html)
 
 ---
 
-``` {.java .number-lines}
-// Some js
+## Example: MLflow
 
-    a = 1;
-    b = 2;
-    let c = x => 1 + 2 + x;
-    c(3);
+- Edit the file requirements.txt
+- Add a line at the end: `mlflow[extras]`
+- Run on the terminal: `./setup.sh`
 
-```
+---
+
+## Example: MLflow
 
 ```python
-n = 0
-while n < 10:
-  if n % 2 == 0:
-    print(f"{n} is even")
-  else:
-    print(f"{n} is odd")
-  n += 1
-```
+source ./activate.sh 
+The activation script must be sourced, otherwise the virtual environment will not work.
+Setting vars
+The following modules were not unloaded:
+  (Use "module --force purge" to unload all):
 
----
+  1) Stages/2023
+
+The following have been reloaded with a version change:
+  1) HDF5/1.12.2-serial => HDF5/1.12.2
+
+
+python
+Python 3.10.4 (main, Oct  4 2022, 08:48:14) [GCC 11.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import mlflow
+>>> mlflow.__version__
+'2.1.1'
+```
