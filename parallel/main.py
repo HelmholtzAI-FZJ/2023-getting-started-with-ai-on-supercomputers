@@ -1,6 +1,7 @@
 import argparse
 import os
 import datetime
+import time 
 
 from tqdm import tqdm
 
@@ -52,9 +53,14 @@ def main(args):
     writer = SummaryWriter(args.tb_dir)
   
     print("Start training ...")
-    train_loop(args, dataloaders["train"], dataloaders["val"], model, loss_fn, optimizer, writer, args.log)
-    print("Done!")
 
+    start = time.time()
+    train_loop(args, dataloaders["train"], dataloaders["val"], model, loss_fn, optimizer, writer, args.log)
+    duration = time.time() - start
+
+    print("The training took: ", duration)
+
+    print("Start testing ...")
     test_loop(dataloaders["test"],model,loss_fn)
 
 
