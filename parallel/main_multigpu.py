@@ -74,6 +74,8 @@ def main(args):
     train_loop(args, dataloaders["train"], dataloaders["val"], datasets_sampler["train"], datasets_sampler["val"], model, loss_fn, optimizer, writer, args.log)
     duration = time.time() - start
 
+    print("The training took: ", duration)
+
     test_loop(dataloaders["test"], datasets_sampler["test"], model, loss_fn)
 
 
