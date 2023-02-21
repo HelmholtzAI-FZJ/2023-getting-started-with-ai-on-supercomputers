@@ -421,11 +421,14 @@ strube1@jusuf ~ $
 ```bash
 # Create a shortcut for the project on the home folder
 ln -s $PROJECT_training2303 ./course
+mkdir course/$USER
+
+# We well need those later
+ln -s .config ./course/$USER/
+ln -s .cache ./course/$USER/
 
 # Enter course folder and create a folder for myself
-cd course
-mkdir $USER
-cd $USER
+cd course/$USER
 
 # Where am I?
 pwd
@@ -577,6 +580,12 @@ The following modules match your search criteria: "toml"
 ## VSCode
 
 - From the ssh connection, navigate to your "course" folder and to the name you created earlier.
+
+```bash
+cd $HOME/course/$USER
+pwd
+```
+
 - This is out working directory. We do everything here.
 
 ---
@@ -624,11 +633,13 @@ python matrix.py
 ### SLURM 🤯
 ![](images/slurm.jpg)
 
+Simple Linux Utility for Resource Management
+
 ---
 
 ### Slurm submission file
 
-- Simple file which describes what we want and how much of it, for how long, and what to do with the results
+- Simple text file which describes what we want and how much of it, for how long, and what to do with the results
 
 ---
 
@@ -643,23 +654,25 @@ Save it as jusuf-matrix.batch
 #SBATCH --job-name=matrix-multiplication
 #SBATCH --ntasks-per-node=1              # How many mpi processes/node
 #SBATCH --cpus-per-task=1                # How many cpus per mpi proc
-#SBATCH --output=output.%                # Where to write results
+#SBATCH --output=output.%        # Where to write results
 #SBATCH --error=error.%j
-#SBATCH --time=00:01:00                  # For how long can it run?
-#SBATCH --partition=gpus                 # Machine partition
+#SBATCH --time=00:01:00          # For how long can it run?
+#SBATCH --partition=gpus         # Machine partition
 
 module Stages/2023
-module load GCC OpenMPI PyTorch
+module load GCC OpenMPI PyTorch  # Load the correct modules on the compute node(s)
 
-srun python matrix.py
+srun python matrix.py            # srun is tells the supercomputer how to run it
 ```
 
 ---
 
-### Submitting a job
+### Submitting a job: SBATCH
 
 ```bash
 sbatch jusuf-matrix.batch
+
+Submitted batch job 412169
 ```
 
 ---
@@ -669,7 +682,7 @@ sbatch jusuf-matrix.batch
 ```bash
 squeue --me
    JOBID  PARTITION    NAME      USER    ST       TIME  NODES NODELIST(REASON)
-   412173 gpus         matrix-m  strube1 CF       0:02      1 jsfc013
+   412169 gpus         matrix-m  strube1 CF       0:02      1 jsfc013
 
 ```
 
@@ -682,15 +695,52 @@ squeue --me
 
 ---
 
+### Job is wrong, need to cancel
+
+```bash
+scancel <JOBID>
+```
+
+---
+
+### Check logs
+
+#### By now you should have output and error log files on your directory. Check them!
+
+```bash
+# Notice that this number is the job id. It's different for every job
+cat error.412169 
+```
+
+Or simply open it on VSCode!
+
+---
+
 ## Jupyter
 
 [jupyter-jsc.fz-juelich.de](https://jupyter-jsc.fz-juelich.de)
 
-- [TODO] Explain partitions, training, reservation
+- Jupyter-JSC calls slurm, just the same as your job
+- When you are working on it, you are using compute node time
+
+*Yes, if you are just thinking and looking at the 📺, you are burning project time*
+
+- It's useful for small tests - not for full-fledged development
+
+---
+
+## Jupyter
+
+#### Pay attention to the partition - DON'T RUN IT ON THE LOGIN NODE!!!
+
+![](images/jupyter-partition.png)
+
 
 ---
 
 ## Kernel and modules:
+
+#### You want that extra software from `pip`....
 
 [Venv/Kernel template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
 
@@ -700,3 +750,40 @@ cd sc_venv_template
 ```
 
 ---
+
+## Example: MLflow
+
+Link: [MLflow quickstart](https://mlflow.org/docs/latest/quickstart.html)
+
+---
+
+## Example: MLflow
+
+- Edit the file requirements.txt
+- Add a line at the end: `mlflow[extras]`
+- Run on the terminal: `./setup.sh`
+
+---
+
+## Example: MLflow
+
+```python
+source ./activate.sh 
+The activation script must be sourced, otherwise the virtual environment will not work.
+Setting vars
+The following modules were not unloaded:
+  (Use "module --force purge" to unload all):
+
+  1) Stages/2023
+
+The following have been reloaded with a version change:
+  1) HDF5/1.12.2-serial => HDF5/1.12.2
+
+
+python
+Python 3.10.4 (main, Oct  4 2022, 08:48:14) [GCC 11.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import mlflow
+>>> mlflow.__version__
+'2.1.1'
+```
