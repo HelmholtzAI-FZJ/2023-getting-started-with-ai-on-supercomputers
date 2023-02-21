@@ -28,3 +28,11 @@ Temporary Items
 # Specific files
 README.html
 email-template.html
+
+parallel/tiny-imagenet-200
+parallel/sc_venv_template
+parallel/logs
+parallel/output
+parallel/download_data.sh
+
+draft/
