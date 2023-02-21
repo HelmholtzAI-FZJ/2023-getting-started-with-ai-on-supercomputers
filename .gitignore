@@ -36,3 +36,7 @@ parallel/output
 parallel/download_data.sh
 
 draft/
+
+# Python
+__pycache__
+*.pyc
