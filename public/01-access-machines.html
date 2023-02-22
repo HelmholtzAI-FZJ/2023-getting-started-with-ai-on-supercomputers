@@ -229,9 +229,10 @@
 <section id="communication" class="slide level2">
 <h2>Communication:</h2>
 <ul>
-<li><a
+<li class="fragment"><a
 href="https://fz-juelich-de.zoom.us/j/98120874933?pwd=NXJJNXo1Nkx4OGNVNEhkWXBNTWlZUT09">Zoom</a></li>
-<li><a href="https://introscfeb2023.slack.com">Slack</a></li>
+<li class="fragment"><a
+href="https://introscfeb2023.slack.com">Slack</a></li>
 </ul>
 <p><img
 data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
@@ -239,8 +240,9 @@ data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
 <section id="goals-for-this-course" class="slide level2">
 <h2>Goals for this course:</h2>
 <ul>
-<li>Make sure you know how to access and use our machines</li>
-<li>Distribute your ML workload.</li>
+<li class="fragment">Make sure you know how to access and use our
+machines</li>
+<li class="fragment">Distribute your ML workload.</li>
 </ul>
 <p><img
 data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
@@ -310,26 +312,29 @@ data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
 
 <h3 id="what-is-a-supercomputer">What is a supercomputer?</h3>
 <ul>
-<li>Compute cluster: Many computers bound together locally</li>
-<li>Supercomputer: A damn lot of computers bound together locally</li>
+<li class="fragment">Compute cluster: Many computers bound together
+locally</li>
+<li class="fragment">Supercomputer: A damn lot of computers bound
+together locally</li>
 </ul>
 </section>
 <section class="slide level2">
 
 <h3 id="anatomy-of-a-supercomputer">Anatomy of a supercomputer</h3>
 <ul>
-<li>Login Nodes: Normal machines, for compilation, data transfer,
-scripting, etc. No GPUs.</li>
-<li>Compute Nodes: Guess what :-)</li>
-<li>Network file system</li>
-<li>Scratch file system accessible from compute nodes</li>
-<li>Key stats:
+<li class="fragment">Login Nodes: Normal machines, for compilation, data
+transfer, scripting, etc. No GPUs.</li>
+<li class="fragment">Compute Nodes: Guess what :-)</li>
+<li class="fragment">Network file system</li>
+<li class="fragment">Scratch file system accessible from compute
+nodes</li>
+<li class="fragment">Key stats:
 <ul>
-<li>Number of Nodes</li>
-<li>CPUs, Number of Cores, Single-core Performance</li>
-<li>RAM</li>
-<li>Network: Bandwidth, Latency</li>
-<li>Accelerators (e.g. GPUs)</li>
+<li class="fragment">Number of Nodes</li>
+<li class="fragment">CPUs, Number of Cores, Single-core Performance</li>
+<li class="fragment">RAM</li>
+<li class="fragment">Network: Bandwidth, Latency</li>
+<li class="fragment">Accelerators (e.g. GPUs)</li>
 </ul></li>
 </ul>
 </section>
@@ -337,12 +342,13 @@ scripting, etc. No GPUs.</li>
 
 <h3 id="juwels-booster">JUWELS Booster</h3>
 <ul>
-<li>936 Nodes</li>
-<li>AMD EPYC Rome 7402 CPU 2.7 GHz (2 × 24 cores x 2 SMT threads = 96
-virtual cores/node)</li>
-<li>512 GiB memory</li>
-<li>Network Mellanox HDR infiniband (FAST💨 and EXPENSIVE💸)</li>
-<li>4x NVIDIA A100 with 40gb.</li>
+<li class="fragment">936 Nodes</li>
+<li class="fragment">AMD EPYC Rome 7402 CPU 2.7 GHz (2 × 24 cores x 2
+SMT threads = 96 virtual cores/node)</li>
+<li class="fragment">512 GiB memory</li>
+<li class="fragment">Network Mellanox HDR infiniband (FAST💨 and
+EXPENSIVE💸)</li>
+<li class="fragment">4x NVIDIA A100 with 40gb.</li>
 </ul>
 <p>TL;DR: 89856 cores, 3744 GPUs, 468 TB RAM 💪</p>
 <p>Way deeper technical info at <a
@@ -353,10 +359,11 @@ Booster Overview</a></p>
 
 <h3 id="jusuf">JUSUF</h3>
 <ul>
-<li>205 Nodes</li>
-<li>AMD EPYC Rome 7742 CPU 2.25 GHz (2 × 64 cores / node)</li>
-<li>256 GiB memory</li>
-<li>61 nodes with 4x NVIDIA V100 with 16gb.</li>
+<li class="fragment">205 Nodes</li>
+<li class="fragment">AMD EPYC Rome 7742 CPU 2.25 GHz (2 × 64 cores /
+node)</li>
+<li class="fragment">256 GiB memory</li>
+<li class="fragment">61 nodes with 4x NVIDIA V100 with 16gb.</li>
 </ul>
 <p>TL;DR: Smaller than JUWELS Booster, but still packs a punch 🤜</p>
 <p>Way deeper technical info at <a
@@ -366,8 +373,8 @@ Overview</a></p>
 <section id="how-do-i-use-a-supercomputer" class="slide level2">
 <h2>How do I use a Supercomputer?</h2>
 <ul>
-<li>Batch: For heavy compute, ML training</li>
-<li>Interactively: Jupyter</li>
+<li class="fragment">Batch: For heavy compute, ML training</li>
+<li class="fragment">Interactively: Jupyter</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -416,8 +423,10 @@ supercomputer</h3>
 <div class="container">
 <div class="col">
 <ul>
-<li>Your job(s) enter the queue, and wait for its turn</li>
-<li>When there are enough resources for that job, it runs</li>
+<li class="fragment">Your job(s) enter the queue, and wait for its
+turn</li>
+<li class="fragment">When there are enough resources for that job, it
+runs</li>
 </ul>
 </div>
 <div class="col">
@@ -437,41 +446,43 @@ supercomputer</h3>
 
 <h3 id="supercomputer-usage-model">Supercomputer Usage Model</h3>
 <ul>
-<li>Using the the supercomputer means submitting a job to a batch
-system.</li>
-<li>No node-sharing. The smallest allocation for jobs is one compute
-node (4 GPUs).</li>
-<li>Maximum runtime of a job: 24h.</li>
+<li class="fragment">Using the the supercomputer means submitting a job
+to a batch system.</li>
+<li class="fragment">No node-sharing. The smallest allocation for jobs
+is one compute node (4 GPUs).</li>
+<li class="fragment">Maximum runtime of a job: 24h.</li>
 </ul>
 </section>
 <section class="slide level2">
 
 <h3 id="recap">Recap:</h3>
 <ul>
-<li>Login nodes are for submitting jobs, move files, compile, etc</li>
-<li>NOT FOR TRAINING NEURAL NETS</li>
+<li class="fragment">Login nodes are for submitting jobs, move files,
+compile, etc</li>
+<li class="fragment">NOT FOR TRAINING NEURAL NETS</li>
 </ul>
 </section>
 <section class="slide level2">
 
 <h3 id="recap-1">Recap:</h3>
 <ul>
-<li>User submit jobs</li>
-<li>Job enters the queue</li>
-<li>When it can, it runs</li>
-<li>Sends results back to user</li>
+<li class="fragment">User submit jobs</li>
+<li class="fragment">Job enters the queue</li>
+<li class="fragment">When it can, it runs</li>
+<li class="fragment">Sends results back to user</li>
 </ul>
 </section>
 <section id="vscode" class="slide level2">
 <h2>VSCode</h2>
 <ul>
-<li><a href="https://code.visualstudio.com/download">Download VScode:
+<li class="fragment"><a
+href="https://code.visualstudio.com/download">Download VScode:
 code.visualstudio.com</a></li>
-<li>Install it</li>
-<li>Install <a
+<li class="fragment">Install it</li>
+<li class="fragment">Install <a
 href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack">Remote
 Development Tools</a></li>
-<li>On the local terminal, type <code>code</code></li>
+<li class="fragment">On the local terminal, type <code>code</code></li>
 </ul>
 </section>
 <section id="vscode-1" class="slide level2">
@@ -500,16 +511,19 @@ compute project pays.</td>
 BOOSTER and JUSUF</h3>
 <h4 id="ssh">SSH</h4>
 <ul>
-<li>SSH is a secure shell (terminal) connection to another computer</li>
-<li>You connect from your computer to the LOGIN NODE</li>
+<li class="fragment">SSH is a secure shell (terminal) connection to
+another computer</li>
+<li class="fragment">You connect from your computer to the LOGIN
+NODE</li>
 </ul>
 </section>
 <section class="slide level2">
 
 <h3 id="ssh-1">SSH</h3>
 <ul>
-<li>Security is given by public/private keys</li>
-<li>You connect from your computer to the LOGIN NODE</li>
+<li class="fragment">Security is given by public/private keys</li>
+<li class="fragment">You connect from your computer to the LOGIN
+NODE</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -570,8 +584,8 @@ id="jülich-supercomputing-centre-restricts-where-you-can-login-from">Jülich
 Supercomputing Centre restricts where you can login from</h4>
 <h4 id="so-we-need-to">So we need to:</h4>
 <ol type="1">
-<li>Find our ip range</li>
-<li>Add the range and key to <a
+<li class="fragment">Find our ip range</li>
+<li class="fragment">Add the range and key to <a
 href="https://judoor.fz-juelich.de">Judoor</a></li>
 </ol>
 </section>
@@ -580,14 +594,15 @@ href="https://judoor.fz-juelich.de">Judoor</a></li>
 <h3 id="ssh-6">SSH</h3>
 <h4 id="find-your-ipname-range">Find your ip/name range</h4>
 <ul>
-<li>Terminal: <code>curl ifconfig.me</code></li>
+<li class="fragment">Terminal: <code>curl ifconfig.me</code></li>
 </ul>
 <div class="sourceCode" id="cb5"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl ifconfig.me </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">93.199.55.160%</span></span></code></pre></div>
 <p>(Ignore the <code>%</code> sign)</p>
 <ul>
-<li>Let’s keep this inside vscode: <code>code key.txt</code></li>
+<li class="fragment">Let’s keep this inside vscode:
+<code>code key.txt</code></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -595,7 +610,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="
 <h3 id="ssh-7">SSH</h3>
 <h4 id="find-your-ipname-range-1">Find your ip/name range</h4>
 <ul>
-<li>Browser: <a
+<li class="fragment">Browser: <a
 href="https://www.whatismyip.com">https://www.whatismyip.com</a></li>
 </ul>
 </section>
@@ -610,7 +625,8 @@ href="https://www.whatismyip.com">https://www.whatismyip.com</a></li>
 <h3 id="ssh---example-93.199.55.160">SSH - Example:
 <code>93.199.55.160</code></h3>
 <ul>
-<li>Let’s make it simpler: <code>93.199.0.0/16</code></li>
+<li class="fragment">Let’s make it simpler:
+<code>93.199.0.0/16</code></li>
 </ul>
 <p>(because the last numbers change)</p>
 </section>
@@ -620,14 +636,14 @@ href="https://www.whatismyip.com">https://www.whatismyip.com</a></li>
 <code>93.199.0.0/16</code></h3>
 <h4 id="copy-your-ssh-key">Copy your ssh key</h4>
 <ul>
-<li>Terminal:</li>
+<li class="fragment">Terminal:</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat ~/.ssh/id_ed25519-JSC.pub</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-ed25519</span> AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de</span></code></pre></div>
 <ul>
-<li>Copy this line to the clipboard (or to an empty file on VS Code:
-<code>code key.txt</code>)</li>
+<li class="fragment">Copy this line to the clipboard (or to an empty
+file on VS Code: <code>code key.txt</code>)</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -635,7 +651,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="
 <h3 id="ssh-9">SSH</h3>
 <h4 id="example-93.199.0.016">Example: <code>93.199.0.0/16</code></h4>
 <ul>
-<li>Put them together and copy again:</li>
+<li class="fragment">Put them together and copy again:</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">from</span><span class="op">=</span><span class="st">&quot;93.199.0.0/16&quot;</span> <span class="ex">ssh-ed25519</span> AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de</span></code></pre></div>
@@ -722,9 +738,9 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href=
 <section id="module-hierarchy" class="slide level2">
 <h2>Module hierarchy</h2>
 <ul>
-<li>Compiler</li>
-<li>MPI</li>
-<li>Module</li>
+<li class="fragment">Compiler</li>
+<li class="fragment">MPI</li>
+<li class="fragment">Module</li>
 </ul>
 <p>Eg: <code>module load GCC OpenMPI PyTorch</code></p>
 </section>
@@ -809,14 +825,15 @@ supercomputers</h4>
 <section id="vscode-4" class="slide level2">
 <h2>VSCode</h2>
 <ul>
-<li>From the ssh connection, navigate to your “course” folder and to the
-name you created earlier.</li>
+<li class="fragment">From the ssh connection, navigate to your “course”
+folder and to the name you created earlier.</li>
 </ul>
 <div class="sourceCode" id="cb15"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
 <ul>
-<li>This is out working directory. We do everything here.</li>
+<li class="fragment">This is out working directory. We do everything
+here.</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -865,8 +882,8 @@ python matrix.py</code></pre>
 
 <h3 id="slurm-submission-file">Slurm submission file</h3>
 <ul>
-<li>Simple text file which describes what we want and how much of it,
-for how long, and what to do with the results</li>
+<li class="fragment">Simple text file which describes what we want and
+how much of it, for how long, and what to do with the results</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -908,11 +925,11 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href=
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>   <span class="ex">412169</span> gpus         matrix-m  strube1 CF       0:02      1 jsfc013</span></code></pre></div>
 <h4 id="st-is-status">ST is status:</h4>
 <ul>
-<li>PD (pending),</li>
-<li>R (running),<br />
+<li class="fragment">PD (pending),</li>
+<li class="fragment">R (running),<br />
 </li>
-<li>CF(configuring),</li>
-<li>CG (completing)</li>
+<li class="fragment">CF(configuring),</li>
+<li class="fragment">CG (completing)</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -938,13 +955,16 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href=
 <p><a
 href="https://jupyter-jsc.fz-juelich.de">jupyter-jsc.fz-juelich.de</a></p>
 <ul>
-<li>Jupyter-JSC calls slurm, just the same as your job</li>
-<li>When you are working on it, you are using compute node time</li>
+<li class="fragment">Jupyter-JSC calls slurm, just the same as your
+job</li>
+<li class="fragment">When you are working on it, you are using compute
+node time</li>
 </ul>
 <p><em>Yes, if you are just thinking and looking at the 📺, you are
 burning project time</em></p>
 <ul>
-<li>It’s useful for small tests - not for full-fledged development</li>
+<li class="fragment">It’s useful for small tests - not for full-fledged
+development</li>
 </ul>
 </section>
 <section id="jupyter-1" class="slide level2">
@@ -973,9 +993,10 @@ quickstart</a></p>
 <section id="example-mlflow-1" class="slide level2">
 <h2>Example: MLflow</h2>
 <ul>
-<li>Edit the file requirements.txt</li>
-<li>Add a line at the end: <code>mlflow[extras]</code></li>
-<li>Run on the terminal: <code>./setup.sh</code></li>
+<li class="fragment">Edit the file requirements.txt</li>
+<li class="fragment">Add a line at the end:
+<code>mlflow[extras]</code></li>
+<li class="fragment">Run on the terminal: <code>./setup.sh</code></li>
 </ul>
 </section>
 <section id="example-mlflow-2" class="slide level2">
@@ -1005,7 +1026,8 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a h
 <h4 id="accessing-compute-nodes-directly">Accessing compute nodes
 directly</h4>
 <ul>
-<li>If we need to access some ports on the compute nodes</li>
+<li class="fragment">If we need to access some ports on the compute
+nodes</li>
 </ul>
 </section>
 <section id="proxy-jump---ssh-configuration" class="slide level2">
@@ -1029,7 +1051,8 @@ Host *.jusuf
 <section id="proxy-jump-connecting-to-a-node" class="slide level2">
 <h2>Proxy Jump: Connecting to a node</h2>
 <ul>
-<li>Example: A service provides web interface on port 1234</li>
+<li class="fragment">Example: A service provides web interface on port
+1234</li>
 </ul>
 <p>On the supercomputer:</p>
 <div class="sourceCode" id="cb26"><pre
