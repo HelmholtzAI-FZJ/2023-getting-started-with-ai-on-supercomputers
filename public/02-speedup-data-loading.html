@@ -212,7 +212,28 @@ compute nodes of all supercomputers see the same files</h4>
 <img data-src="images/nomnom.jpg" alt="Fat GPUs need to be fed FAST" />
 <figcaption aria-hidden="true">Fat GPUs need to be fed FAST</figcaption>
 </figure>
-<p>— Strategies</p>
+</section>
+<section id="strategies" class="slide level2">
+<h2>Strategies</h2>
+<ul>
+<li>We have CPUs and lots of memory - let’s use them
+<ul>
+<li><code>/dev/shm</code> is a filesystem on ram - ultra fast ⚡️</li>
+</ul></li>
+<li>Use big files made for parallel computing
+<ul>
+<li>HDF5, Zarr, mmap()</li>
+</ul></li>
+<li>Use specialized data loading libraries
+<ul>
+<li>FFCV, DALI</li>
+</ul></li>
+<li>Compression
+<ul>
+<li>data transfer can be slower than decompression (must be checked case
+by case)</li>
+</ul></li>
+</ul>
 </section>
 <section id="libraries" class="slide level2">
 <h2>Libraries</h2>
@@ -223,8 +244,8 @@ href="https://github.com/libffcv/ffcv">https://github.com/libffcv/ffcv</a></li>
 href="https://developer.nvidia.com/dali">https://developer.nvidia.com/dali</a></li>
 </ul>
 </section>
-<section class="slide level2">
-
+<section id="demo" class="slide level2">
+<h2>DEMO</h2>
 </section>
     </div>
   </div>
