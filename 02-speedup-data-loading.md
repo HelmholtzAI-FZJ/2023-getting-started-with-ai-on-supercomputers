@@ -40,12 +40,18 @@ date: March 01, 2023
 
 --- 
 
+
+
 ## Strategies
 
 - We have CPUs and lots of memory - let's use them
-- Use big files made for parallel computing - HDF5, Zarr, mmap()
+    - `/dev/shm` is a filesystem on ram - ultra fast ⚡️
+- Use big files made for parallel computing
+    - HDF5, Zarr, mmap()
 - Use specialized data loading libraries
-- Compression - data throughput can be slower than time to decompression (must be checked case by case)
+    - FFCV, DALI
+- Compression
+    - data transfer can be slower than decompression (must be checked case by case)
 
 ---
 
@@ -54,5 +60,6 @@ date: March 01, 2023
 - FFCV [https://github.com/libffcv/ffcv](https://github.com/libffcv/ffcv)
 - Nvidia's DALI [https://developer.nvidia.com/dali](https://developer.nvidia.com/dali)
 
-
 ---
+
+## DEMO
