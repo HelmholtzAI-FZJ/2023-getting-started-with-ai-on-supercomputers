@@ -1,36 +1,55 @@
-import argparse
 import os
+import argparse
+import time
 import datetime
-import time 
-
-from tqdm import tqdm
 
 import torch
-import torch.nn as nn
-
-from torch.utils.data import DataLoader, distributed
+from torch import nn
+import torch.utils.data
+from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
 from torchvision import datasets, transforms
 
-import horovod.torch as hvd
+from resnet import resnet50 
+import utils
 
-from resnet import generate_model
-    
-def metric_average(val, name):
-    tensor = torch.tensor(val)
-    avg_tensor = hvd.allreduce(tensor, name=name)
-    return avg_tensor.item()
-    
-def main(args):
-        
-    hvd.init()
+def train_one_epoch(model, criterion, optimizer, data_loader, sampler, device, epoch):
+    model.train()
+    total_loss = 0.0
 
-    if torch.cuda.is_available():
-        torch.cuda.set_device(hvd.local_rank())
-    
-    # load data
+    for image, target in data_loader:
+        image, target = image.to(device), target.to(device)
+        output = model(image)
+        loss = criterion(output, target)
+        total_loss += loss
+        optimizer.zero_grad()
 
+        loss.backward()
+        optimizer.step()
+
+    total_loss /= len(sampler)
+    torch.distributed.all_reduce(total_loss)
+
+    if utils.is_main_process():
+        print("Epoch {}: avg_loss {}".format(epoch, total_loss))
+
+    return total_loss
+     
+
+def evaluate(model, criterion, data_loader, device):
+    model.eval()
+
+    with torch.no_grad():
+        for image, target in data_loader:
+            image = image.to(device, non_blocking=True)
+            target = target.to(device, non_blocking=True)
+            output = model(image)
+            loss = criterion(output, target)
+
+# Data loading code
+def load_data(args):
+    
     data_transforms = {
         'train': transforms.Compose([
             transforms.RandomRotation(20),
@@ -51,115 +70,76 @@ def main(args):
     image_datasets = {x: datasets.ImageFolder(os.path.join(args.data_dir, x), data_transforms[x]) 
                     for x in ['train', 'val','test']}
 
-    datasets_sampler = {x: distributed.DistributedSampler(image_datasets[x], num_replicas=hvd.size(), rank=hvd.rank())
+    datasets_sampler = {x: torch.utils.data.distributed.DistributedSampler(image_datasets[x])
                     for x in ['train', 'val','test']}
 
-    dataloaders = {x: DataLoader(image_datasets[x], batch_size=args.batch_size, num_workers=args.num_workers, sampler=datasets_sampler[x])
+    dataloaders = {x: DataLoader(image_datasets[x], batch_size=args.batch_size, sampler=datasets_sampler[x], num_workers=args.workers, pin_memory=True)
                     for x in ['train', 'val', 'test']}
 
-    model = generate_model(args.arch)
-    model = model.cuda()
-
-    loss_fn = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
-
-    optimizer = hvd.DistributedOptimizer(optimizer, named_parameters=model.named_parameters())
-
-    hvd.broadcast_parameters(model.state_dict(), root_rank=0)
-    hvd.broadcast_optimizer_state(optimizer, root_rank=0)
-
-    writer = SummaryWriter(args.tb_dir)
-  
-    start = time.time()
-    train_loop(args, dataloaders["train"], dataloaders["val"], datasets_sampler["train"], datasets_sampler["val"], model, loss_fn, optimizer, writer, args.log)
-    duration = time.time() - start
-
-    print("The training took: ", duration)
-
-    test_loop(dataloaders["test"], datasets_sampler["test"], model, loss_fn)
+    return datasets_sampler["train"], dataloaders
 
 
-def train_loop(args, train_dataloader, val_loader, train_sampler, val_sampler, model, loss_fn, optimizer, log, PATH):
+def main(args):
 
-    for t in tqdm(range(args.epochs)):
-        
-        model.train()
-        total_loss, correct = 0.0, 0.0
 
-        for X, y in train_dataloader:
-            X = X.cuda()
-            y = y.cuda()
-
-            pred = model(X)
-
-            loss = loss_fn(pred, y) 
-            total_loss += loss
-            
-            optimizer.zero_grad()
-            loss.backward()
-
-            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.5)
-            
-            optimizer.step()
-            correct += (pred.argmax(1) == y).float().sum()
-
-        total_loss /= len(train_sampler)
-        correct /= len(train_sampler)
-
-        total_loss = metric_average(total_loss, 'avg_loss')
-        correct = metric_average(correct, 'avg_accuracy')
-
-        if hvd.rank() == 0:
-            print('\nEpoch {}: Train set: Average loss: {:.4f}, Accuracy: {:.2f}%\n'.format(
-                t, total_loss, 100. * correct))
-
-            torch.save(model.state_dict(), PATH+"/epoch"+str(t)+".pth")
-
-        test_loss, acc = test_loop(val_loader, val_sampler, model, loss_fn)
-
-        if hvd.rank() == 0:
-            log.add_scalar('loss/train', total_loss, t)
-            log.add_scalar('loss/valid', test_loss, t)
-            log.add_scalar('acc/train_acc', correct, t)
-            log.add_scalar('acc/val_acc', acc, t)
-        
-        
-def test_loop(dataloader, test_sampler, model, loss_fn):
-    test_loss, test_accuracy = 0.0, 0.0
     
-    model.eval()
+    utils.init_distributed_mode(args.master_port)
+    torch.distributed.init_process_group(backend='nccl')
 
-    for X, y in dataloader:
-        X = X.cuda()
-        y = y.cuda()
+    device = torch.device(args.device)
 
-        pred = model(X)
+    torch.backends.cudnn.benchmark = True
 
-        test_loss += loss_fn(pred, y)
-        test_accuracy += (pred.argmax(1) == y).float().sum()
-           
-    test_loss /= len(test_sampler)
-    test_accuracy /= len(test_sampler)
+    if utils.is_main_process():
+        writer = SummaryWriter(args.tb_dir)
+        
+    train_sampler, dataloaders = load_data(args)
 
-    test_loss = metric_average(test_loss, 'test_avg_loss')
-    test_accuracy = metric_average(test_accuracy, 'test_avg_accuracy')
+    model = resnet50()
+    model.to(device)
 
-    if hvd.rank() == 0:
-        print('Test set: Average loss: {:.4f}, Accuracy: {:.2f}%\n'.format(
-            test_loss, 100. * test_accuracy))
-            
-    return test_loss, test_accuracy
+    model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
 
+    criterion = nn.CrossEntropyLoss()
+    optimizer = torch.optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
+
+    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu])
+    model_without_ddp = model.module
+
+    start_time = time.time()
+    for epoch in range(args.epochs):
+        train_sampler.set_epoch(epoch)
+        train_loss = train_one_epoch(model, criterion, optimizer, dataloaders["train"], train_sampler, device, epoch)
+        evaluate(model, criterion, dataloaders["val"], device=device)
+  
+        writer.add_scalar('loss/train', train_loss, epoch)
+
+        if args.log:
+            checkpoint = {
+                'model': model_without_ddp.state_dict(),
+                'optimizer': optimizer.state_dict(),
+                'epoch': epoch,
+                'args': args}
+            utils.save_on_master(
+                checkpoint,
+                os.path.join(args.log, 'checkpoint.pth'))
+
+    total_time = time.time() - start_time
+    total_time_str = str(datetime.timedelta(seconds=int(total_time)))
+    print('Training time {}'.format(total_time_str))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+    parser.add_argument( '--master_port', type=int, default=12354)
+    parser.add_argument('--momentum', type=float, default=0.9)
+    parser.add_argument('--gpu', type=list, default=[0,1,2,3])
+    parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--data_dir', type=str)
     parser.add_argument('--log', type=str)
     parser.add_argument('--tb_dir', type=str)
-    parser.add_argument('--num_workers', type=int, default=0)
-    parser.add_argument('--arch', type=int, default=50)
+    parser.add_argument('--workers', type=int, default=24)
     parser.add_argument('--batch_size', type=int, default=128)
-    parser.add_argument('--epochs', type=int, default=100)
+    parser.add_argument('--epochs', type=int, default=10)
     parser.add_argument('--lr', type=float, default=1e-3)
     parser.add_argument('--weight_decay', type=int, default=1e-4)
 
@@ -167,6 +147,7 @@ if __name__ == "__main__":
 
     now = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     args.log = os.path.join(args.log, now)
+    utils.mkdir(args.log)
     args.tb_dir = os.path.join(args.log, "tensor_board")
-
+    
     main(args)
