@@ -560,8 +560,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> booster</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">HostName</span> juwels-booster.fz-juelich.de</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User</span> <span class="pp">[</span><span class="ss">MY_USERNAME</span><span class="pp">]</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">IdentityFile</span> ~/.ssh/id_ed25519-JSC</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">IdentityFile</span> ~/.ssh/id_ed25519-JSC</span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -1000,6 +999,52 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a h
 <span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> mlflow</span>
 <span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> mlflow.__version__</span>
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;2.1.1&#39;</span></span></code></pre></div>
+</section>
+<section id="backup-slide-proxy-jump" class="slide level2">
+<h2>Backup slide: Proxy Jump</h2>
+<h4 id="accessing-compute-nodes-directly">Accessing compute nodes
+directly</h4>
+<ul>
+<li>If we need to access some ports on the compute nodes</li>
+</ul>
+</section>
+<section id="proxy-jump---ssh-configuration" class="slide level2">
+<h2>Proxy Jump - SSH Configuration</h2>
+<p>Type on your machine <code>code $HOME/.ssh/config</code> and paste
+this at the end:</p>
+<pre class="ssh"><code>
+# -- Compute Nodes --
+Host *.juwels
+        User [ADD YOUR USERNAME HERE]
+        StrictHostKeyChecking no
+        IdentityFile ~/.ssh/id_ed25519-JSC
+        ProxyJump booster
+Host *.jusuf
+        User strube1
+        StrictHostKeyChecking no
+        IdentityFile ~/.ssh/id_ed25519-JSC
+        ProxyJump jusuf
+</code></pre>
+</section>
+<section id="proxy-jump-connecting-to-a-node" class="slide level2">
+<h2>Proxy Jump: Connecting to a node</h2>
+<ul>
+<li>Example: A service provides web interface on port 1234</li>
+</ul>
+<p>On the supercomputer:</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="at">--partition</span><span class="op">=</span>booster <span class="at">--gres</span><span class="op">=</span>gpu:4 <span class="at">-A</span> training2303 <span class="at">--pty</span> /bin/bash</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> hostname <span class="co"># This is running on a compute node of the supercomputer</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="ex">jwb0388.juwels</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> launch-my-service <span class="at">--port</span> 1234</span></code></pre></div>
+<p>On your machine:</p>
+<p><code>ssh -L :3334:localhost:1234 jwb0388i.juwels</code></p>
+<p>Now you can access the service on your local browser at <a
+href="http://localhost:3334">http://localhost:3334</a></p>
+</section>
+<section class="slide level2">
+
 </section>
     </div>
   </div>
