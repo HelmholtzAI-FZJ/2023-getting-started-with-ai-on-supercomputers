@@ -299,8 +299,8 @@ Host booster
         User [MY_USERNAME]
         IdentityFile ~/.ssh/id_ed25519-JSC
 
-
 ```
+
 ---
 
 ### SSH
@@ -787,3 +787,57 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> mlflow.__version__
 '2.1.1'
 ```
+
+---
+
+## Backup slide: Proxy Jump
+
+#### Accessing compute nodes directly
+
+- If we need to access some ports on the compute nodes
+
+---
+
+## Proxy Jump - SSH Configuration
+
+Type on your machine `code $HOME/.ssh/config` and paste this at the end:
+
+```ssh
+
+# -- Compute Nodes --
+Host *.juwels
+        User [ADD YOUR USERNAME HERE]
+        StrictHostKeyChecking no
+        IdentityFile ~/.ssh/id_ed25519-JSC
+        ProxyJump booster
+Host *.jusuf
+        User strube1
+        StrictHostKeyChecking no
+        IdentityFile ~/.ssh/id_ed25519-JSC
+        ProxyJump jusuf
+
+```        
+
+---
+
+## Proxy Jump: Connecting to a node
+
+- Example: A service provides web interface on port 1234
+
+On the supercomputer:
+```bash
+srun --time=00:05:00 --cpu_bind=none --nodes=1 --ntasks=1 --partition=booster --gres=gpu:4 -A training2303 --pty /bin/bash
+
+bash-4.4$ hostname # This is running on a compute node of the supercomputer
+jwb0388.juwels
+bash-4.4$ launch-my-service --port 1234
+```
+
+On your machine:
+
+`ssh -L :3334:localhost:1234 jwb0388i.juwels`
+
+Now you can access the service on your local browser at [http://localhost:3334](http://localhost:3334)
+
+
+---
