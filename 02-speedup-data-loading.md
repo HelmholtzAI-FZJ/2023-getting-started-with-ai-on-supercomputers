@@ -13,9 +13,46 @@ date: March 01, 2023
 | 09:15 - 10:30 | Speedup data loading |
 | 10:30 - 13:00 | Parallelize Training |
 
+
 ---
+
 
 ### Jülich Supercomputers
 
 ![JSC Supercomputer Stragegy](images/machines.png)
-ize training](03-parallelize-training.html)
+
+
+---
+
+
+## I/O is separate and shared
+
+#### All compute nodes of all supercomputers see the same files
+
+- Performance tradeoff between shared acessibility and speed
+
+---
+
+## Data loading
+
+![Fat GPUs need to be fed FAST](images/nomnom.jpg)
+
+
+--- 
+
+## Strategies
+
+- We have CPUs and lots of memory - let's use them
+- Use big files made for parallel computing - HDF5, Zarr, mmap()
+- Use specialized data loading libraries
+- Compression - data throughput can be slower than time to decompression (must be checked case by case)
+
+---
+
+## Libraries
+
+- FFCV [https://github.com/libffcv/ffcv](https://github.com/libffcv/ffcv)
+- Nvidia's DALI [https://developer.nvidia.com/dali](https://developer.nvidia.com/dali)
+
+
+---
