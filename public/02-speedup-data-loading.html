@@ -203,7 +203,8 @@
 <h4 id="all-compute-nodes-of-all-supercomputers-see-the-same-files">All
 compute nodes of all supercomputers see the same files</h4>
 <ul>
-<li>Performance tradeoff between shared acessibility and speed</li>
+<li class="fragment">Performance tradeoff between shared acessibility
+and speed</li>
 </ul>
 </section>
 <section id="data-loading" class="slide level2">
@@ -213,34 +214,48 @@ compute nodes of all supercomputers see the same files</h4>
 <figcaption aria-hidden="true">Fat GPUs need to be fed FAST</figcaption>
 </figure>
 </section>
+<section id="data-staging" class="slide level2">
+<h2>Data Staging</h2>
+<ul>
+<li class="fragment"><a
+href="https://apps.fz-juelich.de/jsc/hps/juwels/filesystems.html">LARGEDATA
+filesystem</a> is not accessible by compute nodes</li>
+<li class="fragment">Copy files to an accessible filesystem</li>
+<li class="fragment">Imagenet-21K copy alone takes 21+ minutes to
+$SCRATCH</li>
+</ul>
+</section>
 <section id="strategies" class="slide level2">
 <h2>Strategies</h2>
 <ul>
-<li>We have CPUs and lots of memory - let’s use them
+<li class="fragment">We have CPUs and lots of memory - let’s use them
 <ul>
-<li><code>/dev/shm</code> is a filesystem on ram - ultra fast ⚡️</li>
+<li class="fragment"><code>/dev/shm</code> is a filesystem on ram -
+ultra fast ⚡️</li>
 </ul></li>
-<li>Use big files made for parallel computing
+<li class="fragment">Use big files made for parallel computing
 <ul>
-<li>HDF5, Zarr, mmap()</li>
+<li class="fragment">HDF5, Zarr, mmap(), LMDB</li>
 </ul></li>
-<li>Use specialized data loading libraries
+<li class="fragment">Use specialized data loading libraries
 <ul>
-<li>FFCV, DALI</li>
+<li class="fragment">FFCV, DALI</li>
 </ul></li>
-<li>Compression
+<li class="fragment">Compression
 <ul>
-<li>data transfer can be slower than decompression (must be checked case
-by case)</li>
+<li class="fragment">data transfer can be slower than decompression
+(must be checked case by case)</li>
 </ul></li>
 </ul>
 </section>
 <section id="libraries" class="slide level2">
 <h2>Libraries</h2>
 <ul>
-<li>FFCV <a
-href="https://github.com/libffcv/ffcv">https://github.com/libffcv/ffcv</a></li>
-<li>Nvidia’s DALI <a
+<li class="fragment">FFCV <a
+href="https://github.com/libffcv/ffcv">https://github.com/libffcv/ffcv</a>
+and <a href="https://github.com/SerezD/ffcv_pytorch_lightning">FFCV for
+PyTorch-Lightning</a></li>
+<li class="fragment">Nvidia’s DALI <a
 href="https://developer.nvidia.com/dali">https://developer.nvidia.com/dali</a></li>
 </ul>
 </section>
