@@ -215,7 +215,10 @@ Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps
 ### Now with the remote explorer tab
 ![](images/vscode-welcome.png)
 
+
 ---
+
+
 ### Connecting to JUWELS BOOSTER
 
 #### Getting compute time
@@ -301,6 +304,8 @@ Host booster
 
 ```
 
+Copy contents to the config file
+
 ---
 
 ### SSH
@@ -361,7 +366,7 @@ $ curl ifconfig.me
 $ cat ~/.ssh/id_ed25519-JSC.pub
 ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
 ```
-- Copy this line to the clipboard (or to an empty file on VS Code: `code key.txt`)
+- Paste this line at the same `key.txt` which you just opened)
 
 ---
 
@@ -662,7 +667,7 @@ Save it as jusuf-matrix.batch
 module Stages/2023
 module load GCC OpenMPI PyTorch  # Load the correct modules on the compute node(s)
 
-srun python matrix.py            # srun is tells the supercomputer how to run it
+srun python matrix.py            # srun tells the supercomputer how to run it
 ```
 
 ---
@@ -709,6 +714,7 @@ scancel <JOBID>
 
 ```bash
 # Notice that this number is the job id. It's different for every job
+cat output.412169 
 cat error.412169 
 ```
 

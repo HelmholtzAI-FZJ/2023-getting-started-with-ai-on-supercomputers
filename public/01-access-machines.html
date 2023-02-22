@@ -490,23 +490,22 @@ Development Tools</a></li>
 <h3 id="now-with-the-remote-explorer-tab">Now with the remote explorer
 tab</h3>
 <p><img data-src="images/vscode-welcome.png" /></p>
-<table style="width:6%;">
-<colgroup>
-<col style="width: 5%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>### Connecting to JUWELS BOOSTER</td>
-</tr>
-<tr class="even">
-<td>#### Getting compute time - Go to <a
-href="https://judoor.fz-juelich.de/projects/join/training2303">https://judoor.fz-juelich.de/projects/join/training2303</a>
-- Join the course project <code>training2303</code> - Compute time
-allocation is based on compute projects. For every compute job, a
-compute project pays.</td>
-</tr>
-</tbody>
-</table>
+</section>
+<section class="slide level2">
+
+<h3 id="connecting-to-juwels-booster">Connecting to JUWELS BOOSTER</h3>
+<h4 id="getting-compute-time">Getting compute time</h4>
+<ul>
+<li class="fragment">Go to <a
+href="https://judoor.fz-juelich.de/projects/join/training2303">https://judoor.fz-juelich.de/projects/join/training2303</a></li>
+<li class="fragment">Join the course project
+<code>training2303</code></li>
+<li class="fragment">Compute time allocation is based on compute
+projects. For every compute job, a compute project pays.</li>
+</ul>
+</section>
+<section class="slide level2">
+
 <h3 id="connecting-to-juwels-booster-and-jusuf">Connecting to JUWELS
 BOOSTER and JUSUF</h3>
 <h4 id="ssh">SSH</h4>
@@ -575,6 +574,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">HostName</span> juwels-booster.fz-juelich.de</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User</span> <span class="pp">[</span><span class="ss">MY_USERNAME</span><span class="pp">]</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">IdentityFile</span> ~/.ssh/id_ed25519-JSC</span></code></pre></div>
+<p>Copy contents to the config file</p>
 </section>
 <section class="slide level2">
 
@@ -642,8 +642,8 @@ href="https://www.whatismyip.com">https://www.whatismyip.com</a></li>
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat ~/.ssh/id_ed25519-JSC.pub</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-ed25519</span> AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de</span></code></pre></div>
 <ul>
-<li class="fragment">Copy this line to the clipboard (or to an empty
-file on VS Code: <code>code key.txt</code>)</li>
+<li class="fragment">Paste this line at the same <code>key.txt</code>
+which you just opened)</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -906,7 +906,7 @@ class="sourceCode numberSource bash number-lines"><code class="sourceCode bash">
 <span id="cb18-12"><a href="#cb18-12"></a><span class="ex">module</span> Stages/2023</span>
 <span id="cb18-13"><a href="#cb18-13"></a><span class="ex">module</span> load GCC OpenMPI PyTorch  <span class="co"># Load the correct modules on the compute node(s)</span></span>
 <span id="cb18-14"><a href="#cb18-14"></a></span>
-<span id="cb18-15"><a href="#cb18-15"></a><span class="ex">srun</span> python matrix.py            <span class="co"># srun is tells the supercomputer how to run it</span></span></code></pre></div>
+<span id="cb18-15"><a href="#cb18-15"></a><span class="ex">srun</span> python matrix.py            <span class="co"># srun tells the supercomputer how to run it</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -947,7 +947,8 @@ now you should have output and error log files on your directory. Check
 them!</h4>
 <div class="sourceCode" id="cb22"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Notice that this number is the job id. It&#39;s different for every job</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> error.412169 </span></code></pre></div>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> output.412169 </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> error.412169 </span></code></pre></div>
 <p>Or simply open it on VSCode!</p>
 </section>
 <section id="jupyter" class="slide level2">
