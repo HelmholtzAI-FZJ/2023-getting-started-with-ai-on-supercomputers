@@ -164,8 +164,9 @@
   <p class="date">March 01, 2023</p>
 </section>
 
-<section id="schedule-for-day-2" class="slide level3">
-<h3>Schedule for day 2</h3>
+<section class="slide level2">
+
+<h3 id="schedule-for-day-2">Schedule for day 2</h3>
 <table>
 <thead>
 <tr class="header">
@@ -189,11 +190,41 @@
 </tbody>
 </table>
 </section>
-<section id="jülich-supercomputers" class="slide level3">
-<h3>Jülich Supercomputers</h3>
-<p><img data-src="images/machines.png"
-alt="JSC Supercomputer Stragegy" /> ize
-training](03-parallelize-training.html)</p>
+<section class="slide level2">
+
+<h3 id="jülich-supercomputers">Jülich Supercomputers</h3>
+<figure>
+<img data-src="images/machines.png" alt="JSC Supercomputer Stragegy" />
+<figcaption aria-hidden="true">JSC Supercomputer Stragegy</figcaption>
+</figure>
+</section>
+<section id="io-is-separate-and-shared" class="slide level2">
+<h2>I/O is separate and shared</h2>
+<h4 id="all-compute-nodes-of-all-supercomputers-see-the-same-files">All
+compute nodes of all supercomputers see the same files</h4>
+<ul>
+<li>Performance tradeoff between shared acessibility and speed</li>
+</ul>
+</section>
+<section id="data-loading" class="slide level2">
+<h2>Data loading</h2>
+<figure>
+<img data-src="images/nomnom.jpg" alt="Fat GPUs need to be fed FAST" />
+<figcaption aria-hidden="true">Fat GPUs need to be fed FAST</figcaption>
+</figure>
+<p>— Strategies</p>
+</section>
+<section id="libraries" class="slide level2">
+<h2>Libraries</h2>
+<ul>
+<li>FFCV <a
+href="https://github.com/libffcv/ffcv">https://github.com/libffcv/ffcv</a></li>
+<li>Nvidia’s DALI <a
+href="https://developer.nvidia.com/dali">https://developer.nvidia.com/dali</a></li>
+</ul>
+</section>
+<section class="slide level2">
+
 </section>
     </div>
   </div>
