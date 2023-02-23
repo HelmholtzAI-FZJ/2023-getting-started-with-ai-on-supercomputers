@@ -80,7 +80,6 @@ def load_h5data(args):
     image_datasets = {x: data_loader.ImagenetH5(args.h5_file, x, dataset_transforms[x]) 
                     for x in ['train', 'val']}
 
-
     return image_datasets
 
 def load_data(args):
