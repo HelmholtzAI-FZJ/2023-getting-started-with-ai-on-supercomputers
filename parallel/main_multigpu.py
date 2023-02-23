@@ -12,6 +12,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torchvision import datasets, transforms
 
 from resnet import resnet50 
+import data_loader
 import utils
 
 def train_one_epoch(model, criterion, optimizer, data_loader, sampler, device, epoch):
@@ -28,6 +29,8 @@ def train_one_epoch(model, criterion, optimizer, data_loader, sampler, device, e
         loss.backward()
         optimizer.step()
 
+    # Total loss is devided by the number of 
+    print(len(sampler))
     total_loss /= len(sampler)
     torch.distributed.all_reduce(total_loss)
 
@@ -47,41 +50,54 @@ def evaluate(model, criterion, data_loader, device):
             output = model(image)
             loss = criterion(output, target)
 
+def transformation():
+    _IMAGE_MEAN_VALUE = [0.485, 0.456, 0.406]
+    _IMAGE_STD_VALUE = [0.229, 0.224, 0.225]
+
+    return dict(
+        train=transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Resize((256, 256)),
+            transforms.RandomCrop(224),
+            transforms.RandomHorizontalFlip(),
+            
+            transforms.Normalize(_IMAGE_MEAN_VALUE, _IMAGE_STD_VALUE)
+        ]),
+        val=transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Resize((224, 224)),
+
+            transforms.Normalize(_IMAGE_MEAN_VALUE, _IMAGE_STD_VALUE)
+        ]),
+        test=transforms.Compose([        
+            transforms.ToTensor(),
+            transforms.Resize((224, 224)),
+            transforms.Normalize(_IMAGE_MEAN_VALUE, _IMAGE_STD_VALUE)
+        ]))
+
+
 # Data loading code
+def load_h5data(args):
+
+    dataset_transforms = transformation()
+
+    image_datasets = {x: data_loader.ImagenetH5(args.h5_file, x, dataset_transforms[x]) 
+                    for x in ['train', 'val']}
+
+
+    return image_datasets
+
 def load_data(args):
-    
-    data_transforms = {
-        'train': transforms.Compose([
-            transforms.RandomRotation(20),
-            transforms.RandomHorizontalFlip(0.5),
-            transforms.ToTensor(),
-            transforms.Normalize([0.4802, 0.4481, 0.3975], [0.2302, 0.2265, 0.2262]),
-        ]),
-        'val': transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize([0.4802, 0.4481, 0.3975], [0.2302, 0.2265, 0.2262]),
-        ]),
-        'test': transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize([0.4802, 0.4481, 0.3975], [0.2302, 0.2265, 0.2262]),
-        ])
-    }
+    dataset_transforms = transformation()
 
-    image_datasets = {x: datasets.ImageFolder(os.path.join(args.data_dir, x), data_transforms[x]) 
-                    for x in ['train', 'val','test']}
+    image_datasets = {x: data_loader.Imagenet(args.imagenet_root+x, "imagenet_"+x+".pkl", "imagenet_labels.pkl", x, dataset_transforms["train"]) 
+                    for x in ['train', 'val']}
 
-    datasets_sampler = {x: torch.utils.data.distributed.DistributedSampler(image_datasets[x])
-                    for x in ['train', 'val','test']}
 
-    dataloaders = {x: DataLoader(image_datasets[x], batch_size=args.batch_size, sampler=datasets_sampler[x], num_workers=args.workers, pin_memory=True)
-                    for x in ['train', 'val', 'test']}
-
-    return datasets_sampler["train"], dataloaders
+    return image_datasets
 
 
 def main(args):
-
-
     
     utils.init_distributed_mode(args.master_port)
     torch.distributed.init_process_group(backend='nccl')
@@ -93,7 +109,14 @@ def main(args):
     if utils.is_main_process():
         writer = SummaryWriter(args.tb_dir)
         
-    train_sampler, dataloaders = load_data(args)
+    image_datasets = load_data(args)
+
+    # sampler is used to specify the sequence of indices/keys used in data loading
+    datasets_sampler = {x: torch.utils.data.distributed.DistributedSampler(image_datasets[x])
+                    for x in ['train', 'val']}
+
+    dataloaders = {x: DataLoader(image_datasets[x], batch_size=args.batch_size, sampler=datasets_sampler[x], num_workers=args.workers, pin_memory=True)
+                    for x in ['train', 'val']}
 
     model = resnet50()
     model.to(device)
@@ -108,11 +131,12 @@ def main(args):
 
     start_time = time.time()
     for epoch in range(args.epochs):
-        train_sampler.set_epoch(epoch)
-        train_loss = train_one_epoch(model, criterion, optimizer, dataloaders["train"], train_sampler, device, epoch)
+        datasets_sampler["train"].set_epoch(epoch)
+        train_loss = train_one_epoch(model, criterion, optimizer, dataloaders["train"], datasets_sampler["train"], device, epoch)
         evaluate(model, criterion, dataloaders["val"], device=device)
-  
-        writer.add_scalar('loss/train', train_loss, epoch)
+        
+        if utils.is_main_process():
+            writer.add_scalar('loss/train', train_loss, epoch)
 
         if args.log:
             checkpoint = {
@@ -135,6 +159,8 @@ if __name__ == "__main__":
     parser.add_argument('--gpu', type=list, default=[0,1,2,3])
     parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--data_dir', type=str)
+    parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/imagenet.h5")
+    parser.add_argument('--imagenet_root', type=str, default="/p/scratch/training2303/data/ILSVRC/Data/CLS-LOC/")
     parser.add_argument('--log', type=str)
     parser.add_argument('--tb_dir', type=str)
     parser.add_argument('--workers', type=int, default=24)

@@ -12,6 +12,7 @@ from torch.utils.tensorboard import SummaryWriter
 from torchvision import datasets, transforms
 
 from resnet import resnet50 
+import data_loader
 import utils
 
 def train_one_epoch(model, criterion, optimizer, data_loader, device, epoch):
@@ -28,6 +29,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, device, epoch):
         loss.backward()
         optimizer.step()
 
+    print(len(data_loader))
     total_loss /= len(data_loader)
     print("Epoch {}: avg_loss {}".format(epoch, total_loss))
     return total_loss
@@ -36,6 +38,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, device, epoch):
 def evaluate(model, criterion, data_loader, device):
     model.eval()
 
+    # desable gradient calculation
     with torch.no_grad():
         for image, target in data_loader:
             image = image.to(device, non_blocking=True)
@@ -43,45 +46,65 @@ def evaluate(model, criterion, data_loader, device):
             output = model(image)
             loss = criterion(output, target)
 
-# Data loading code
+def transformation():
+    _IMAGE_MEAN_VALUE = [0.485, 0.456, 0.406]
+    _IMAGE_STD_VALUE = [0.229, 0.224, 0.225]
+
+    return dict(
+        train=transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Resize((256, 256)),
+            transforms.RandomCrop(224),
+            transforms.RandomHorizontalFlip(),
+            
+            transforms.Normalize(_IMAGE_MEAN_VALUE, _IMAGE_STD_VALUE)
+        ]),
+        val=transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Resize((224, 224)),
+
+            transforms.Normalize(_IMAGE_MEAN_VALUE, _IMAGE_STD_VALUE)
+        ]),
+        test=transforms.Compose([        
+            transforms.ToTensor(),
+            transforms.Resize((224, 224)),
+            transforms.Normalize(_IMAGE_MEAN_VALUE, _IMAGE_STD_VALUE)
+        ]))
+
+
+
+def load_h5data(args):
+
+    dataset_transforms = transformation()
+
+    image_datasets = {x: data_loader.ImagenetH5(args.h5_file, x, dataset_transforms[x]) 
+                    for x in ['train', 'val']}
+
+
+    return image_datasets
+
 def load_data(args):
-    
-    print("Loading training data")
-    data_transforms = {
-        'train': transforms.Compose([
-            transforms.RandomRotation(20),
-            transforms.RandomHorizontalFlip(0.5),
-            transforms.ToTensor(),
-            transforms.Normalize([0.4802, 0.4481, 0.3975], [0.2302, 0.2265, 0.2262]),
-        ]),
-        'val': transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize([0.4802, 0.4481, 0.3975], [0.2302, 0.2265, 0.2262]),
-        ]),
-        'test': transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Normalize([0.4802, 0.4481, 0.3975], [0.2302, 0.2265, 0.2262]),
-        ])
-    }
+    dataset_transforms = transformation()
 
-    image_datasets = {x: datasets.ImageFolder(os.path.join(args.data_dir, x), data_transforms[x]) 
-                    for x in ['train', 'val','test']}
+    image_datasets = {x: data_loader.Imagenet(args.imagenet_root+x, "imagenet_"+x+".pkl", "imagenet_labels.pkl", x, dataset_transforms["train"]) 
+                    for x in ['train', 'val']}
 
 
-    dataloaders = {x: DataLoader(image_datasets[x], batch_size=args.batch_size, shuffle=True, num_workers=args.workers, pin_memory=True)
-                    for x in ['train', 'val', 'test']}
-
-    return dataloaders
+    return image_datasets
 
 
 def main(args):
 
+    # create a file to log the loss values per epoch 
     writer = SummaryWriter(args.tb_dir)
+    # return an object representing the device on which tensors will be allocated.
     device = torch.device(args.device)
 
-    dataloaders = load_data(args)
+    image_datasets = load_data(args)
 
-    print("Creating model")
+    dataloaders = {x: DataLoader(image_datasets[x], batch_size=args.batch_size, shuffle=True, num_workers=args.workers, pin_memory=True)
+                    for x in ['train', 'val']}
+
     model = resnet50(True)
     model.to(device)
 
@@ -90,12 +113,13 @@ def main(args):
 
     print("Start training")
     start_time = time.time()
+
     for epoch in range(args.epochs):
         train_loss = train_one_epoch(model, criterion, optimizer, dataloaders["train"], device, epoch)
         evaluate(model, criterion, dataloaders["val"], device=device)
-
+        # Add scalar data to summary
         writer.add_scalar('loss/train', train_loss, epoch)
-
+        # save model's weights
         if args.log:
             checkpoint = {
                 'model': model.state_dict(),
@@ -108,6 +132,7 @@ def main(args):
 
     total_time = time.time() - start_time
     total_time_str = str(datetime.timedelta(seconds=int(total_time)))
+
     print('Training time {}'.format(total_time_str))
 
 if __name__ == "__main__":
@@ -125,7 +150,7 @@ if __name__ == "__main__":
     parser.add_argument('--weight_decay', type=int, default=1e-4)
 
     args = parser.parse_args()
-
+    # Create log and tensorboard folder
     now = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     args.log = os.path.join(args.log, now)
     utils.mkdir(args.log)
