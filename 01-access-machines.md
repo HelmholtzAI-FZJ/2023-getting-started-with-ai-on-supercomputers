@@ -2,12 +2,13 @@
 author: Alexandre Strube // Sabrina Benassou
 title: Getting Started with AI on Supercomputers 
 # subtitle: A primer in supercomputers`
-date: February 29, 2023
+date: February 28, 2023
 ---
 ## Communication:
 
 - [Zoom](https://fz-juelich-de.zoom.us/j/98120874933?pwd=NXJJNXo1Nkx4OGNVNEhkWXBNTWlZUT09)
 - [Slack](https://introscfeb2023.slack.com)
+- [This document: http://go.fzj.de/intro-sc-ai-2023](http://go.fzj.de/intro-sc-ai-2023)
 
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
 
@@ -67,7 +68,8 @@ date: February 29, 2023
 
 -  Login Nodes: Normal machines, for compilation, data transfer,  scripting, etc. No GPUs.
 - Compute Nodes: Guess what :-)
-- Network file system
+- High-speed, ultra-low-latency network
+- Shared networked file systems
 - Scratch file system accessible from compute nodes
 - Key stats:
     - Number of Nodes
@@ -78,7 +80,7 @@ date: February 29, 2023
 
 ---
 
-### JUWELS Booster
+### JUWELS Booster Compute Nodes
 
 - 936 Nodes
 - AMD EPYC Rome 7402 CPU 2.7 GHz (2 × 24 cores x 2 SMT threads = 96 virtual cores/node)
@@ -201,30 +203,15 @@ Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps
 
 ---
 
-## VSCode
-
-- [Download VScode: code.visualstudio.com](https://code.visualstudio.com/download)
-- Install it
-- Install [Remote Development Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-- On the local terminal, type `code`
-
----
-
-## VSCode
-
-### Now with the remote explorer tab
-![](images/vscode-welcome.png)
-
-
----
-
-
 ### Connecting to JUWELS BOOSTER
 
 #### Getting compute time
 - Go to [https://judoor.fz-juelich.de/projects/join/training2303](https://judoor.fz-juelich.de/projects/join/training2303)
 - Join the course project `training2303`
+- Sign the Usage Agreements ([Video](https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view))
 - Compute time allocation is based on compute projects. For every compute job, a compute project pays.
+- Time is measured in core-hours. One hour of Juwels BOOSTER is 48 core-hours. One hour of Jusuf is 128 core-h.
+- Example: Job runs for 8 hours on 64 nodes of Juwels BOOSTER: 8 * 64 * 48 = 24576 core-h!
 
 ---
 
@@ -233,21 +220,20 @@ Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps
 #### SSH
 - SSH is a secure shell (terminal) connection to another computer
 - You connect from your computer to the LOGIN NODE
+- Security is given by public/private keys
+- A connection to the supercomputer needs a 
+    1. Key,
+    2. Configuration
+    3. Key/IP address known to the supercomputer
 
 ---
-
-### SSH
-
-- Security is given by public/private keys
-- You connect from your computer to the LOGIN NODE
-
---- 
 
 ### SSH
 
 #### Create key
 
 ```bash
+mkdir ~/.ssh/
 ssh-keygen -a 100 -t ed25519 -f ~/.ssh/id_ed25519-JSC
 ```
 
@@ -273,6 +259,23 @@ The keys randomart image is:
 |            .    |
 +----[SHA256]-----+
 ```
+
+---
+
+## VSCode
+
+- [Download VScode: code.visualstudio.com](https://code.visualstudio.com/download)
+- Install it
+- Install [Remote Development Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+- Install [Remote: SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
+- On the local terminal, type `code`
+
+---
+
+## VSCode
+
+### Now with the remote explorer tab
+![](images/vscode-welcome.png)
 
 
 ---
@@ -304,7 +307,7 @@ Host booster
 
 ```
 
-Copy contents to the config file
+Copy contents to the config file and save it.
 
 ---
 
@@ -330,7 +333,7 @@ $ curl ifconfig.me
 
 (Ignore the `%` sign)
 
-- Let's keep this inside vscode: `code key.txt`
+- Let's keep this inside vscode: `code key.txt` and paste the number you got
 
 ---
 
@@ -348,25 +351,28 @@ $ curl ifconfig.me
 
 ![](images/whatismyip.png)
 
+- Let's keep this inside vscode: `code key.txt` and paste the number you got
+
 ---
 
 ### SSH - Example: `93.199.55.160`
 
-- Let's make it simpler: `93.199.0.0/16`
-
-(because the last numbers change)
+- Go to VSCode and make it simpler, replace the 2nd half with `0.0/16`: `93.199.0.0/16`
+- (because the last numbers change)
+- Add a `from=""` around it
+- So, it looks like this, now: `from="93.199.0.0/16"`
 
 ---
 
 ### SSH - Example: `93.199.0.0/16`
 
 #### Copy your ssh key
-- Terminal: 
-```bash
+- Terminal: `cat ~/.ssh/id_ed25519-JSC.pub`
+- ```bash
 $ cat ~/.ssh/id_ed25519-JSC.pub
 ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
 ```
-- Paste this line at the same `key.txt` which you just opened)
+- Paste this line at the same `key.txt` which you just opened
 
 ---
 
@@ -375,8 +381,7 @@ ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F
 #### Example: `93.199.0.0/16`
 
 - Put them together and copy again:
-
-```bash
+- ```bash
 from="93.199.0.0/16" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
 ```
 
@@ -386,7 +391,8 @@ from="93.199.0.0/16" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0
 
 ![](images/manage-ssh-keys.png)
 
-Do it for JUWELS, JUSUF and JUDAC with the same key
+- Let's add it on [Judoor](https://judoor.fz-juelich.de)
+- Do it for JUWELS, JUSUF and JUDAC with the same key
 
 ---
 
@@ -425,15 +431,15 @@ strube1@jusuf ~ $
 
 ```bash
 # Create a shortcut for the project on the home folder
-ln -s $PROJECT_training2303 ./course
+ln -s $PROJECT_training2303 ~/course
 mkdir course/$USER
 
 # We well need those later
-ln -s .config ./course/$USER/
-ln -s .cache ./course/$USER/
+ln -s .config ~/course/$USER/
+ln -s .cache ~/course/$USER/
 
 # Enter course folder and create a folder for myself
-cd course/$USER
+cd ~/course/$USER
 
 # Where am I?
 pwd
@@ -443,7 +449,9 @@ pwd
 
 ## Working with the supercomputer's software
 
-We have literally thousands of software packages, hand-compiled for the specifics of the supercomputer.
+- We have literally thousands of software packages, hand-compiled for the specifics of the supercomputer.
+- [Full list](https://www.fz-juelich.de/en/ias/jsc/services/user-support/using-systems/software)
+- [Detailed documentation](https://apps.fz-juelich.de/jsc/hps/juwels/software-modules.html)
 
 ---
 
@@ -472,19 +480,22 @@ strube1$ module spider PyTorch
 
 ---
 
+## What do we have?
+
+`module avail` (Inside hierarchy)
+
+---
+
 ## Module hierarchy
 
+- Stage (full collection of software of a given year)
 - Compiler
 - MPI
 - Module
 
-Eg: `module load GCC OpenMPI PyTorch`
+- Eg: `module load Stages/2023 GCC OpenMPI PyTorch`
 
 ---
-
-## What do we have?
-
-`module avail` (Inside hierarchy)
 
 #### What do I need to load such software?
 
@@ -509,6 +520,8 @@ Search with the version - it will suggest the hierarchy
 ---
 
 ## Example: PyTorch
+
+(make sure you are still connected to JUSUF)
 
 ```bash
 $ python
@@ -547,7 +560,7 @@ $ python -c "import torch ; print(torch.__version__)"
 
 ## Python Modules
 
-#### Some of the python softwares are part of Python itself, or of other softwares. Use `module key`
+#### Some of the python softwares are part of Python itself, or of other softwares. Use "`module key`"
 
 ```bash
 module key toml
@@ -581,12 +594,17 @@ The following modules match your search criteria: "toml"
 
 ---
 
+## VSCode
+
+- You can have a terminal inside VSCode: Go to the menu View->Terminal
+
+--- 
 
 ## VSCode
 
 - From the ssh connection, navigate to your "course" folder and to the name you created earlier.
 
-```bash
+- ```bash
 cd $HOME/course/$USER
 pwd
 ```
@@ -596,7 +614,13 @@ pwd
 ---
 
 ### Demo code
-#### Create a new file "`matrix.py`" on VSCode on Jusuf  
+#### Create a new file "`matrix.py`" on VSCode on Jusuf
+
+```bash
+code matrix.py
+```
+
+Paste this into the file:
 
 ``` {.python .number-lines}
 import torch
@@ -650,7 +674,7 @@ Simple Linux Utility for Resource Management
 
 ### Slurm submission file example
 
-Save it as jusuf-matrix.batch
+`code jusuf-matrix.sbatch`
 
 ``` {.bash .number-lines}
 #!/bin/bash -x
@@ -659,7 +683,7 @@ Save it as jusuf-matrix.batch
 #SBATCH --job-name=matrix-multiplication
 #SBATCH --ntasks-per-node=1              # How many mpi processes/node
 #SBATCH --cpus-per-task=1                # How many cpus per mpi proc
-#SBATCH --output=output.%        # Where to write results
+#SBATCH --output=output.%j        # Where to write results
 #SBATCH --error=error.%j
 #SBATCH --time=00:01:00          # For how long can it run?
 #SBATCH --partition=gpus         # Machine partition
@@ -675,7 +699,7 @@ srun python matrix.py            # srun tells the supercomputer how to run it
 ### Submitting a job: SBATCH
 
 ```bash
-sbatch jusuf-matrix.batch
+sbatch jusuf-matrix.sbatch
 
 Submitted batch job 412169
 ```
@@ -683,6 +707,8 @@ Submitted batch job 412169
 ---
 
 ### Are we there yet? 🐴
+
+`squeue --me`
 
 ```bash
 squeue --me
@@ -694,8 +720,8 @@ squeue --me
 #### ST is status:
 
 - PD (pending), 
-- R (running),   
 - CF(configuring), 
+- R (running),   
 - CG (completing)
 
 ---
@@ -729,7 +755,7 @@ Or simply open it on VSCode!
 - Jupyter-JSC calls slurm, just the same as your job
 - When you are working on it, you are using compute node time
 
-*Yes, if you are just thinking and looking at the 📺, you are burning project time*
+- *Yes, if you are just thinking and looking at the 📺, you are burning project time*🤦‍♂️
 
 - It's useful for small tests - not for full-fledged development
 
@@ -744,7 +770,7 @@ Or simply open it on VSCode!
 
 ---
 
-## Kernel and modules:
+## Extra software, modules and kernels
 
 #### You want that extra software from `pip`....
 
@@ -773,6 +799,8 @@ Link: [MLflow quickstart](https://mlflow.org/docs/latest/quickstart.html)
 
 ## Example: MLflow
 
+Activate the environment where MLFlow is with `source ./activate.sh`
+
 ```python
 source ./activate.sh 
 The activation script must be sourced, otherwise the virtual environment will not work.
@@ -793,6 +821,15 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> mlflow.__version__
 '2.1.1'
 ```
+
+---
+
+## Example: MLFlow
+
+`mlflow ui`
+
+Opens a connection on port 5000... *OF THE SUPERCOMPUTER*.
+We need to do something else: SSH PORT FORWARDING
 
 ---
 
@@ -836,12 +873,12 @@ srun --time=00:05:00 --cpu_bind=none --nodes=1 --ntasks=1 --partition=booster --
 
 bash-4.4$ hostname # This is running on a compute node of the supercomputer
 jwb0388.juwels
-bash-4.4$ launch-my-service --port 1234
+bash-4.4$ launch-my-service --port 5000
 ```
 
 On your machine:
 
-`ssh -L :3334:localhost:1234 jwb0388i.juwels`
+`ssh -L :3334:localhost:5000 jwb0388i.juwels`
 
 Now you can access the service on your local browser at [http://localhost:3334](http://localhost:3334)
 
