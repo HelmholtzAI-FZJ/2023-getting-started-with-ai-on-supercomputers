@@ -1,10 +1,8 @@
 import os
-import pickle
 import h5py 
 import json
 from PIL import Image
 
-import pandas as pd
 from torch.utils.data import Dataset
 
 class ImagenetH5(Dataset):
@@ -26,12 +24,11 @@ class ImagenetH5(Dataset):
 
         idx = self.imgs[self.img_ids[index]]
         img = idx["image"][:]
-        label = idx["label"][()]
 
         if self._transform:
             img = self._transform(img)
     
-        return img, label
+        return img, idx["label"][()]
 
 
 class ImageNetKaggle(Dataset):
