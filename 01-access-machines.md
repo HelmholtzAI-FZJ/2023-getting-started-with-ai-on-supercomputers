@@ -826,12 +826,35 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 ## Example: MLFlow
 
+![](images/supercomputer-firewall.svg)
+
+---
+
+## Example: MLFlow
+
 `mlflow ui`
 
 Opens a connection on port 5000... *OF THE SUPERCOMPUTER*.
 We need to do something else: SSH PORT FORWARDING
 
 ---
+
+## Port Forwarding
+
+![](images/port-forwarding.svg)
+
+`ssh -L :1234:localhost:3000 jusuf`
+
+---
+
+## Port forwarding demo:
+
+- On local computer: `ssh -L :1234:localhost:3000 jusuf`
+- On jusuf:
+- ```bash
+module load Python
+python -m http.server 3000
+```
 
 ## Backup slide: Proxy Jump
 

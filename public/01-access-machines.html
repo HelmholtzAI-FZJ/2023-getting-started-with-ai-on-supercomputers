@@ -1071,9 +1071,29 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a h
 </section>
 <section id="example-mlflow-3" class="slide level2">
 <h2>Example: MLFlow</h2>
+<p><img data-src="images/supercomputer-firewall.svg" /></p>
+</section>
+<section id="example-mlflow-4" class="slide level2">
+<h2>Example: MLFlow</h2>
 <p><code>mlflow ui</code></p>
 <p>Opens a connection on port 5000… <em>OF THE SUPERCOMPUTER</em>. We
 need to do something else: SSH PORT FORWARDING</p>
+</section>
+<section id="port-forwarding" class="slide level2">
+<h2>Port Forwarding</h2>
+<p><img data-src="images/port-forwarding.svg" /></p>
+<p><code>ssh -L :1234:localhost:3000 jusuf</code></p>
+</section>
+<section id="port-forwarding-demo" class="slide level2">
+<h2>Port forwarding demo:</h2>
+<ul>
+<li class="fragment">On local computer:
+<code>ssh -L :1234:localhost:3000 jusuf</code></li>
+<li class="fragment">On jusuf:</li>
+<li class="fragment"><div class="sourceCode" id="cb26"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load Python</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> http.server 3000</span></code></pre></div></li>
+</ul>
 </section>
 <section id="backup-slide-proxy-jump" class="slide level2">
 <h2>Backup slide: Proxy Jump</h2>
@@ -1109,12 +1129,12 @@ Host *.jusuf
 1234</li>
 </ul>
 <p>On the supercomputer:</p>
-<div class="sourceCode" id="cb27"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="at">--partition</span><span class="op">=</span>booster <span class="at">--gres</span><span class="op">=</span>gpu:4 <span class="at">-A</span> training2303 <span class="at">--pty</span> /bin/bash</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> hostname <span class="co"># This is running on a compute node of the supercomputer</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="ex">jwb0388.juwels</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> launch-my-service <span class="at">--port</span> 5000</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="at">--partition</span><span class="op">=</span>booster <span class="at">--gres</span><span class="op">=</span>gpu:4 <span class="at">-A</span> training2303 <span class="at">--pty</span> /bin/bash</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> hostname <span class="co"># This is running on a compute node of the supercomputer</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="ex">jwb0388.juwels</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> launch-my-service <span class="at">--port</span> 5000</span></code></pre></div>
 <p>On your machine:</p>
 <p><code>ssh -L :3334:localhost:5000 jwb0388i.juwels</code></p>
 <p>Now you can access the service on your local browser at <a
