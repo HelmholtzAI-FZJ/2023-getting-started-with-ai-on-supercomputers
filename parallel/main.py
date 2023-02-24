@@ -85,9 +85,8 @@ def load_h5data(args):
 def load_data(args):
     dataset_transforms = transformation()
 
-    image_datasets = {x: data_loader.Imagenet(args.imagenet_root+x, "imagenet_"+x+".pkl", "imagenet_labels.pkl", x, dataset_transforms["train"]) 
+    image_datasets = {x: data_loader.ImageNetKaggle(args.imagenet_root, x, dataset_transforms[x]) 
                     for x in ['train', 'val']}
-
 
     return image_datasets
 

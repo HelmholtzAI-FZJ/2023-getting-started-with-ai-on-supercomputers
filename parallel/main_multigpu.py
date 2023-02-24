@@ -90,9 +90,8 @@ def load_h5data(args):
 def load_data(args):
     dataset_transforms = transformation()
 
-    image_datasets = {x: data_loader.Imagenet(args.imagenet_root+x, "imagenet_"+x+".pkl", "imagenet_labels.pkl", x, dataset_transforms["train"]) 
+    image_datasets = {x: data_loader.ImageNetKaggle(args.imagenet_root, x, dataset_transforms[x]) 
                     for x in ['train', 'val']}
-
 
     return image_datasets
 
@@ -160,7 +159,7 @@ if __name__ == "__main__":
     parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--data_dir', type=str)
     parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/imagenet.h5")
-    parser.add_argument('--imagenet_root', type=str, default="/p/scratch/training2303/data/ILSVRC/Data/CLS-LOC/")
+    parser.add_argument('--imagenet_root', type=str, default="/p/scratch/training2303/data/")
     parser.add_argument('--log', type=str)
     parser.add_argument('--tb_dir', type=str)
     parser.add_argument('--workers', type=int, default=24)
