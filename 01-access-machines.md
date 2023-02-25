@@ -45,8 +45,9 @@ date: February 28, 2023
 | ------------- | -----------  |
 | 09:00 - 09:15 | Welcome      |
 | 09:15 - 10:00 | Introduction |
-| 10:00 - 11:00 | Judoor, Keys |
-| 11:00 - 12:00 | SSH, Jupyter, VS Code |
+| 10:00 - 10:30 | Judoor, Keys |
+| 10:30 - 11:00 | SSH, Jupyter, VS Code |
+| 11:00 - 12:00 | Running services on the login and compute nodes | 
 | 12:00 - 13:00 | Sync (everyone should be at the same point) |
 
 ---
@@ -361,6 +362,8 @@ $ curl ifconfig.me
 - (because the last numbers change)
 - Add a `from=""` around it
 - So, it looks like this, now: `from="93.199.0.0/16"`
+- Add a second magic number, with a comma: `,10.0.0.0/8` 🧙‍♀️
+- I promise, the magic is worth it 🧝‍♂️
 
 ---
 
@@ -382,7 +385,7 @@ ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F
 
 - Put them together and copy again:
 - ```bash
-from="93.199.0.0/16" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
+from="93.199.0.0/16,10.0.0.0/8" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
 ```
 
 ---
@@ -787,6 +790,8 @@ cd sc_venv_template
 
 Link: [MLflow quickstart](https://mlflow.org/docs/latest/quickstart.html)
 
+- I won't teach MLflow btw - it's a demo on installing and running software
+
 ---
 
 ## Example: MLflow
@@ -826,16 +831,88 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 ## Example: MLFlow
 
-![](images/supercomputer-firewall.svg)
+- Let's run it on the supercomputer!
+- Open the [MLFlow Quickstart](https://mlflow.org/docs/latest/quickstart.html)
+- Copy some example to a file mlflow-demo.py
 
 ---
 
 ## Example: MLFlow
 
-`mlflow ui`
+```python
+import os
+from random import random, randint
+from mlflow import log_metric, log_param, log_artifacts
 
-Opens a connection on port 5000... *OF THE SUPERCOMPUTER*.
-We need to do something else: SSH PORT FORWARDING
+if __name__ == "__main__":
+    # Log a parameter (key-value pair)
+    log_param("param1", randint(0, 100))
+
+    # Log a metric; metrics can be updated throughout the run
+    log_metric("foo", random())
+    log_metric("foo", random() + 1)
+    log_metric("foo", random() + 2)
+
+    # Log an artifact (output file)
+    if not os.path.exists("outputs"):
+        os.makedirs("outputs")
+    with open("outputs/test.txt", "w") as f:
+        f.write("hello world!")
+    log_artifacts("outputs")
+```
+
+---
+
+## MLFlow: Submission file
+
+### Save as mlflow-demo.sbatch
+
+``` {.bash .number-lines}
+#!/bin/bash -x
+#SBATCH --account=training2303
+#SBATCH --nodes=1
+#SBATCH --job-name=mlflow-demo
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+#SBATCH --output=output.%j
+#SBATCH --error=err.%j
+#SBATCH --time=00:10:00
+#SBATCH --partition=gpus
+
+# Make sure we are on the right directory
+cd /p/home/jusers/$USER/jusuf/course/$USER
+
+# This loads modules and python packages
+source sc_venv_template/activate.sh
+
+# Run the demo
+srun python mlflow-demo.py
+
+```
+
+---
+
+Example: MLFlow
+
+```bash
+sbatch mlflow-demo.sbatch
+squeue --me
+```
+
+---
+
+## Example: MLFlow
+
+`mlflow ui --port 3000`
+
+- Opens a connection on port 3000... *OF THE SUPERCOMPUTER*.
+- We need to do something else: SSH PORT FORWARDING
+
+---
+
+## Example: MLFlow
+
+![](images/supercomputer-firewall.svg)
 
 ---
 
@@ -852,32 +929,44 @@ We need to do something else: SSH PORT FORWARDING
 - On local computer: `ssh -L :1234:localhost:3000 jusuf`
 - On jusuf:
 - ```bash
-module load Python
-python -m http.server 3000
+cd $HOME/course/$USER/sc_venv_template
+source activate.sh
+mlflow server --port 3000
 ```
+- On the browser: [http://localhost:1234](http://localhost:1234)
 
-## Backup slide: Proxy Jump
+---
+
+## But there's more!
+
+- Remember the magic? 🧙‍♂️
+- Let's use it now to access the compute nodes directly!
+
+---
+
+## Proxy Jump
 
 #### Accessing compute nodes directly
 
 - If we need to access some ports on the compute nodes
+- ![](images/proxyjump-magic.svg)
 
 ---
 
 ## Proxy Jump - SSH Configuration
 
-Type on your machine `code $HOME/.ssh/config` and paste this at the end:
+Type on your machine "`code $HOME/.ssh/config`" and paste this at the end:
 
 ```ssh
 
 # -- Compute Nodes --
-Host *.juwels
+Host *.booster
         User [ADD YOUR USERNAME HERE]
         StrictHostKeyChecking no
         IdentityFile ~/.ssh/id_ed25519-JSC
         ProxyJump booster
 Host *.jusuf
-        User strube1
+        User [ADD YOUR USERNAME HERE]
         StrictHostKeyChecking no
         IdentityFile ~/.ssh/id_ed25519-JSC
         ProxyJump jusuf
@@ -892,18 +981,42 @@ Host *.jusuf
 
 On the supercomputer:
 ```bash
-srun --time=00:05:00 --cpu_bind=none --nodes=1 --ntasks=1 --partition=booster --gres=gpu:4 -A training2303 --pty /bin/bash
+srun --time=00:05:00 \
+     --nodes=1 --ntasks=1 \
+     --partition=gpus \
+     --account training2303 \
+     --cpu_bind=none \
+     --pty /bin/bash -i
 
 bash-4.4$ hostname # This is running on a compute node of the supercomputer
-jwb0388.juwels
-bash-4.4$ launch-my-service --port 5000
+jsfc013
+
+bash-4.4$ cd $HOME/course/$USER
+bash-4.4$ source sc_venv_template/activate.sh
+bash-4.4$ mlflow ui
 ```
+---
+
+## Proxy Jump 
 
 On your machine:
 
-`ssh -L :3334:localhost:5000 jwb0388i.juwels`
+- `ssh -L :3334:localhost:5000 jsfc013i.jusuf`
 
-Now you can access the service on your local browser at [http://localhost:3334](http://localhost:3334)
+- Mind the `i` letter I added at the end of the hostname
 
+- Now you can access the service on your local browser at [http://localhost:3334](http://localhost:3334)
 
 ---
+
+## Day 1 recap
+
+As of now, I expect you managed to: 
+
+- Stay awake for the most part of this morning 😴
+- Have your own ssh keys 🗝️🔐
+- A working ssh connection to the supercomputers 🖥️
+- Can edit and transfer files via VSCode 📝
+- Submit jobs and read results 📫
+- Access services on the login and compute nodes 🧙‍♀️
+- Is ready to make great code! 💪

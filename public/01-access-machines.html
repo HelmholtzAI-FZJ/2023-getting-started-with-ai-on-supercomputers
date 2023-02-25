@@ -289,14 +289,18 @@ data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
 <td>Introduction</td>
 </tr>
 <tr class="odd">
-<td>10:00 - 11:00</td>
+<td>10:00 - 10:30</td>
 <td>Judoor, Keys</td>
 </tr>
 <tr class="even">
-<td>11:00 - 12:00</td>
+<td>10:30 - 11:00</td>
 <td>SSH, Jupyter, VS Code</td>
 </tr>
 <tr class="odd">
+<td>11:00 - 12:00</td>
+<td>Running services on the login and compute nodes</td>
+</tr>
+<tr class="even">
 <td>12:00 - 13:00</td>
 <td>Sync (everyone should be at the same point)</td>
 </tr>
@@ -647,6 +651,9 @@ half with <code>0.0/16</code>: <code>93.199.0.0/16</code></li>
 <li class="fragment">Add a <code>from=""</code> around it</li>
 <li class="fragment">So, it looks like this, now:
 <code>from="93.199.0.0/16"</code></li>
+<li class="fragment">Add a second magic number, with a comma:
+<code>,10.0.0.0/8</code> 🧙‍♀️</li>
+<li class="fragment">I promise, the magic is worth it 🧝‍♂️</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -671,7 +678,7 @@ which you just opened</li>
 <ul>
 <li class="fragment">Put them together and copy again:</li>
 <li class="fragment"><div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">from</span><span class="op">=</span><span class="st">&quot;93.199.0.0/16&quot;</span> <span class="ex">ssh-ed25519</span> AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">from</span><span class="op">=</span><span class="st">&quot;93.199.0.0/16,10.0.0.0/8&quot;</span> <span class="ex">ssh-ed25519</span> AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de</span></code></pre></div></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -1035,6 +1042,10 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href=
 <h2>Example: MLflow</h2>
 <p>Link: <a href="https://mlflow.org/docs/latest/quickstart.html">MLflow
 quickstart</a></p>
+<ul>
+<li class="fragment">I won’t teach MLflow btw - it’s a demo on
+installing and running software</li>
+</ul>
 </section>
 <section id="example-mlflow-1" class="slide level2">
 <h2>Example: MLflow</h2>
@@ -1071,13 +1082,81 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a h
 </section>
 <section id="example-mlflow-3" class="slide level2">
 <h2>Example: MLFlow</h2>
-<p><img data-src="images/supercomputer-firewall.svg" /></p>
+<ul>
+<li class="fragment">Let’s run it on the supercomputer!</li>
+<li class="fragment">Open the <a
+href="https://mlflow.org/docs/latest/quickstart.html">MLFlow
+Quickstart</a></li>
+<li class="fragment">Copy some example to a file mlflow-demo.py</li>
+</ul>
 </section>
 <section id="example-mlflow-4" class="slide level2">
 <h2>Example: MLFlow</h2>
-<p><code>mlflow ui</code></p>
-<p>Opens a connection on port 5000… <em>OF THE SUPERCOMPUTER</em>. We
-need to do something else: SSH PORT FORWARDING</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> random <span class="im">import</span> random, randint</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlflow <span class="im">import</span> log_metric, log_param, log_artifacts</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log a parameter (key-value pair)</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    log_param(<span class="st">&quot;param1&quot;</span>, randint(<span class="dv">0</span>, <span class="dv">100</span>))</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log a metric; metrics can be updated throughout the run</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    log_metric(<span class="st">&quot;foo&quot;</span>, random())</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    log_metric(<span class="st">&quot;foo&quot;</span>, random() <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    log_metric(<span class="st">&quot;foo&quot;</span>, random() <span class="op">+</span> <span class="dv">2</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log an artifact (output file)</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> os.path.exists(<span class="st">&quot;outputs&quot;</span>):</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>        os.makedirs(<span class="st">&quot;outputs&quot;</span>)</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(<span class="st">&quot;outputs/test.txt&quot;</span>, <span class="st">&quot;w&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="st">&quot;hello world!&quot;</span>)</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>    log_artifacts(<span class="st">&quot;outputs&quot;</span>)</span></code></pre></div>
+</section>
+<section id="mlflow-submission-file" class="slide level2">
+<h2>MLFlow: Submission file</h2>
+<h3 id="save-as-mlflow-demo.sbatch">Save as mlflow-demo.sbatch</h3>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1"></a><span class="co">#!/bin/bash -x</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="co">#SBATCH --account=training2303</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="co">#SBATCH --nodes=1</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a><span class="co">#SBATCH --job-name=mlflow-demo</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a><span class="co">#SBATCH --ntasks-per-node=1</span></span>
+<span id="cb27-6"><a href="#cb27-6"></a><span class="co">#SBATCH --cpus-per-task=1</span></span>
+<span id="cb27-7"><a href="#cb27-7"></a><span class="co">#SBATCH --output=output.%j</span></span>
+<span id="cb27-8"><a href="#cb27-8"></a><span class="co">#SBATCH --error=err.%j</span></span>
+<span id="cb27-9"><a href="#cb27-9"></a><span class="co">#SBATCH --time=00:10:00</span></span>
+<span id="cb27-10"><a href="#cb27-10"></a><span class="co">#SBATCH --partition=gpus</span></span>
+<span id="cb27-11"><a href="#cb27-11"></a></span>
+<span id="cb27-12"><a href="#cb27-12"></a><span class="co"># Make sure we are on the right directory</span></span>
+<span id="cb27-13"><a href="#cb27-13"></a><span class="bu">cd</span> /p/home/jusers/<span class="va">$USER</span>/jusuf/course/<span class="va">$USER</span></span>
+<span id="cb27-14"><a href="#cb27-14"></a></span>
+<span id="cb27-15"><a href="#cb27-15"></a><span class="co"># This loads modules and python packages</span></span>
+<span id="cb27-16"><a href="#cb27-16"></a><span class="bu">source</span> sc_venv_template/activate.sh</span>
+<span id="cb27-17"><a href="#cb27-17"></a></span>
+<span id="cb27-18"><a href="#cb27-18"></a><span class="co"># Run the demo</span></span>
+<span id="cb27-19"><a href="#cb27-19"></a><span class="ex">srun</span> python mlflow-demo.py</span></code></pre></div>
+</section>
+<section class="slide level2">
+
+<p>Example: MLFlow</p>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> mlflow-demo.sbatch</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span></span></code></pre></div>
+</section>
+<section id="example-mlflow-5" class="slide level2">
+<h2>Example: MLFlow</h2>
+<p><code>mlflow ui --port 3000</code></p>
+<ul>
+<li class="fragment">Opens a connection on port 3000… <em>OF THE
+SUPERCOMPUTER</em>.</li>
+<li class="fragment">We need to do something else: SSH PORT
+FORWARDING</li>
+</ul>
+</section>
+<section id="example-mlflow-6" class="slide level2">
+<h2>Example: MLFlow</h2>
+<p><img data-src="images/supercomputer-firewall.svg" /></p>
 </section>
 <section id="port-forwarding" class="slide level2">
 <h2>Port Forwarding</h2>
@@ -1090,33 +1169,45 @@ need to do something else: SSH PORT FORWARDING</p>
 <li class="fragment">On local computer:
 <code>ssh -L :1234:localhost:3000 jusuf</code></li>
 <li class="fragment">On jusuf:</li>
-<li class="fragment"><div class="sourceCode" id="cb26"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load Python</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> http.server 3000</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb29"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span>/sc_venv_template</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> activate.sh</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="ex">mlflow</span> server <span class="at">--port</span> 3000</span></code></pre></div></li>
+<li class="fragment">On the browser: <a
+href="http://localhost:1234">http://localhost:1234</a></li>
 </ul>
 </section>
-<section id="backup-slide-proxy-jump" class="slide level2">
-<h2>Backup slide: Proxy Jump</h2>
+<section id="but-theres-more" class="slide level2">
+<h2>But there’s more!</h2>
+<ul>
+<li class="fragment">Remember the magic? 🧙‍♂️</li>
+<li class="fragment">Let’s use it now to access the compute nodes
+directly!</li>
+</ul>
+</section>
+<section id="proxy-jump" class="slide level2">
+<h2>Proxy Jump</h2>
 <h4 id="accessing-compute-nodes-directly">Accessing compute nodes
 directly</h4>
 <ul>
 <li class="fragment">If we need to access some ports on the compute
 nodes</li>
+<li class="fragment"><img data-src="images/proxyjump-magic.svg" /></li>
 </ul>
 </section>
 <section id="proxy-jump---ssh-configuration" class="slide level2">
 <h2>Proxy Jump - SSH Configuration</h2>
-<p>Type on your machine <code>code $HOME/.ssh/config</code> and paste
+<p>Type on your machine “<code>code $HOME/.ssh/config</code>” and paste
 this at the end:</p>
 <pre class="ssh"><code>
 # -- Compute Nodes --
-Host *.juwels
+Host *.booster
         User [ADD YOUR USERNAME HERE]
         StrictHostKeyChecking no
         IdentityFile ~/.ssh/id_ed25519-JSC
         ProxyJump booster
 Host *.jusuf
-        User strube1
+        User [ADD YOUR USERNAME HERE]
         StrictHostKeyChecking no
         IdentityFile ~/.ssh/id_ed25519-JSC
         ProxyJump jusuf
@@ -1129,19 +1220,49 @@ Host *.jusuf
 1234</li>
 </ul>
 <p>On the supercomputer:</p>
-<div class="sourceCode" id="cb28"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="at">--partition</span><span class="op">=</span>booster <span class="at">--gres</span><span class="op">=</span>gpu:4 <span class="at">-A</span> training2303 <span class="at">--pty</span> /bin/bash</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> hostname <span class="co"># This is running on a compute node of the supercomputer</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="ex">jwb0388.juwels</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> launch-my-service <span class="at">--port</span> 5000</span></code></pre></div>
-<p>On your machine:</p>
-<p><code>ssh -L :3334:localhost:5000 jwb0388i.juwels</code></p>
-<p>Now you can access the service on your local browser at <a
-href="http://localhost:3334">http://localhost:3334</a></p>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="dt">\</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="dt">\</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">--partition</span><span class="op">=</span>gpus <span class="dt">\</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2303 <span class="dt">\</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="dt">\</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">--pty</span> /bin/bash <span class="at">-i</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> hostname <span class="co"># This is running on a compute node of the supercomputer</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a><span class="ex">jsfc013</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> cd <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> source sc_venv_template/activate.sh</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> mlflow ui</span></code></pre></div>
 </section>
-<section class="slide level2">
-
+<section id="proxy-jump-1" class="slide level2">
+<h2>Proxy Jump</h2>
+<p>On your machine:</p>
+<ul>
+<li
+class="fragment"><p><code>ssh -L :3334:localhost:5000 jsfc013i.jusuf</code></p></li>
+<li class="fragment"><p>Mind the <code>i</code> letter I added at the
+end of the hostname</p></li>
+<li class="fragment"><p>Now you can access the service on your local
+browser at <a
+href="http://localhost:3334">http://localhost:3334</a></p></li>
+</ul>
+</section>
+<section id="day-1-recap" class="slide level2">
+<h2>Day 1 recap</h2>
+<p>As of now, I expect you managed to:</p>
+<ul>
+<li class="fragment">Stay awake for the most part of this morning
+😴</li>
+<li class="fragment">Have your own ssh keys 🗝️🔐</li>
+<li class="fragment">A working ssh connection to the supercomputers
+🖥️</li>
+<li class="fragment">Can edit and transfer files via VSCode 📝</li>
+<li class="fragment">Submit jobs and read results 📫</li>
+<li class="fragment">Access services on the login and compute nodes
+🧙‍♀️</li>
+<li class="fragment">Is ready to make great code! 💪</li>
+</ul>
 </section>
     </div>
   </div>
