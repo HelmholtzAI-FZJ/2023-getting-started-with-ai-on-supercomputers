@@ -7,15 +7,16 @@ EXPORTED_DOCS=\
 
 RM=/bin/rm
 
-PANDOC=/usr/local/bin/pandoc
+PANDOC=pandoc
 
 PANDOC_OPTIONS=-t revealjs -s \
 	-V revealjs-url=. \
 	--include-in-header=slides.css \
 	-V hlss=zenburn \
 	-V theme=sky \
-	-V transition=fade # \
-#	--embed-resources  \ # This make a single file, good for distribution
+	-V transition=fade  \
+	-i 
+# --embed-resources   # This make a single file, good for distribution
 #	-A footer.html # The footer is just too big
 
 public/%.html : %.md *.css
