@@ -12,4 +12,4 @@
 
 source sc_venv_template/activate.sh
 
-srun python -u main.py --data_dir "tiny-imagenet-200/" --log "/p/home/jusers/benassou1/juwels/benassou1/2023-getting-started-with-ai-on-supercomputers/parallel/logs/" 
+srun python -u to_h5.py

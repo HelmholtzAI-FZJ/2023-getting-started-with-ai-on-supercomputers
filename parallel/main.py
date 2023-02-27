@@ -29,9 +29,10 @@ def train_one_epoch(model, criterion, optimizer, data_loader, device, epoch):
         loss.backward()
         optimizer.step()
 
-    print(len(data_loader))
+
     total_loss /= len(data_loader)
     print("Epoch {}: avg_loss {}".format(epoch, total_loss))
+    
     return total_loss
      
 
@@ -95,6 +96,7 @@ def main(args):
 
     # create a file to log the loss values per epoch 
     writer = SummaryWriter(args.tb_dir)
+    
     # return an object representing the device on which tensors will be allocated.
     device = torch.device(args.device)
 
@@ -115,8 +117,10 @@ def main(args):
     for epoch in range(args.epochs):
         train_loss = train_one_epoch(model, criterion, optimizer, dataloaders["train"], device, epoch)
         evaluate(model, criterion, dataloaders["val"], device=device)
+        
         # Add scalar data to summary
         writer.add_scalar('loss/train', train_loss, epoch)
+        
         # save model's weights
         if args.log:
             checkpoint = {
@@ -139,6 +143,8 @@ if __name__ == "__main__":
     parser.add_argument('--gpu', type=list, default=[0,1,2,3])
     parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--data_dir', type=str)
+    parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/imagenet.h5")
+    parser.add_argument('--imagenet_root', type=str, default="/p/scratch/training2303/data/")
     parser.add_argument('--log', type=str)
     parser.add_argument('--tb_dir', type=str)
     parser.add_argument('--workers', type=int, default=24)
