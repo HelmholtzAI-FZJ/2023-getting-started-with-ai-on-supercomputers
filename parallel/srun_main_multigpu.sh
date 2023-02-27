@@ -10,6 +10,10 @@
 #SBATCH --gres=gpu:4
 #SBATCH --account=training2303
 
+# Use this on tuesday
+##SBATCH --reservation=training-20230229
+# And this one on wednesday
+##SBATCH --reservation=training-20230301
 
 mkdir -p parallel/output
 source sc_venv_template/activate.sh
