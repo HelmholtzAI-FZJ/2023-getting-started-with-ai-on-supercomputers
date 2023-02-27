@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+mkdir -p serial/output
+
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=96
@@ -15,7 +17,6 @@
 # And this one on wednesday
 ##SBATCH --reservation=training-20230301
 
-mkdir -p serial/output
 source sc_venv_template/activate.sh
 
 

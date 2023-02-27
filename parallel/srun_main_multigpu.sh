@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+mkdir -p parallel/output
+
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=4
 #SBATCH --cpus-per-task=24
@@ -15,7 +17,6 @@
 # And this one on wednesday
 ##SBATCH --reservation=training-20230301
 
-mkdir -p parallel/output
 source sc_venv_template/activate.sh
 
 srun python -u main_multigpu.py --data_dir "tiny-imagenet-200/" --log "parallel/logs/" 
