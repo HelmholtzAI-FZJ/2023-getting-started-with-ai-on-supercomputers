@@ -18,27 +18,25 @@ import utils
 def train_one_epoch(model, criterion, optimizer, data_loader, sampler, device, epoch):
     model.train()
     total_loss = 0.0
-    start_time = time.time()
+    
     for image, target in data_loader:  
 
         image, target = image.to(device), target.to(device)
         output = model(image)
         
         loss = criterion(output, target)
-        # total_loss += loss
+        total_loss += loss
         
         optimizer.zero_grad()
         loss.backward()
         
         optimizer.step()
-        print(str(datetime.timedelta(seconds=int(time.time() - start_time))))
 
 
     # Total loss is devided by the number of 
-    # total_loss /= len(sampler)
-    # 
-    # torch.distributed.all_reduce(total_loss)
-    # 
+    total_loss /= len(sampler)
+    
+    torch.distributed.all_reduce(total_loss)
 
     if utils.is_main_process():
         print("Epoch {}: avg_loss {}".format(epoch, total_loss))
