@@ -1,4 +1,5 @@
 import os
+from io import BytesIO
 import h5py 
 import json
 from PIL import Image
@@ -29,15 +30,16 @@ class ImagenetH5(Dataset):
         return len(self.samples)
 
     def __getitem__(self, index: int):
+        img_string = self.imgs["images"][index]
 
-        idx = self.imgs[self.samples[index]]
-        img = idx["image"][:]
+        with BytesIO(img_string) as byte_stream:
+            img = Image.open(byte_stream)
+            img = img.convert("RGB")
 
         if self.transform:
             img = self.transform(img)
     
-        return img, idx["label"][()]
-
+        return img, self.imgs["targets"][index]
 
 class ImageNetKaggle(Dataset):
     def __init__(self, root, split, transform=None):
@@ -71,6 +73,7 @@ class ImageNetKaggle(Dataset):
                 self.samples.append(sample_path)
                 self.targets.append(target)
 
+        
     def __len__(self):
         return len(self.samples)
 
