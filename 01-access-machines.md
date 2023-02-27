@@ -48,8 +48,9 @@ date: February 28, 2023
 | 09:15 - 10:00 | Introduction |
 | 10:00 - 10:30 | Judoor, Keys |
 | 10:30 - 11:00 | SSH, Jupyter, VS Code |
-| 11:00 - 12:00 | Running services on the login and compute nodes | 
-| 12:00 - 13:00 | Sync (everyone should be at the same point) |
+| 11:00 - 11:15 | Coffee Break |
+| 11:15 - 12:30 | Running services on the login and compute nodes | 
+| 12:30 - 13:00 | Sync (everyone should be at the same point) |
 
 ---
 
