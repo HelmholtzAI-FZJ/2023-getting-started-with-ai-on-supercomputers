@@ -1227,3 +1227,64 @@ As of now, I expect you managed to:
 - Submit jobs and read results 📫
 - Access services on the login and compute nodes 🧙‍♀️
 - Is ready to make great code! 💪
+
+
+---
+
+## ANY QUESTIONS??
+
+#### Feedback is more than welcome!
+
+---
+
+## Backup slides
+
+---
+
+## Adding MLFLow to the Fast.AI demo
+
+- Follow the example from [mlflow.fastai](https://mlflow.org/docs/latest/python_api/mlflow.fastai.html)
+- Add this at the beginning of your code:
+- ```python
+import mlflow.fastai
+from mlflow import MlflowClient
+```
+- Change the training line to this:
+
+- ``` python
+# Enable auto logging
+mlflow.fastai.autolog()
+# Start MLflow session
+with mlflow.start_run() as run:
+        learn.fine_tune(1) # We are using a pre-trained model
+```
+
+---
+
+## MLFLOW+Fast.AI 
+
+#### Do the ssh port forward and check with `mlflow ui` on the login node
+
+```python
+from fastai.vision.all import *
+import mlflow.fastai
+from mlflow import MlflowClient
+
+path = untar_data(URLs.PETS)/'images'
+
+def is_cat(x): return x[0].isupper()
+dls = ImageDataLoaders.from_name_func(
+    path, get_image_files(path), valid_pct=0.2, seed=42,
+    label_func=is_cat, item_tfms=Resize(224))
+
+learn = vision_learner(dls, resnet34, metrics=error_rate)
+
+# Enable auto logging
+mlflow.fastai.autolog()
+
+# Start MLflow session
+with mlflow.start_run() as run:
+    learn.fine_tune(1)
+```
+
+---

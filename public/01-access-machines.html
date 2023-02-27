@@ -1451,6 +1451,62 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href=
 <li class="fragment">Is ready to make great code! 💪</li>
 </ul>
 </section>
+<section id="any-questions" class="slide level2">
+<h2>ANY QUESTIONS??</h2>
+<h4 id="feedback-is-more-than-welcome">Feedback is more than
+welcome!</h4>
+</section>
+<section id="backup-slides" class="slide level2">
+<h2>Backup slides</h2>
+</section>
+<section id="adding-mlflow-to-the-fast.ai-demo" class="slide level2">
+<h2>Adding MLFLow to the Fast.AI demo</h2>
+<ul>
+<li class="fragment"><p>Follow the example from <a
+href="https://mlflow.org/docs/latest/python_api/mlflow.fastai.html">mlflow.fastai</a></p></li>
+<li class="fragment"><p>Add this at the beginning of your code:</p></li>
+<li class="fragment"><div class="sourceCode" id="cb45"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow.fastai</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlflow <span class="im">import</span> MlflowClient</span></code></pre></div></li>
+<li class="fragment"><p>Change the training line to this:</p></li>
+<li class="fragment"><div class="sourceCode" id="cb46"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable auto logging</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>mlflow.fastai.autolog()</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Start MLflow session</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run() <span class="im">as</span> run:</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>        learn.fine_tune(<span class="dv">1</span>) <span class="co"># We are using a pre-trained model</span></span></code></pre></div></li>
+</ul>
+</section>
+<section id="mlflowfast.ai" class="slide level2">
+<h2>MLFLOW+Fast.AI</h2>
+<h4
+id="do-the-ssh-port-forward-and-check-with-mlflow-ui-on-the-login-node">Do
+the ssh port forward and check with <code>mlflow ui</code> on the login
+node</h4>
+<div class="sourceCode" id="cb47"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlflow.fastai</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlflow <span class="im">import</span> MlflowClient</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> untar_data(URLs.PETS)<span class="op">/</span><span class="st">&#39;images&#39;</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_cat(x): <span class="cf">return</span> x[<span class="dv">0</span>].isupper()</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> ImageDataLoaders.from_name_func(</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    path, get_image_files(path), valid_pct<span class="op">=</span><span class="fl">0.2</span>, seed<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>    label_func<span class="op">=</span>is_cat, item_tfms<span class="op">=</span>Resize(<span class="dv">224</span>))</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(dls, resnet34, metrics<span class="op">=</span>error_rate)</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Enable auto logging</span></span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>mlflow.fastai.autolog()</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Start MLflow session</span></span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> mlflow.start_run() <span class="im">as</span> run:</span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>    learn.fine_tune(<span class="dv">1</span>)</span></code></pre></div>
+</section>
+<section class="slide level2">
+
+</section>
     </div>
   </div>
 
