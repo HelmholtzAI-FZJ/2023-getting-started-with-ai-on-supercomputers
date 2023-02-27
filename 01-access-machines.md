@@ -435,17 +435,24 @@ strube1@jusuf ~ $
 ```bash
 # Create a shortcut for the project on the home folder
 ln -s $PROJECT_training2303 ~/course
+
+# Create a folder for myself
 mkdir course/$USER
 
-# We well need those later
-ln -s .config ~/course/$USER/
-ln -s .cache ~/course/$USER/
-
-# Enter course folder and create a folder for myself
+# Enter course folder and
 cd ~/course/$USER
 
 # Where am I?
 pwd
+
+# We well need those later
+mkdir ~/course/$USER/.cache
+mkdir ~/course/$USER/.config
+mkdir ~/course/$USER/.fastai
+
+ln -s ~/course/$USER/.cache $HOME/
+ln -s ~/course/$USER/.cache $HOME/
+ln -s ~/course/$USER/.cache $HOME/
 ```
 
 ---
@@ -797,7 +804,11 @@ Link: [MLflow quickstart](https://mlflow.org/docs/latest/quickstart.html)
 ## Example: MLflow
 
 - Edit the file requirements.txt
-- Add a line at the end: `mlflow[extras]`
+- Add two lines at the end: 
+- ```
+mlflow[extras]
+fastai
+```
 - Run on the terminal: `./setup.sh`
 
 ---
@@ -1006,6 +1017,111 @@ On your machine:
 - Mind the `i` letter I added at the end of the hostname
 
 - Now you can access the service on your local browser at [http://localhost:3334](http://localhost:3334)
+
+---
+
+## A fisrt AI code!
+
+- Let's copy the demo from [Fast.AI's course](https://github.com/fastai/fastbook/blob/master/01_intro.ipynb) (highly recommended)
+
+---
+
+## Let's train a pet classifier
+
+- This is a minimal demo, to show some quirks of the supercomputer
+
+---
+
+## FastAI's demo image classifier
+
+### Save this as `fastai-demo.py`
+
+```python
+from fastai.vision.all import *
+path = untar_data(URLs.PETS)/'images'
+
+def is_cat(x): return x[0].isupper()
+dls = ImageDataLoaders.from_name_func(
+    path, get_image_files(path), valid_pct=0.2, seed=42,
+    label_func=is_cat, item_tfms=Resize(224))
+
+learn = vision_learner(dls, resnet34, metrics=error_rate)
+learn.fine_tune(1)
+```
+
+---
+
+## Submission file for the classifier
+
+### Save this as `fastai-demo.sbatch`
+
+```bash
+#!/bin/bash -x
+#SBATCH --account=training2303
+#SBATCH --mail-user=MYUSER@fz-juelich.de
+#SBATCH --mail-type=ALL
+#SBATCH --nodes=1
+#SBATCH --job-name=matrix-multiplication
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+#SBATCH --output=output.%j
+#SBATCH --error=err.%j
+#SBATCH --time=00:10:00
+#SBATCH --partition=gpus
+####SBATCH --gres=gpu:4
+
+cd /p/home/jusers/$USER/jusuf/course/$USER
+source sc_venv_template/activate.sh # Now we finally use the fastai module
+
+srun python fastai-demo.py
+```
+
+---
+
+## 💥
+
+---
+
+## What happened?
+
+- Check the `error.${JOBID}` file
+- Long error message which ends with
+- ```python
+  File "/p/software/jusuf/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py", line 1391, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "/p/software/jusuf/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+srun: error: jsfc013: task 0: Exited with exit code 1
+```
+
+---
+
+## 🤔...
+
+---
+
+## Remember, remember
+
+![](images/queue-finished.svg)
+
+---
+
+![](images/compute-nodes-no-net.svg)
+
+---
+
+## Compute nodes have no internet connection
+
+- But the login nodes do!
+- So we download our dataset before...
+
+---
+
+## On the login node:
+
+
+
 
 ---
 
