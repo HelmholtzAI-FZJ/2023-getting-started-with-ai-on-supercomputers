@@ -171,10 +171,10 @@ def main(args):
                 os.path.join(args.log, 'checkpoint.pth'))
         
            
-        total_time = time.time() - start_time
-        total_time_str = str(datetime.timedelta(seconds=int(total_time)))
-        if utils.is_main_process():
-            print('Training time {}'.format(total_time_str))
+    total_time = time.time() - start_time
+    total_time_str = str(datetime.timedelta(seconds=int(total_time)))
+    if utils.is_main_process():
+        print('Training time {}'.format(total_time_str))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -183,7 +183,7 @@ if __name__ == "__main__":
     parser.add_argument('--gpu', type=list, default=[0,1,2,3])
     parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--data_dir', type=str)
-    parser.add_argument('--kaggle', type=bool, default=True)
+    parser.add_argument('--kaggle', type=bool, default=False)
     parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/new_imagenet2.h5")
     parser.add_argument('--imagenet_root', type=str, default="/p/scratch/training2303/data/")
     parser.add_argument('--log', type=str)

@@ -1,11 +1,11 @@
 #!/bin/bash -x
-mkdir -p parallel/output
+
 
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=4
 #SBATCH --cpus-per-task=24
-#SBATCH --output=parallel/output/%j.out
-#SBATCH --error=parallel/output/%j.err
+#SBATCH --output=output/%j.out
+#SBATCH --error=output/%j.err
 #SBATCH --time=02:00:00
 #SBATCH --partition=develbooster
 #SBATCH --gres=gpu:4
@@ -16,7 +16,8 @@ mkdir -p parallel/output
 # And this one on wednesday
 ##SBATCH --reservation=training-20230301
 
+mkdir -p output
 
 source sc_venv_template/activate.sh
 
-srun python -u main_multigpu.py --data_dir "tiny-imagenet-200/" --log "parallel/logs/" 
+srun python -u main_multigpu.py --log "logs/" 
