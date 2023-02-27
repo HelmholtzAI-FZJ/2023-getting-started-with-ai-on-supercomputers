@@ -15,8 +15,8 @@ PANDOC_OPTIONS=-t revealjs -s \
 	-V hlss=zenburn \
 	-V theme=sky \
 	-V transition=fade  \
-	-i
-#	--embed-resources  \ # This make a single file, good for distribution
+	-i 
+# --embed-resources   # This make a single file, good for distribution
 #	-A footer.html # The footer is just too big
 
 public/%.html : %.md *.css
