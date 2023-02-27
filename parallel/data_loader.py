@@ -63,7 +63,7 @@ class ImageNetKaggle(Dataset):
                 self.samples.append(sample_path)
                 self.targets.append(target)
 
-        
+
     def __len__(self):
         return len(self.samples)
 
