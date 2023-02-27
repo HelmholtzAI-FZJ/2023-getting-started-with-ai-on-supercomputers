@@ -9,7 +9,7 @@ from torch.utils.data import Dataset
 
 class ImagenetH5(Dataset):
 
-    def __init__(self, root, h5_file, subset, transform=None):
+    def __init__(self, h5_file, subset, transform=None):
 
         self.imgs = h5py.File(h5_file, 'r')[subset] 
     

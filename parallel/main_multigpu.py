@@ -85,7 +85,7 @@ def load_h5data(args):
 
     dataset_transforms = transformation()
 
-    image_datasets = {x: data_loader.ImagenetH5(args.imagenet_root, args.h5_file, x, dataset_transforms[x]) 
+    image_datasets = {x: data_loader.ImagenetH5(args.h5_file, x, dataset_transforms[x]) 
                     for x in ['train', 'val']}
 
 
