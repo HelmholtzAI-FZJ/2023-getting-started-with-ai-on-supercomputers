@@ -21,7 +21,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, sampler, device, e
     
     for image, target in data_loader:  
 
-        image, target = image.to(device), target.type(torch.LongTensor).to(device)
+        image, target = image.to(device), target.to(device)
         output = model(image)
         
         loss = criterion(output, target)
@@ -50,7 +50,7 @@ def evaluate(model, criterion, data_loader, device):
     with torch.no_grad():
         for image, target in data_loader:
             image = image.to(device, non_blocking=True)
-            target = target.type(torch.LongTensor).to(device, non_blocking=True)
+            target = target.to(device, non_blocking=True)
             output = model(image)
             loss = criterion(output, target)
 
@@ -183,7 +183,7 @@ if __name__ == "__main__":
     parser.add_argument('--gpu', type=list, default=[0,1,2,3])
     parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--data_dir', type=str)
-    parser.add_argument('--kaggle', type=bool, default=False)
+    parser.add_argument('--kaggle', type=bool, default=True)
     parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/new_imagenet2.h5")
     parser.add_argument('--imagenet_root', type=str, default="/p/scratch/training2303/data/")
     parser.add_argument('--log', type=str)

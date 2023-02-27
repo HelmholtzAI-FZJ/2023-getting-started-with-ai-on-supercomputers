@@ -3,6 +3,7 @@ from io import BytesIO
 import h5py 
 import json
 from PIL import Image
+import numpy as np 
 
 from torch.utils.data import Dataset
 
@@ -28,7 +29,7 @@ class ImagenetH5(Dataset):
         if self.transform:
             img = self.transform(img)
     
-        return img, self.imgs["targets"][index]
+        return img, np.int_(self.imgs["targets"][index])
 
 class ImageNetKaggle(Dataset):
     def __init__(self, root, split, transform=None):
