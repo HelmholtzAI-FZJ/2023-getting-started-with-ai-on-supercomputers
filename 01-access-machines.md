@@ -1161,7 +1161,7 @@ Downloading dataset...
 
 ---
 
-## Run it again!
+## Run it again on the compute nodes!
 
 - Uncomment the line that does training:
 - ```bash
@@ -1174,7 +1174,32 @@ sbatch fastai-demo.sbatch
 
 ---
 
+## Masoquistically waiting for the job to run?
 
+```bash
+watch squeue --me
+```
+(To exit, type CTRL-C)
+
+---
+
+## Check output files
+
+- You can seem them at VSCode
+- ```bash
+The activation script must be sourced, otherwise the virtual environment will not work.
+Setting vars
+Downloading dataset...
+Finished downloading dataset
+epoch     train_loss  valid_loss  error_rate  time    
+Epoch 1/1 : |-----------------------------------| 0.00% [0/92 00:00<?]
+Epoch 1/1 : |-----------------------------------| 2.17% [2/92 00:14<10:35 1.7452]
+Epoch 1/1 : |█----------------------------------| 3.26% [3/92 00:14<07:01 1.6413]
+Epoch 1/1 : |██---------------------------------| 5.43% [5/92 00:15<04:36 1.6057]
+```
+
+- 🎉
+- 🥳
 
 ---
 

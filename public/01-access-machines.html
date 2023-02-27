@@ -1382,8 +1382,8 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href=
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a> <span class="ex">Downloading:</span> <span class="st">&quot;https://download.pytorch.org/models/resnet34-b627a593.pth&quot;</span> to /p/project/ccstao/cstao05/.cache/torch/hub/checkpoints/resnet34-b627a593.pth</span>
 <span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="ex">100%</span><span class="kw">|</span><span class="ex">█████████████████████████████████████</span><span class="kw">|</span> <span class="ex">83.3M/83.3M</span> [00:00<span class="op">&lt;</span>00:00, 266MB/s]</span></code></pre></div>
 </section>
-<section id="run-it-again" class="slide level2">
-<h2>Run it again!</h2>
+<section id="run-it-again-on-the-compute-nodes" class="slide level2">
+<h2>Run it again on the compute nodes!</h2>
 <ul>
 <li class="fragment">Uncomment the line that does training:</li>
 <li class="fragment"><div class="sourceCode" id="cb41"><pre
@@ -1393,8 +1393,30 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href=
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> fastai-demo.sbatch</span></code></pre></div></li>
 </ul>
 </section>
-<section class="slide level2">
-
+<section id="masoquistically-waiting-for-the-job-to-run"
+class="slide level2">
+<h2>Masoquistically waiting for the job to run?</h2>
+<div class="sourceCode" id="cb43"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">watch</span> squeue <span class="at">--me</span></span></code></pre></div>
+<p>(To exit, type CTRL-C)</p>
+</section>
+<section id="check-output-files" class="slide level2">
+<h2>Check output files</h2>
+<ul>
+<li class="fragment">You can seem them at VSCode</li>
+<li class="fragment"><div class="sourceCode" id="cb44"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> activation script must be sourced, otherwise the virtual environment will not work.</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Setting</span> vars</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Downloading</span> dataset...</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Finished</span> downloading dataset</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="ex">epoch</span>     train_loss  valid_loss  error_rate  time    </span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">-----------------------------------</span><span class="kw">|</span> <span class="ex">0.00%</span> [0/92 00:00<span class="op">&lt;</span><span class="pp">?</span>]</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">-----------------------------------</span><span class="kw">|</span> <span class="ex">2.17%</span> [2/92 00:14<span class="op">&lt;</span>10:35 1.7452]</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">█----------------------------------</span><span class="kw">|</span> <span class="ex">3.26%</span> [3/92 00:14<span class="op">&lt;</span>07:01 1.6413]</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">██---------------------------------</span><span class="kw">|</span> <span class="ex">5.43%</span> [5/92 00:15<span class="op">&lt;</span>04:36 1.6057]</span></code></pre></div></li>
+<li class="fragment">🎉</li>
+<li class="fragment">🥳</li>
+</ul>
 </section>
 <section id="day-1-recap" class="slide level2">
 <h2>Day 1 recap</h2>
