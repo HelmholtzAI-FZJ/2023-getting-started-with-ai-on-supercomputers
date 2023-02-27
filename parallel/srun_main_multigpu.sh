@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-#SBATCH --nodes=2
+#SBATCH --nodes=1
 #SBATCH --ntasks-per-node=4
 #SBATCH --cpus-per-task=24
 #SBATCH --output=/p/home/jusers/benassou1/juwels/benassou1/2023-getting-started-with-ai-on-supercomputers/parallel/output/%j.out

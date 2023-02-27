@@ -18,20 +18,27 @@ import utils
 def train_one_epoch(model, criterion, optimizer, data_loader, sampler, device, epoch):
     model.train()
     total_loss = 0.0
+    start_time = time.time()
+    for image, target in data_loader:  
 
-    for image, target in data_loader:
         image, target = image.to(device), target.to(device)
         output = model(image)
+        
         loss = criterion(output, target)
-        total_loss += loss
+        # total_loss += loss
+        
         optimizer.zero_grad()
-
         loss.backward()
+        
         optimizer.step()
+        print(str(datetime.timedelta(seconds=int(time.time() - start_time))))
+
 
     # Total loss is devided by the number of 
-    total_loss /= len(sampler)
-    torch.distributed.all_reduce(total_loss)
+    # total_loss /= len(sampler)
+    # 
+    # torch.distributed.all_reduce(total_loss)
+    # 
 
     if utils.is_main_process():
         print("Epoch {}: avg_loss {}".format(epoch, total_loss))
@@ -80,7 +87,7 @@ def load_h5data(args):
 
     dataset_transforms = transformation()
 
-    image_datasets = {x: data_loader.ImagenetH5(args.h5_file, x, dataset_transforms[x]) 
+    image_datasets = {x: data_loader.ImagenetH5(args.imagenet_root, args.h5_file, x, dataset_transforms[x]) 
                     for x in ['train', 'val']}
 
 
@@ -96,6 +103,7 @@ def load_data(args):
 
 
 def main(args):
+    
     # set up the environement variable for the distributed mode
     utils.init_distributed_mode(args.master_port)
 
@@ -107,17 +115,18 @@ def main(args):
 
     # enable benchmark mode in cuDNN to benchmark multiple convolution algorithms and select the fastest.
     torch.backends.cudnn.benchmark = True
-
+    
     # only process rank 0 initialize the SummaryWriter.
     if utils.is_main_process():
         print(args)
         writer = SummaryWriter(args.tb_dir)
-
+    
+   
     if args.kaggle:
         image_datasets = load_data(args)
     else:
         image_datasets = load_h5data(args)
-
+    
 
     # sampler is used to specify the sequence of indices/keys used in data loading
     datasets_sampler = {x: torch.utils.data.distributed.DistributedSampler(image_datasets[x])
@@ -125,9 +134,11 @@ def main(args):
 
     dataloaders = {x: DataLoader(image_datasets[x], batch_size=args.batch_size, sampler=datasets_sampler[x], num_workers=args.workers, pin_memory=True)
                     for x in ['train', 'val']}
+    
 
     model = resnet50()
     model.to(device)
+
     # Synchronization of batchnorm statistics
     model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     # implements data parallelism of the model which can run across multiple machines. 
@@ -141,13 +152,15 @@ def main(args):
     for epoch in range(args.epochs):
         # it’s necessary to use set_epoch to guarantee a different shuffling order
         datasets_sampler["train"].set_epoch(epoch)
+
         train_loss = train_one_epoch(model, criterion, optimizer, dataloaders["train"], datasets_sampler["train"], device, epoch)
+
         evaluate(model, criterion, dataloaders["val"], device=device)
-        
+           
         # Only process rank 0 can add scalar data to summary
         if utils.is_main_process():
             writer.add_scalar('loss/train', train_loss, epoch)
-
+        
         # Only process rank 0 can save checkpoints
         if args.log:
             checkpoint = {
@@ -159,7 +172,7 @@ def main(args):
                 checkpoint,
                 os.path.join(args.log, 'checkpoint.pth'))
         
-        
+           
         total_time = time.time() - start_time
         total_time_str = str(datetime.timedelta(seconds=int(total_time)))
         if utils.is_main_process():
@@ -172,14 +185,14 @@ if __name__ == "__main__":
     parser.add_argument('--gpu', type=list, default=[0,1,2,3])
     parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--data_dir', type=str)
-    parser.add_argument('--kaggle', type=bool, default=True)
+    parser.add_argument('--kaggle', type=bool, default=False)
     parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/imageNet.h5")
     parser.add_argument('--imagenet_root', type=str, default="/p/scratch/training2303/data/")
     parser.add_argument('--log', type=str)
     parser.add_argument('--tb_dir', type=str)
     parser.add_argument('--workers', type=int, default=24)
     parser.add_argument('--batch_size', type=int, default=128)
-    parser.add_argument('--epochs', type=int, default=5)
+    parser.add_argument('--epochs', type=int, default=1)
     parser.add_argument('--lr', type=float, default=1e-3)
     parser.add_argument('--weight_decay', type=int, default=1e-4)
 

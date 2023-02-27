@@ -7,26 +7,34 @@ from torch.utils.data import Dataset
 
 class ImagenetH5(Dataset):
 
-    def __init__(self, h5_file, subset, transform=None):
+    def __init__(self, root, h5_file, subset, transform=None):
 
         self.imgs = h5py.File(h5_file, 'r')[subset] 
     
-        self.img_ids = [img_id for img_id in self.imgs.keys()]
-            
-        self._transform = transform
+        self.samples = []
+        self.transform = transform
+
+        samples_dir = os.path.join(root, "ILSVRC/Data/CLS-LOC", subset)
+        for entry in os.listdir(samples_dir):
+            if subset == "train":
+                syn_id = entry
+                syn_folder = os.path.join(samples_dir, syn_id)
+                for sample in os.listdir(syn_folder):
+                    self.samples.append(sample)                    
+            elif subset == "val":            
+                self.samples.append(entry)
+
 
     def __len__(self) -> int:
-        return len(self.img_ids)
+        return len(self.samples)
 
     def __getitem__(self, index: int):
-        if not 0 <= (index) < len(self.img_ids):
-            raise IndexError(index)
 
-        idx = self.imgs[self.img_ids[index]]
+        idx = self.imgs[self.samples[index]]
         img = idx["image"][:]
 
-        if self._transform:
-            img = self._transform(img)
+        if self.transform:
+            img = self.transform(img)
     
         return img, idx["label"][()]
 
