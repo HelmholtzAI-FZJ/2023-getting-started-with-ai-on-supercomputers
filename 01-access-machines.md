@@ -2,12 +2,13 @@
 author: Alexandre Strube // Sabrina Benassou
 title: Getting Started with AI on Supercomputers 
 # subtitle: A primer in supercomputers`
-date: February 29, 2023
+date: February 28, 2023
 ---
 ## Communication:
 
 - [Zoom](https://fz-juelich-de.zoom.us/j/98120874933?pwd=NXJJNXo1Nkx4OGNVNEhkWXBNTWlZUT09)
 - [Slack](https://introscfeb2023.slack.com)
+- [This document: http://go.fzj.de/intro-sc-ai-2023](http://go.fzj.de/intro-sc-ai-2023)
 
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
 
@@ -18,6 +19,7 @@ date: February 29, 2023
 
 - Make sure you know how to access and use our machines
 - Distribute your ML workload.
+- Important: This is _*NOT*_ a basic AI course
 
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
 
@@ -44,9 +46,11 @@ date: February 29, 2023
 | ------------- | -----------  |
 | 09:00 - 09:15 | Welcome      |
 | 09:15 - 10:00 | Introduction |
-| 10:00 - 11:00 | Judoor, Keys |
-| 11:00 - 12:00 | SSH, Jupyter, VS Code |
-| 12:00 - 13:00 | Sync (everyone should be at the same point) |
+| 10:00 - 10:30 | Judoor, Keys |
+| 10:30 - 11:00 | SSH, Jupyter, VS Code |
+| 11:00 - 11:15 | Coffee Break |
+| 11:15 - 12:30 | Running services on the login and compute nodes | 
+| 12:30 - 13:00 | Sync (everyone should be at the same point) |
 
 ---
 
@@ -67,7 +71,8 @@ date: February 29, 2023
 
 -  Login Nodes: Normal machines, for compilation, data transfer,  scripting, etc. No GPUs.
 - Compute Nodes: Guess what :-)
-- Network file system
+- High-speed, ultra-low-latency network
+- Shared networked file systems
 - Scratch file system accessible from compute nodes
 - Key stats:
     - Number of Nodes
@@ -78,7 +83,7 @@ date: February 29, 2023
 
 ---
 
-### JUWELS Booster
+### JUWELS Booster Compute Nodes
 
 - 936 Nodes
 - AMD EPYC Rome 7402 CPU 2.7 GHz (2 × 24 cores x 2 SMT threads = 96 virtual cores/node)
@@ -201,27 +206,15 @@ Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps
 
 ---
 
-## VSCode
-
-- [Download VScode: code.visualstudio.com](https://code.visualstudio.com/download)
-- Install it
-- Install [Remote Development Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-- On the local terminal, type `code`
-
----
-
-## VSCode
-
-### Now with the remote explorer tab
-![](images/vscode-welcome.png)
-
----
 ### Connecting to JUWELS BOOSTER
 
 #### Getting compute time
 - Go to [https://judoor.fz-juelich.de/projects/join/training2303](https://judoor.fz-juelich.de/projects/join/training2303)
 - Join the course project `training2303`
+- Sign the Usage Agreements ([Video](https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view))
 - Compute time allocation is based on compute projects. For every compute job, a compute project pays.
+- Time is measured in core-hours. One hour of Juwels BOOSTER is 48 core-hours. One hour of Jusuf is 128 core-h.
+- Example: Job runs for 8 hours on 64 nodes of Juwels BOOSTER: 8 * 64 * 48 = 24576 core-h!
 
 ---
 
@@ -230,21 +223,20 @@ Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps
 #### SSH
 - SSH is a secure shell (terminal) connection to another computer
 - You connect from your computer to the LOGIN NODE
+- Security is given by public/private keys
+- A connection to the supercomputer needs a 
+    1. Key,
+    2. Configuration
+    3. Key/IP address known to the supercomputer
 
 ---
-
-### SSH
-
-- Security is given by public/private keys
-- You connect from your computer to the LOGIN NODE
-
---- 
 
 ### SSH
 
 #### Create key
 
 ```bash
+mkdir ~/.ssh/
 ssh-keygen -a 100 -t ed25519 -f ~/.ssh/id_ed25519-JSC
 ```
 
@@ -270,6 +262,23 @@ The keys randomart image is:
 |            .    |
 +----[SHA256]-----+
 ```
+
+---
+
+## VSCode
+
+- [Download VScode: code.visualstudio.com](https://code.visualstudio.com/download)
+- Install it
+- Install [Remote Development Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+- Install [Remote: SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
+- On the local terminal, type `code`
+
+---
+
+## VSCode
+
+### Now with the remote explorer tab
+![](images/vscode-welcome.png)
 
 
 ---
@@ -299,8 +308,10 @@ Host booster
         User [MY_USERNAME]
         IdentityFile ~/.ssh/id_ed25519-JSC
 
-
 ```
+
+Copy contents to the config file and save it.
+
 ---
 
 ### SSH
@@ -325,7 +336,7 @@ $ curl ifconfig.me
 
 (Ignore the `%` sign)
 
-- Let's keep this inside vscode: `code key.txt`
+- Let's keep this inside vscode: `code key.txt` and paste the number you got
 
 ---
 
@@ -343,25 +354,30 @@ $ curl ifconfig.me
 
 ![](images/whatismyip.png)
 
+- Let's keep this inside vscode: `code key.txt` and paste the number you got
+
 ---
 
 ### SSH - Example: `93.199.55.160`
 
-- Let's make it simpler: `93.199.0.0/16`
-
-(because the last numbers change)
+- Go to VSCode and make it simpler, replace the 2nd half with `0.0/16`: `93.199.0.0/16`
+- (because the last numbers change)
+- Add a `from=""` around it
+- So, it looks like this, now: `from="93.199.0.0/16"`
+- Add a second magic number, with a comma: `,10.0.0.0/8` 🧙‍♀️
+- I promise, the magic is worth it 🧝‍♂️
 
 ---
 
 ### SSH - Example: `93.199.0.0/16`
 
 #### Copy your ssh key
-- Terminal: 
-```bash
+- Terminal: `cat ~/.ssh/id_ed25519-JSC.pub`
+- ```bash
 $ cat ~/.ssh/id_ed25519-JSC.pub
 ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
 ```
-- Copy this line to the clipboard (or to an empty file on VS Code: `code key.txt`)
+- Paste this line at the same `key.txt` which you just opened
 
 ---
 
@@ -370,9 +386,8 @@ ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F
 #### Example: `93.199.0.0/16`
 
 - Put them together and copy again:
-
-```bash
-from="93.199.0.0/16" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
+- ```bash
+from="93.199.0.0/16,10.0.0.0/8" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
 ```
 
 ---
@@ -381,7 +396,8 @@ from="93.199.0.0/16" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0
 
 ![](images/manage-ssh-keys.png)
 
-Do it for JUWELS, JUSUF and JUDAC with the same key
+- Let's add it on [Judoor](https://judoor.fz-juelich.de)
+- Do it for JUWELS, JUSUF and JUDAC with the same key
 
 ---
 
@@ -420,22 +436,34 @@ strube1@jusuf ~ $
 
 ```bash
 # Create a shortcut for the project on the home folder
-ln -s $PROJECT_training2303 ./course
+ln -s $PROJECT_training2303 ~/course
 
-# Enter course folder and create a folder for myself
-cd course
-mkdir $USER
-cd $USER
+# Create a folder for myself
+mkdir course/$USER
+
+# Enter course folder and
+cd ~/course/$USER
 
 # Where am I?
 pwd
+
+# We well need those later
+mkdir ~/course/$USER/.cache
+mkdir ~/course/$USER/.config
+mkdir ~/course/$USER/.fastai
+
+ln -s ~/course/$USER/.cache $HOME/
+ln -s ~/course/$USER/.config $HOME/
+ln -s ~/course/$USER/.fastai $HOME/
 ```
 
 ---
 
 ## Working with the supercomputer's software
 
-We have literally thousands of software packages, hand-compiled for the specifics of the supercomputer.
+- We have literally thousands of software packages, hand-compiled for the specifics of the supercomputer.
+- [Full list](https://www.fz-juelich.de/en/ias/jsc/services/user-support/using-systems/software)
+- [Detailed documentation](https://apps.fz-juelich.de/jsc/hps/juwels/software-modules.html)
 
 ---
 
@@ -464,19 +492,22 @@ strube1$ module spider PyTorch
 
 ---
 
+## What do we have?
+
+`module avail` (Inside hierarchy)
+
+---
+
 ## Module hierarchy
 
+- Stage (full collection of software of a given year)
 - Compiler
 - MPI
 - Module
 
-Eg: `module load GCC OpenMPI PyTorch`
+- Eg: `module load Stages/2023 GCC OpenMPI PyTorch`
 
 ---
-
-## What do we have?
-
-`module avail` (Inside hierarchy)
 
 #### What do I need to load such software?
 
@@ -501,6 +532,8 @@ Search with the version - it will suggest the hierarchy
 ---
 
 ## Example: PyTorch
+
+(make sure you are still connected to JUSUF)
 
 ```bash
 $ python
@@ -539,7 +572,7 @@ $ python -c "import torch ; print(torch.__version__)"
 
 ## Python Modules
 
-#### Some of the python softwares are part of Python itself, or of other softwares. Use `module key`
+#### Some of the python softwares are part of Python itself, or of other softwares. Use "`module key`"
 
 ```bash
 module key toml
@@ -573,21 +606,158 @@ The following modules match your search criteria: "toml"
 
 ---
 
+## VSCode
+
+- You can have a terminal inside VSCode: Go to the menu View->Terminal
+
+--- 
 
 ## VSCode
 
 - From the ssh connection, navigate to your "course" folder and to the name you created earlier.
+
+- ```bash
+cd $HOME/course/$USER
+pwd
+```
+
 - This is out working directory. We do everything here.
 
 ---
 
-Now we can edit some code and submit it to the queue....
+### Demo code
+#### Create a new file "`matrix.py`" on VSCode on Jusuf
+
+```bash
+code matrix.py
+```
+
+Paste this into the file:
+
+``` {.python .number-lines}
+import torch
+
+matrix1 = torch.randn(3,3)
+print("The first matrix is", matrix1)
+
+matrix2 = torch.randn(3,3)
+print("The second matrix is", matrix2)
+
+result = torch.matmul(matrix1,matrix2)
+print("The result is:\n", result)
+```
+
 ---
 
-But we need to learn about the queue! 🤯
+### How to run it on the login node
+
+```
+module load Stages/2023
+module load GCC OpenMPI PyTorch
+python matrix.py
+```
+
 ---
 
-## SLURM
+### But that's not what we want... 😒
+
+---
+
+### So we send it to the queue!
+
+---
+
+## HOW?🤔
+
+---
+
+### SLURM 🤯
+![](images/slurm.jpg)
+
+Simple Linux Utility for Resource Management
+
+---
+
+### Slurm submission file
+
+- Simple text file which describes what we want and how much of it, for how long, and what to do with the results
+
+---
+
+### Slurm submission file example
+
+`code jusuf-matrix.sbatch`
+
+``` {.bash .number-lines}
+#!/bin/bash -x
+#SBATCH --account=training2303           # Who pays?
+#SBATCH --nodes=1                        # How many compute nodes
+#SBATCH --job-name=matrix-multiplication
+#SBATCH --ntasks-per-node=1              # How many mpi processes/node
+#SBATCH --cpus-per-task=1                # How many cpus per mpi proc
+#SBATCH --output=output.%j        # Where to write results
+#SBATCH --error=error.%j
+#SBATCH --time=00:01:00          # For how long can it run?
+#SBATCH --partition=gpus         # Machine partition
+#SBATCH --reservation=training-20230229 # For today only
+
+module Stages/2023
+module load GCC OpenMPI PyTorch  # Load the correct modules on the compute node(s)
+
+srun python matrix.py            # srun tells the supercomputer how to run it
+```
+
+---
+
+### Submitting a job: SBATCH
+
+```bash
+sbatch jusuf-matrix.sbatch
+
+Submitted batch job 412169
+```
+
+---
+
+### Are we there yet? 🐴
+
+`squeue --me`
+
+```bash
+squeue --me
+   JOBID  PARTITION    NAME      USER    ST       TIME  NODES NODELIST(REASON)
+   412169 gpus         matrix-m  strube1 CF       0:02      1 jsfc013
+
+```
+
+#### ST is status:
+
+- PD (pending), 
+- CF(configuring), 
+- R (running),   
+- CG (completing)
+
+---
+
+### Job is wrong, need to cancel
+
+```bash
+scancel <JOBID>
+```
+
+---
+
+### Check logs
+
+#### By now you should have output and error log files on your directory. Check them!
+
+```bash
+# Notice that this number is the job id. It's different for every job
+cat output.412169 
+cat error.412169 
+```
+
+Or simply open it on VSCode!
 
 ---
 
@@ -595,11 +765,27 @@ But we need to learn about the queue! 🤯
 
 [jupyter-jsc.fz-juelich.de](https://jupyter-jsc.fz-juelich.de)
 
-- [TODO] Explain partitions, training, reservation
+- Jupyter-JSC calls slurm, just the same as your job
+- When you are working on it, you are using compute node time
+
+- *Yes, if you are just thinking and looking at the 📺, you are burning project time*🤦‍♂️
+
+- It's useful for small tests - not for full-fledged development
 
 ---
 
-## Kernel and modules:
+## Jupyter
+
+#### Pay attention to the partition - DON'T RUN IT ON THE LOGIN NODE!!!
+
+![](images/jupyter-partition.png)
+
+
+---
+
+## Extra software, modules and kernels
+
+#### You want that extra software from `pip`....
 
 [Venv/Kernel template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
 
@@ -610,28 +796,496 @@ cd sc_venv_template
 
 ---
 
+## Example: MLflow
+
+Link: [MLflow quickstart](https://mlflow.org/docs/latest/quickstart.html)
+
+- I won't teach MLflow btw - it's a demo on installing and running software
+
+---
+
+## Example: MLflow
+
+- Edit the file requirements.txt
+- Add two lines at the end: 
+- ```
+mlflow[extras]
+fastai
+```
+- Run on the terminal: `./setup.sh`
+
+---
+
+## Example: MLflow
+
+Activate the environment where MLFlow is with `source ./activate.sh`
+
+```python
+source ./activate.sh 
+The activation script must be sourced, otherwise the virtual environment will not work.
+Setting vars
+The following modules were not unloaded:
+  (Use "module --force purge" to unload all):
+
+  1) Stages/2023
+
+The following have been reloaded with a version change:
+  1) HDF5/1.12.2-serial => HDF5/1.12.2
+
+
+python
+Python 3.10.4 (main, Oct  4 2022, 08:48:14) [GCC 11.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import mlflow
+>>> mlflow.__version__
+'2.1.1'
+```
+
+---
+
+## Example: MLFlow
+
+- Let's run it on the supercomputer!
+- Open the [MLFlow Quickstart](https://mlflow.org/docs/latest/quickstart.html)
+- Copy some example to a file mlflow-demo.py
+
+---
+
+## Example: MLFlow
+
+```python
+import os
+from random import random, randint
+from mlflow import log_metric, log_param, log_artifacts
+
+if __name__ == "__main__":
+    # Log a parameter (key-value pair)
+    log_param("param1", randint(0, 100))
+
+    # Log a metric; metrics can be updated throughout the run
+    log_metric("foo", random())
+    log_metric("foo", random() + 1)
+    log_metric("foo", random() + 2)
+
+    # Log an artifact (output file)
+    if not os.path.exists("outputs"):
+        os.makedirs("outputs")
+    with open("outputs/test.txt", "w") as f:
+        f.write("hello world!")
+    log_artifacts("outputs")
+```
+
+---
+
+## MLFlow: Submission file
+
+### Save as mlflow-demo.sbatch
+
+``` {.bash .number-lines}
+#!/bin/bash -x
+#SBATCH --account=training2303
+#SBATCH --nodes=1
+#SBATCH --job-name=mlflow-demo
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+#SBATCH --output=output.%j
+#SBATCH --error=err.%j
+#SBATCH --time=00:10:00
+#SBATCH --partition=gpus
+#SBATCH --reservation=training-20230229 # For today only
+
+# Make sure we are on the right directory
+cd /p/home/jusers/$USER/jusuf/course/$USER
+
+# This loads modules and python packages
+source sc_venv_template/activate.sh
+
+# Run the demo
+srun python mlflow-demo.py
+
+```
+
+---
+
+Example: MLFlow
+
+```bash
+sbatch mlflow-demo.sbatch
+squeue --me
+```
+
+---
+
+## Example: MLFlow
+
+`mlflow ui --port 3000`
+
+- Opens a connection on port 3000... *OF THE SUPERCOMPUTER*.
+- We need to do something else: SSH PORT FORWARDING
+
+---
+
+## Example: MLFlow
+
+![](images/supercomputer-firewall.svg)
+
+---
+
+## Port Forwarding
+
+![](images/port-forwarding.svg)
+
+`ssh -L :1234:localhost:3000 jusuf`
+
+---
+
+## Port forwarding demo:
+
+- On local computer: `ssh -L :1234:localhost:3000 jusuf`
+- On jusuf:
+- ```bash
+cd $HOME/course/$USER/sc_venv_template
+source activate.sh
+mlflow server --port 3000
+```
+- On the browser: [http://localhost:1234](http://localhost:1234)
+
+---
+
+## A fisrt AI code!
+
+- Let's copy the demo from [Fast.AI's course](https://github.com/fastai/fastbook/blob/master/01_intro.ipynb) (highly recommended)
+
+---
+
+## Let's train a pet classifier
+
+- This is a minimal demo, to show some quirks of the supercomputer
+
+---
+
+## FastAI's demo image classifier
+
+### Save this as `fastai-demo.py`
+
+```python
+from fastai.vision.all import *
+
+print("Downloading dataset...")
+path = untar_data(URLs.PETS)/'images'
+print("Finished downloading dataset")
+
+def is_cat(x): return x[0].isupper()
+dls = ImageDataLoaders.from_name_func(
+    path, get_image_files(path), valid_pct=0.2, seed=42,
+    label_func=is_cat, item_tfms=Resize(224))
+
+print("On the login node, this will download resnet34")
+learn = vision_learner(dls, resnet34, metrics=error_rate)
+learn.fine_tune(1)
+```
+
+---
+
+## Submission file for the classifier
+
+### Save this as `fastai-demo.sbatch`
+
+```bash
+#!/bin/bash -x
+#SBATCH --account=training2303
+#SBATCH --mail-user=MYUSER@fz-juelich.de
+#SBATCH --mail-type=ALL
+#SBATCH --nodes=1
+#SBATCH --job-name=matrix-multiplication
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=1
+#SBATCH --output=output.%j
+#SBATCH --error=err.%j
+#SBATCH --time=00:10:00
+#SBATCH --partition=gpus
+#SBATCH --reservation=training-20230229 # For today only
+
+cd /p/home/jusers/$USER/jusuf/course/$USER
+source sc_venv_template/activate.sh # Now we finally use the fastai module
+
+srun python fastai-demo.py
+```
+
+---
+
+## 💥
+
+---
+
+## What happened?
+
+- Check the `error.${JOBID}` file
+- Long error message which ends with
+- ```python
+  File "/p/software/jusuf/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py", line 1391, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "/p/software/jusuf/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+srun: error: jsfc013: task 0: Exited with exit code 1
+```
+
+---
+
+## 🤔...
+
+---
+
+### What is it doing?
+
+- This downloads the dataset:
+- ```python
+path = untar_data(URLs.PETS)/'images'
+```
+
+- And this one downloads the pre-trained weights:
+- ```python
+learn = vision_learner(dls, resnet34, metrics=error_rate)
+```
+
+---
+
+
+## Remember, remember
+
+![](images/queue-finished.svg)
+
+---
+
+![](images/compute-nodes-no-net.svg)
+
+---
+
+## Compute nodes have no internet connection
+
+- But the login nodes do!
+- So we download our dataset before...
+
+---
+
+
+## On the login node:
+
+- Comment out the line which does AI training:
+- ```python
+# learn.fine_tune(1)
+```
+- Call our code on the login node!
+- ```bash
+source sc_venv_template/activate.sh # So that we have fast.ai library
+python fastai-demo.py
+```
+
+---
+
+## Downloading a dataset
+
+```bash
+$ source sc_venv_template/activate.sh
+$ python fastai-demo.py 
+Downloading dataset...
+ |████████-------------------------------| 23.50% [190750720/811706944 00:08<00:26]
+ Downloading: "https://download.pytorch.org/models/resnet34-b627a593.pth" to /p/project/ccstao/cstao05/.cache/torch/hub/checkpoints/resnet34-b627a593.pth
+100%|█████████████████████████████████████| 83.3M/83.3M [00:00<00:00, 266MB/s]
+```
+
+---
+
+## Run it again on the compute nodes!
+
+- Uncomment the line that does training:
+- ```bash
+learn.fine_tune(1)
+```
+- Submit the job!
+- ```bash
+sbatch fastai-demo.sbatch
+```
+
+---
+
+## Masoquistically waiting for the job to run?
+
+```bash
+watch squeue --me
+```
+(To exit, type CTRL-C)
+
+---
+
+## Check output files
+
+- You can seem them at VSCode
+- ```bash
+The activation script must be sourced, otherwise the virtual environment will not work.
+Setting vars
+Downloading dataset...
+Finished downloading dataset
+epoch     train_loss  valid_loss  error_rate  time    
+Epoch 1/1 : |-----------------------------------| 0.00% [0/92 00:00<?]
+Epoch 1/1 : |-----------------------------------| 2.17% [2/92 00:14<10:35 1.7452]
+Epoch 1/1 : |█----------------------------------| 3.26% [3/92 00:14<07:01 1.6413]
+Epoch 1/1 : |██---------------------------------| 5.43% [5/92 00:15<04:36 1.6057]
+...
+....
+Epoch 1/1 :
+epoch     train_loss  valid_loss  error_rate  time    
+0         0.049855    0.021369    0.007442    00:42     
+```
+
+- 🎉
+- 🥳
+
+---
+
+## Adding MLFLow to the Fast.AI demo
+
+- Follow the example from [mlflow.fastai](https://mlflow.org/docs/latest/python_api/mlflow.fastai.html)
+- Add this at the beginning of your code:
+- ```python
+import mlflow.fastai
+from mlflow import MlflowClient
+```
+- Change the training line to this:
+
+- ``` python
+# Enable auto logging
+mlflow.fastai.autolog()
+# Start MLflow session
+with mlflow.start_run() as run:
+        learn.fine_tune(1) # We are using a pre-trained model
+```
+
+---
+
+## MLFLOW+Fast.AI 
+
+#### Do the ssh port forward and check with `mlflow ui` on the login node
+
+```python
+from fastai.vision.all import *
+import mlflow.fastai
+from mlflow import MlflowClient
+
+path = untar_data(URLs.PETS)/'images'
+
+def is_cat(x): return x[0].isupper()
+dls = ImageDataLoaders.from_name_func(
+    path, get_image_files(path), valid_pct=0.2, seed=42,
+    label_func=is_cat, item_tfms=Resize(224))
+
+learn = vision_learner(dls, resnet34, metrics=error_rate)
+
+# Enable auto logging
+mlflow.fastai.autolog()
+
+# Start MLflow session
+with mlflow.start_run() as run:
+    learn.fine_tune(1)
+```
+
+---
+
+## Day 1 recap
+
+As of now, I expect you managed to: 
+
+- Stay awake for the most part of this morning 😴
+- Have your own ssh keys 🗝️🔐
+- A working ssh connection to the supercomputers 🖥️
+- Can edit and transfer files via VSCode 📝
+- Submit jobs and read results 📫
+- Access services on the login and compute nodes 🧙‍♀️
+- Is ready to make great code! 💪
+
+
+---
+
+## ANY QUESTIONS??
+
+#### Feedback is more than welcome!
+
+---
+
 ## Backup slides
 
 ---
 
-``` {.java .number-lines}
-// Some js
+## There's more!
 
-    a = 1;
-    b = 2;
-    let c = x => 1 + 2 + x;
-    c(3);
-
-```
-
-```python
-n = 0
-while n < 10:
-  if n % 2 == 0:
-    print(f"{n} is even")
-  else:
-    print(f"{n} is odd")
-  n += 1
-```
+- Remember the magic? 🧙‍♂️
+- Let's use it now to access the compute nodes directly!
 
 ---
+
+## Proxy Jump
+
+#### Accessing compute nodes directly
+
+- If we need to access some ports on the compute nodes
+- ![](images/proxyjump-magic.svg)
+
+---
+
+## Proxy Jump - SSH Configuration
+
+Type on your machine "`code $HOME/.ssh/config`" and paste this at the end:
+
+```ssh
+
+# -- Compute Nodes --
+Host *.booster
+        User [ADD YOUR USERNAME HERE]
+        StrictHostKeyChecking no
+        IdentityFile ~/.ssh/id_ed25519-JSC
+        ProxyJump booster
+Host *.jusuf
+        User [ADD YOUR USERNAME HERE]
+        StrictHostKeyChecking no
+        IdentityFile ~/.ssh/id_ed25519-JSC
+        ProxyJump jusuf
+
+```        
+
+---
+
+## Proxy Jump: Connecting to a node
+
+- Example: A service provides web interface on port 1234
+
+On the supercomputer:
+```bash
+srun --time=00:05:00 \
+     --nodes=1 --ntasks=1 \
+     --partition=gpus \
+     --account training2303 \
+     --cpu_bind=none \
+     --pty /bin/bash -i
+
+bash-4.4$ hostname # This is running on a compute node of the supercomputer
+jsfc013
+
+bash-4.4$ cd $HOME/course/$USER
+bash-4.4$ source sc_venv_template/activate.sh
+bash-4.4$ mlflow ui
+```
+---
+
+## Proxy Jump 
+
+On your machine:
+
+- `ssh -L :3334:localhost:5000 jsfc013i.jusuf`
+
+- Mind the `i` letter I added at the end of the hostname
+
+- Now you can access the service on your local browser at [http://localhost:3334](http://localhost:3334)
+
+---
+

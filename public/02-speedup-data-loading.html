@@ -27,6 +27,70 @@
       vertical-align: middle;
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="./dist/theme/sky.css" id="theme">
   <style>
@@ -164,8 +228,9 @@
   <p class="date">March 01, 2023</p>
 </section>
 
-<section id="schedule-for-day-2" class="slide level3">
-<h3>Schedule for day 2</h3>
+<section class="slide level2">
+
+<h3 id="schedule-for-day-2">Schedule for day 2</h3>
 <table>
 <thead>
 <tr class="header">
@@ -183,17 +248,136 @@
 <td>Speedup data loading</td>
 </tr>
 <tr class="odd">
+<td>10:30 - 11:00</td>
+<td>Coffee Break (flexible)</td>
+</tr>
+<tr class="even">
 <td>10:30 - 13:00</td>
 <td>Parallelize Training</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="jülich-supercomputers" class="slide level3">
-<h3>Jülich Supercomputers</h3>
-<p><img data-src="images/machines.png"
-alt="JSC Supercomputer Stragegy" /> ize
-training](03-parallelize-training.html)</p>
+<section id="io-is-separate-and-shared" class="slide level2">
+<h2>I/O is separate and shared</h2>
+<h4 id="all-compute-nodes-of-all-supercomputers-see-the-same-files">All
+compute nodes of all supercomputers see the same files</h4>
+<ul>
+<li class="fragment">Performance tradeoff between shared acessibility
+and speed</li>
+<li class="fragment">It’s simple to load data fast to 1 or 2 gpus. But
+to 100? 1000? 10000?</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="jülich-supercomputers">Jülich Supercomputers</h3>
+<ul>
+<li class="fragment">Our I/O server is almost a supercomputer by
+itself</li>
+<li class="fragment"><figure>
+<img data-src="images/machines.png" alt="JSC Supercomputer Stragegy" />
+<figcaption aria-hidden="true">JSC Supercomputer Stragegy</figcaption>
+</figure></li>
+</ul>
+</section>
+<section id="data-services" class="slide level2">
+<h2>Data services</h2>
+<ul>
+<li class="fragment">JSC provides different data services</li>
+<li class="fragment">Data projects give massive amounts of storage</li>
+<li class="fragment">We use it for ML datasets. Join the project at <a
+href="https://judoor.fz-juelich.de/projects/join/datasets">Judoor</a></li>
+<li class="fragment">After being approved, connect to the supercomputer
+and try it:</li>
+<li class="fragment"><div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$DATA_datasets</span></span></code></pre></div></li>
+</ul>
+</section>
+<section id="data-staging" class="slide level2">
+<h2>Data Staging</h2>
+<ul>
+<li class="fragment"><a
+href="https://apps.fz-juelich.de/jsc/hps/juwels/filesystems.html">LARGEDATA
+filesystem</a> is not accessible by compute nodes</li>
+<li class="fragment">Copy files to an accessible filesystem BEFORE
+working</li>
+<li class="fragment">Imagenet-21K copy alone takes 21+ minutes to
+$SCRATCH</li>
+</ul>
+</section>
+<section id="data-loading" class="slide level2">
+<h2>Data loading</h2>
+<figure>
+<img data-src="images/nomnom.jpg" alt="Fat GPUs need to be fed FAST" />
+<figcaption aria-hidden="true">Fat GPUs need to be fed FAST</figcaption>
+</figure>
+</section>
+<section id="strategies" class="slide level2">
+<h2>Strategies</h2>
+<ul>
+<li class="fragment">We have CPUs and lots of memory - let’s use them
+<ul>
+<li class="fragment">multitask training and data loading for the next
+batch</li>
+<li class="fragment"><code>/dev/shm</code> is a filesystem on ram -
+ultra fast ⚡️</li>
+</ul></li>
+<li class="fragment">Use big files made for parallel computing
+<ul>
+<li class="fragment">HDF5, Zarr, mmap() in a parallel fs, LMDB</li>
+</ul></li>
+<li class="fragment">Use specialized data loading libraries
+<ul>
+<li class="fragment">FFCV, DALI</li>
+</ul></li>
+<li class="fragment">Compression
+<ul>
+<li class="fragment">data transfer can be slower than decompression
+(must be checked case by case)</li>
+</ul></li>
+</ul>
+</section>
+<section id="libraries" class="slide level2">
+<h2>Libraries</h2>
+<ul>
+<li class="fragment">FFCV <a
+href="https://github.com/libffcv/ffcv">https://github.com/libffcv/ffcv</a>
+and <a href="https://github.com/SerezD/ffcv_pytorch_lightning">FFCV for
+PyTorch-Lightning</a></li>
+<li class="fragment">Nvidia’s DALI <a
+href="https://developer.nvidia.com/dali">https://developer.nvidia.com/dali</a></li>
+</ul>
+</section>
+<section id="access-file-vs-access-h5-file" class="slide level2">
+<h2>Access file VS Access H5 file</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>images_data <span class="op">=</span> data_loader.ImageNetKaggle(images_root, <span class="st">&quot;train&quot;</span>, transforms[<span class="st">&quot;train&quot;</span>]) </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataloaders <span class="op">=</span> DataLoader(images_data, batch_size<span class="op">=</span>batch_size, num_workers<span class="op">=</span>workers)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>start_t <span class="op">=</span> time.time()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> dataloaders:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    x</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>end_t <span class="op">=</span> time.time()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Time without h5 file: &quot;</span>, <span class="bu">str</span>(datetime.timedelta(seconds<span class="op">=</span><span class="bu">int</span>(end_t<span class="op">-</span>start_t))))       </span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Time</span> without h5 file:  0:00:29</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>images_data <span class="op">=</span> data_loader.ImagenetH5(h5_file, <span class="st">&quot;train&quot;</span>, transforms[<span class="st">&quot;train&quot;</span>]) </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dataloadersh5<span class="op">=</span> DataLoader(images_data, batch_size<span class="op">=</span>batch_size, num_workers<span class="op">=</span>workers)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>start_t <span class="op">=</span> time.time()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> dataloadersh5:</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    x</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>end_t <span class="op">=</span> time.time()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Time with h5 file: &quot;</span>, <span class="bu">str</span>(datetime.timedelta(seconds<span class="op">=</span><span class="bu">int</span>(end_t<span class="op">-</span>start_t))))</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Time</span> with h5 file:  0:00:26</span></code></pre></div>
+</section>
+<section id="demo" class="slide level2">
+<h2>Demo</h2>
 </section>
     </div>
   </div>

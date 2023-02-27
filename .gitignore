@@ -44,3 +44,7 @@ parallel/mainh5.py
 parallel/srun_h5b.sh
 
 draft/
+
+# Python
+__pycache__
+*.pyc
