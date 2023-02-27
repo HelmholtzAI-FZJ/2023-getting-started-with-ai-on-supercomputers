@@ -968,11 +968,12 @@ class="sourceCode numberSource bash number-lines"><code class="sourceCode bash">
 <span id="cb19-8"><a href="#cb19-8"></a><span class="co">#SBATCH --error=error.%j</span></span>
 <span id="cb19-9"><a href="#cb19-9"></a><span class="co">#SBATCH --time=00:01:00          # For how long can it run?</span></span>
 <span id="cb19-10"><a href="#cb19-10"></a><span class="co">#SBATCH --partition=gpus         # Machine partition</span></span>
-<span id="cb19-11"><a href="#cb19-11"></a></span>
-<span id="cb19-12"><a href="#cb19-12"></a><span class="ex">module</span> Stages/2023</span>
-<span id="cb19-13"><a href="#cb19-13"></a><span class="ex">module</span> load GCC OpenMPI PyTorch  <span class="co"># Load the correct modules on the compute node(s)</span></span>
-<span id="cb19-14"><a href="#cb19-14"></a></span>
-<span id="cb19-15"><a href="#cb19-15"></a><span class="ex">srun</span> python matrix.py            <span class="co"># srun tells the supercomputer how to run it</span></span></code></pre></div>
+<span id="cb19-11"><a href="#cb19-11"></a><span class="co">#SBATCH --reservation=training-20230229 # For today only</span></span>
+<span id="cb19-12"><a href="#cb19-12"></a></span>
+<span id="cb19-13"><a href="#cb19-13"></a><span class="ex">module</span> Stages/2023</span>
+<span id="cb19-14"><a href="#cb19-14"></a><span class="ex">module</span> load GCC OpenMPI PyTorch  <span class="co"># Load the correct modules on the compute node(s)</span></span>
+<span id="cb19-15"><a href="#cb19-15"></a></span>
+<span id="cb19-16"><a href="#cb19-16"></a><span class="ex">srun</span> python matrix.py            <span class="co"># srun tells the supercomputer how to run it</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -1141,15 +1142,16 @@ class="sourceCode numberSource bash number-lines"><code class="sourceCode bash">
 <span id="cb28-8"><a href="#cb28-8"></a><span class="co">#SBATCH --error=err.%j</span></span>
 <span id="cb28-9"><a href="#cb28-9"></a><span class="co">#SBATCH --time=00:10:00</span></span>
 <span id="cb28-10"><a href="#cb28-10"></a><span class="co">#SBATCH --partition=gpus</span></span>
-<span id="cb28-11"><a href="#cb28-11"></a></span>
-<span id="cb28-12"><a href="#cb28-12"></a><span class="co"># Make sure we are on the right directory</span></span>
-<span id="cb28-13"><a href="#cb28-13"></a><span class="bu">cd</span> /p/home/jusers/<span class="va">$USER</span>/jusuf/course/<span class="va">$USER</span></span>
-<span id="cb28-14"><a href="#cb28-14"></a></span>
-<span id="cb28-15"><a href="#cb28-15"></a><span class="co"># This loads modules and python packages</span></span>
-<span id="cb28-16"><a href="#cb28-16"></a><span class="bu">source</span> sc_venv_template/activate.sh</span>
-<span id="cb28-17"><a href="#cb28-17"></a></span>
-<span id="cb28-18"><a href="#cb28-18"></a><span class="co"># Run the demo</span></span>
-<span id="cb28-19"><a href="#cb28-19"></a><span class="ex">srun</span> python mlflow-demo.py</span></code></pre></div>
+<span id="cb28-11"><a href="#cb28-11"></a><span class="co">#SBATCH --reservation=training-20230229 # For today only</span></span>
+<span id="cb28-12"><a href="#cb28-12"></a></span>
+<span id="cb28-13"><a href="#cb28-13"></a><span class="co"># Make sure we are on the right directory</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a><span class="bu">cd</span> /p/home/jusers/<span class="va">$USER</span>/jusuf/course/<span class="va">$USER</span></span>
+<span id="cb28-15"><a href="#cb28-15"></a></span>
+<span id="cb28-16"><a href="#cb28-16"></a><span class="co"># This loads modules and python packages</span></span>
+<span id="cb28-17"><a href="#cb28-17"></a><span class="bu">source</span> sc_venv_template/activate.sh</span>
+<span id="cb28-18"><a href="#cb28-18"></a></span>
+<span id="cb28-19"><a href="#cb28-19"></a><span class="co"># Run the demo</span></span>
+<span id="cb28-20"><a href="#cb28-20"></a><span class="ex">srun</span> python mlflow-demo.py</span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -1314,7 +1316,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href=
 <span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=err.%j</span></span>
 <span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=00:10:00</span></span>
 <span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=gpus</span></span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="co">####SBATCH --gres=gpu:4</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --reservation=training-20230229 # For today only</span></span>
 <span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /p/home/jusers/<span class="va">$USER</span>/jusuf/course/<span class="va">$USER</span></span>
 <span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh <span class="co"># Now we finally use the fastai module</span></span>

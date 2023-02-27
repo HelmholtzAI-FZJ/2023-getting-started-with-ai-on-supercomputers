@@ -699,6 +699,7 @@ Simple Linux Utility for Resource Management
 #SBATCH --error=error.%j
 #SBATCH --time=00:01:00          # For how long can it run?
 #SBATCH --partition=gpus         # Machine partition
+#SBATCH --reservation=training-20230229 # For today only
 
 module Stages/2023
 module load GCC OpenMPI PyTorch  # Load the correct modules on the compute node(s)
@@ -891,6 +892,7 @@ if __name__ == "__main__":
 #SBATCH --error=err.%j
 #SBATCH --time=00:10:00
 #SBATCH --partition=gpus
+#SBATCH --reservation=training-20230229 # For today only
 
 # Make sure we are on the right directory
 cd /p/home/jusers/$USER/jusuf/course/$USER
@@ -1074,7 +1076,7 @@ learn.fine_tune(1)
 #SBATCH --error=err.%j
 #SBATCH --time=00:10:00
 #SBATCH --partition=gpus
-####SBATCH --gres=gpu:4
+#SBATCH --reservation=training-20230229 # For today only
 
 cd /p/home/jusers/$USER/jusuf/course/$USER
 source sc_venv_template/activate.sh # Now we finally use the fastai module
