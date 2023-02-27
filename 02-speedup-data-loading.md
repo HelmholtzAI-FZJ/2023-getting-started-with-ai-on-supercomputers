@@ -79,4 +79,37 @@ cd $DATA_datasets
 
 ---
 
-## DEMO
+## Access file VS Access H5 file
+
+```python
+images_data = data_loader.ImageNetKaggle(images_root, "train", transforms["train"]) 
+dataloaders = DataLoader(images_data, batch_size=batch_size, num_workers=workers)
+
+start_t = time.time()
+for x in dataloaders:
+    x
+
+end_t = time.time()
+print("Time without h5 file: ", str(datetime.timedelta(seconds=int(end_t-start_t))))       
+```
+```bash 
+Time without h5 file:  0:00:29
+```     
+
+```python
+images_data = data_loader.ImagenetH5(h5_file, "train", transforms["train"]) 
+dataloadersh5= DataLoader(images_data, batch_size=batch_size, num_workers=workers)
+ 
+start_t = time.time()
+for x in dataloadersh5:
+    x
+end_t = time.time()
+
+print("Time with h5 file: ", str(datetime.timedelta(seconds=int(end_t-start_t))))
+
+```
+```bash 
+Time with h5 file:  0:00:26
+```
+---
+## Demo

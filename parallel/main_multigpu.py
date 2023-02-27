@@ -85,7 +85,7 @@ def load_h5data(args):
 
     dataset_transforms = transformation()
 
-    image_datasets = {x: data_loader.ImagenetH5(args.imagenet_root, args.h5_file, x, dataset_transforms[x]) 
+    image_datasets = {x: data_loader.ImagenetH5(args.h5_file, x, dataset_transforms[x]) 
                     for x in ['train', 'val']}
 
 
@@ -183,8 +183,8 @@ if __name__ == "__main__":
     parser.add_argument('--gpu', type=list, default=[0,1,2,3])
     parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--data_dir', type=str)
-    parser.add_argument('--kaggle', type=bool, default=False)
-    parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/imageNet.h5")
+    parser.add_argument('--kaggle', type=bool, default=True)
+    parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/new_imagenet2.h5")
     parser.add_argument('--imagenet_root', type=str, default="/p/scratch/training2303/data/")
     parser.add_argument('--log', type=str)
     parser.add_argument('--tb_dir', type=str)
