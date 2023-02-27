@@ -451,8 +451,8 @@ mkdir ~/course/$USER/.config
 mkdir ~/course/$USER/.fastai
 
 ln -s ~/course/$USER/.cache $HOME/
-ln -s ~/course/$USER/.cache $HOME/
-ln -s ~/course/$USER/.cache $HOME/
+ln -s ~/course/$USER/.config $HOME/
+ln -s ~/course/$USER/.fastai $HOME/
 ```
 
 ---
