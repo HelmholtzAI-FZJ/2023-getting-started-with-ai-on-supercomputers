@@ -11,25 +11,44 @@ date: March 01, 2023
 | ------------- | -----------          |
 | 09:00 - 09:15 | Welcome, questions   |
 | 09:15 - 10:30 | Speedup data loading |
+| 10:30 - 11:00 | Coffee Break (flexible) |
 | 10:30 - 13:00 | Parallelize Training |
 
-
 ---
-
-
-### Jülich Supercomputers
-
-![JSC Supercomputer Stragegy](images/machines.png)
-
-
----
-
 
 ## I/O is separate and shared
 
 #### All compute nodes of all supercomputers see the same files
 
 - Performance tradeoff between shared acessibility and speed
+- It's simple to load data fast to 1 or 2 gpus. But to 100? 1000? 10000?
+
+---
+
+### Jülich Supercomputers
+
+- Our I/O server is almost a supercomputer by itself
+- ![JSC Supercomputer Stragegy](images/machines.png)
+
+---
+
+## Data services
+
+- JSC provides different data services
+- Data projects give massive amounts of storage
+- We use it for ML datasets. Join the project at [Judoor](https://judoor.fz-juelich.de/projects/join/datasets)
+- After being approved, connect to the supercomputer and try it:
+- ```bash
+cd $DATA_datasets
+```
+
+---
+
+## Data Staging
+
+- [LARGEDATA filesystem](https://apps.fz-juelich.de/jsc/hps/juwels/filesystems.html) is not accessible by compute nodes
+- Copy files to an accessible filesystem BEFORE working
+- Imagenet-21K copy alone takes 21+ minutes to $SCRATCH
 
 ---
 
@@ -37,23 +56,15 @@ date: March 01, 2023
 
 ![Fat GPUs need to be fed FAST](images/nomnom.jpg)
 
----
-
-## Data Staging
-
-- [LARGEDATA filesystem](https://apps.fz-juelich.de/jsc/hps/juwels/filesystems.html) is not accessible by compute nodes
-- Copy files to an accessible filesystem
-- Imagenet-21K copy alone takes 21+ minutes to $SCRATCH
-
-
 --- 
 
 ## Strategies
 
 - We have CPUs and lots of memory - let's use them
+    - multitask training and data loading for the next batch
     - `/dev/shm` is a filesystem on ram - ultra fast ⚡️
 - Use big files made for parallel computing
-    - HDF5, Zarr, mmap(), LMDB
+    - HDF5, Zarr, mmap() in a parallel fs, LMDB
 - Use specialized data loading libraries
     - FFCV, DALI
 - Compression
