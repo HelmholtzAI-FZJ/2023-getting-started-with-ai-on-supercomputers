@@ -7,34 +7,33 @@ date: February 28, 2023
 
 Dear colleagues,
 
-the next "Getting started with AI on supercomputers" course is approaching, thank you all very much for your participation.
+the next "Getting started with AI on supercomputers" course is approaching! Thank you all very much for your participation.
 
-You can find the information about the course and agenda here:
-https://indico3-jsc.fz-juelich.de/event/75/
+The course is online, over zoom:
+Join our Cloud HD Video Meeting
+https://go.fzj.de/intro-sc-ai-2023-slack
 
-Please, let us know by Wednesday 22.Feb if any changes are needed.
-Otherwise we consider this agenda to be set.
+We will use Slack for communication. Please log in BEFORE the course:
+Slack
+https://go.fzj.de/intro-sc-ai-2023-slack
 
-Our Zoom Meeting
-https://fz-juelich-de.zoom.us/j/98120874933?pwd=NXJJNXo1Nkx4OGNVNEhkWXBNTWlZUT09
 
-We will use Slack for communication. 
-https://join.slack.com/t/introscfeb2023/shared_invite/zt-1ozf2340j-Nnq~sqkObUgJfViVjWsHNw
 
 WHAT NEEDS TO BE DONE BEFORE THE COURSE?
 
 - If you don't have one, make an account on JuDOOR, our portal: https://judoor.fz-juelich.de/register
 Video: https://drive.google.com/file/d/1-DfiNBP4Gta0av4lQmubkXIXzr2FW4a-/view
+
 - Joining the course's project: https://judoor.fz-juelich.de/projects/join/training2303
+
 - Sign the usage agreements, as shown in this video: https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view
 
 
 ---
 
-
 What software is necessary for this course?
 
-The course can be followed by a Windows user, but if possible, avoid it. In general. Forever.
+The course is platform-independent. It can even be followed by a Windows user, but if possible, avoid it. In general. Forever.
 
 - Visual Studio Code: it's a free editor which we will demo on this course. Get it from https://code.visualstudio.com/download
 
@@ -50,5 +49,15 @@ The course can be followed by a Windows user, but if possible, avoid it. In gene
 
 - Some knowledge of the python language.
 
+---
 
-The material is available at https://go.fzj.de/intro-sc-ai-2023
+The course material is available at https://go.fzj.de/intro-sc-ai-2023 - I will be making some final commits to it, so make sure you reload it every now and then.
+
+See you tomorrow, 
+
+Alex and Sabrina
+
+
+
+
+
