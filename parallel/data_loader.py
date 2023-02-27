@@ -12,22 +12,11 @@ class ImagenetH5(Dataset):
 
         self.imgs = h5py.File(h5_file, 'r')[subset] 
     
-        self.samples = []
         self.transform = transform
 
-        samples_dir = os.path.join(root, "ILSVRC/Data/CLS-LOC", subset)
-        for entry in os.listdir(samples_dir):
-            if subset == "train":
-                syn_id = entry
-                syn_folder = os.path.join(samples_dir, syn_id)
-                for sample in os.listdir(syn_folder):
-                    self.samples.append(sample)                    
-            elif subset == "val":            
-                self.samples.append(entry)
-
-
+      
     def __len__(self) -> int:
-        return len(self.samples)
+        return self.imgs["images"].shape[0]
 
     def __getitem__(self, index: int):
         img_string = self.imgs["images"][index]

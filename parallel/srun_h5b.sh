@@ -5,8 +5,8 @@
 #SBATCH --cpus-per-task=96
 #SBATCH --output=/p/home/jusers/benassou1/juwels/benassou1/2023-getting-started-with-ai-on-supercomputers/parallel/output/%j.out
 #SBATCH --error=/p/home/jusers/benassou1/juwels/benassou1/2023-getting-started-with-ai-on-supercomputers/parallel/output/%j.err
-#SBATCH --time=02:00:00
-#SBATCH --partition=develbooster
+#SBATCH --time=10:00:00
+#SBATCH --partition=booster
 #SBATCH --gres=gpu:1
 #SBATCH --account=atmlaml
 

@@ -34,5 +34,13 @@ parallel/sc_venv_template
 parallel/logs
 parallel/output
 parallel/download_data.sh
+parallel/__pycache__
+parallel/imagenet_val.pkl
+parallel/imagenet_train.pkl
+parallel/imagenet_labels.pkl
+parallel/ResNet18_224.ipynb
+parallel/to_h5.py
+parallel/mainh5.py
+parallel/srun_h5b.sh
 
 draft/
