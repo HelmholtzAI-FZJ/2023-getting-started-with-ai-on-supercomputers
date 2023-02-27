@@ -952,78 +952,6 @@ mlflow server --port 3000
 
 ---
 
-## But there's more!
-
-- Remember the magic? 🧙‍♂️
-- Let's use it now to access the compute nodes directly!
-
----
-
-## Proxy Jump
-
-#### Accessing compute nodes directly
-
-- If we need to access some ports on the compute nodes
-- ![](images/proxyjump-magic.svg)
-
----
-
-## Proxy Jump - SSH Configuration
-
-Type on your machine "`code $HOME/.ssh/config`" and paste this at the end:
-
-```ssh
-
-# -- Compute Nodes --
-Host *.booster
-        User [ADD YOUR USERNAME HERE]
-        StrictHostKeyChecking no
-        IdentityFile ~/.ssh/id_ed25519-JSC
-        ProxyJump booster
-Host *.jusuf
-        User [ADD YOUR USERNAME HERE]
-        StrictHostKeyChecking no
-        IdentityFile ~/.ssh/id_ed25519-JSC
-        ProxyJump jusuf
-
-```        
-
----
-
-## Proxy Jump: Connecting to a node
-
-- Example: A service provides web interface on port 1234
-
-On the supercomputer:
-```bash
-srun --time=00:05:00 \
-     --nodes=1 --ntasks=1 \
-     --partition=gpus \
-     --account training2303 \
-     --cpu_bind=none \
-     --pty /bin/bash -i
-
-bash-4.4$ hostname # This is running on a compute node of the supercomputer
-jsfc013
-
-bash-4.4$ cd $HOME/course/$USER
-bash-4.4$ source sc_venv_template/activate.sh
-bash-4.4$ mlflow ui
-```
----
-
-## Proxy Jump 
-
-On your machine:
-
-- `ssh -L :3334:localhost:5000 jsfc013i.jusuf`
-
-- Mind the `i` letter I added at the end of the hostname
-
-- Now you can access the service on your local browser at [http://localhost:3334](http://localhost:3334)
-
----
-
 ## A fisrt AI code!
 
 - Let's copy the demo from [Fast.AI's course](https://github.com/fastai/fastbook/blob/master/01_intro.ipynb) (highly recommended)
@@ -1216,31 +1144,6 @@ epoch     train_loss  valid_loss  error_rate  time
 
 ---
 
-## Day 1 recap
-
-As of now, I expect you managed to: 
-
-- Stay awake for the most part of this morning 😴
-- Have your own ssh keys 🗝️🔐
-- A working ssh connection to the supercomputers 🖥️
-- Can edit and transfer files via VSCode 📝
-- Submit jobs and read results 📫
-- Access services on the login and compute nodes 🧙‍♀️
-- Is ready to make great code! 💪
-
-
----
-
-## ANY QUESTIONS??
-
-#### Feedback is more than welcome!
-
----
-
-## Backup slides
-
----
-
 ## Adding MLFLow to the Fast.AI demo
 
 - Follow the example from [mlflow.fastai](https://mlflow.org/docs/latest/python_api/mlflow.fastai.html)
@@ -1288,3 +1191,101 @@ with mlflow.start_run() as run:
 ```
 
 ---
+
+## Day 1 recap
+
+As of now, I expect you managed to: 
+
+- Stay awake for the most part of this morning 😴
+- Have your own ssh keys 🗝️🔐
+- A working ssh connection to the supercomputers 🖥️
+- Can edit and transfer files via VSCode 📝
+- Submit jobs and read results 📫
+- Access services on the login and compute nodes 🧙‍♀️
+- Is ready to make great code! 💪
+
+
+---
+
+## ANY QUESTIONS??
+
+#### Feedback is more than welcome!
+
+---
+
+## Backup slides
+
+---
+
+## There's more!
+
+- Remember the magic? 🧙‍♂️
+- Let's use it now to access the compute nodes directly!
+
+---
+
+## Proxy Jump
+
+#### Accessing compute nodes directly
+
+- If we need to access some ports on the compute nodes
+- ![](images/proxyjump-magic.svg)
+
+---
+
+## Proxy Jump - SSH Configuration
+
+Type on your machine "`code $HOME/.ssh/config`" and paste this at the end:
+
+```ssh
+
+# -- Compute Nodes --
+Host *.booster
+        User [ADD YOUR USERNAME HERE]
+        StrictHostKeyChecking no
+        IdentityFile ~/.ssh/id_ed25519-JSC
+        ProxyJump booster
+Host *.jusuf
+        User [ADD YOUR USERNAME HERE]
+        StrictHostKeyChecking no
+        IdentityFile ~/.ssh/id_ed25519-JSC
+        ProxyJump jusuf
+
+```        
+
+---
+
+## Proxy Jump: Connecting to a node
+
+- Example: A service provides web interface on port 1234
+
+On the supercomputer:
+```bash
+srun --time=00:05:00 \
+     --nodes=1 --ntasks=1 \
+     --partition=gpus \
+     --account training2303 \
+     --cpu_bind=none \
+     --pty /bin/bash -i
+
+bash-4.4$ hostname # This is running on a compute node of the supercomputer
+jsfc013
+
+bash-4.4$ cd $HOME/course/$USER
+bash-4.4$ source sc_venv_template/activate.sh
+bash-4.4$ mlflow ui
+```
+---
+
+## Proxy Jump 
+
+On your machine:
+
+- `ssh -L :3334:localhost:5000 jsfc013i.jusuf`
+
+- Mind the `i` letter I added at the end of the hostname
+
+- Now you can access the service on your local browser at [http://localhost:3334](http://localhost:3334)
+
+---
+
