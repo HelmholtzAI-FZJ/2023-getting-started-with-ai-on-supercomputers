@@ -19,6 +19,7 @@ date: February 28, 2023
 
 - Make sure you know how to access and use our machines
 - Distribute your ML workload.
+- Important: This is _*NOT*_ a basic AI course
 
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
 
@@ -1038,13 +1039,17 @@ On your machine:
 
 ```python
 from fastai.vision.all import *
+
+print("Downloading dataset...")
 path = untar_data(URLs.PETS)/'images'
+print("Finished downloading dataset")
 
 def is_cat(x): return x[0].isupper()
 dls = ImageDataLoaders.from_name_func(
     path, get_image_files(path), valid_pct=0.2, seed=42,
     label_func=is_cat, item_tfms=Resize(224))
 
+print("On the login node, this will download resnet34")
 learn = vision_learner(dls, resnet34, metrics=error_rate)
 learn.fine_tune(1)
 ```
@@ -1196,6 +1201,11 @@ Epoch 1/1 : |-----------------------------------| 0.00% [0/92 00:00<?]
 Epoch 1/1 : |-----------------------------------| 2.17% [2/92 00:14<10:35 1.7452]
 Epoch 1/1 : |█----------------------------------| 3.26% [3/92 00:14<07:01 1.6413]
 Epoch 1/1 : |██---------------------------------| 5.43% [5/92 00:15<04:36 1.6057]
+...
+....
+Epoch 1/1 :
+epoch     train_loss  valid_loss  error_rate  time    
+0         0.049855    0.021369    0.007442    00:42     
 ```
 
 - 🎉

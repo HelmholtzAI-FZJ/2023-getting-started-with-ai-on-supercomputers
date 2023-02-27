@@ -246,6 +246,8 @@ data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
 <li class="fragment">Make sure you know how to access and use our
 machines</li>
 <li class="fragment">Distribute your ML workload.</li>
+<li class="fragment">Important: This is <em><em>NOT</em></em> a basic AI
+course</li>
 </ul>
 <p><img
 data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
@@ -1277,15 +1279,19 @@ supercomputer</li>
 <code>fastai-demo.py</code></h3>
 <div class="sourceCode" id="cb33"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> untar_data(URLs.PETS)<span class="op">/</span><span class="st">&#39;images&#39;</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_cat(x): <span class="cf">return</span> x[<span class="dv">0</span>].isupper()</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> ImageDataLoaders.from_name_func(</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    path, get_image_files(path), valid_pct<span class="op">=</span><span class="fl">0.2</span>, seed<span class="op">=</span><span class="dv">42</span>,</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    label_func<span class="op">=</span>is_cat, item_tfms<span class="op">=</span>Resize(<span class="dv">224</span>))</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(dls, resnet34, metrics<span class="op">=</span>error_rate)</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>learn.fine_tune(<span class="dv">1</span>)</span></code></pre></div>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Downloading dataset...&quot;</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> untar_data(URLs.PETS)<span class="op">/</span><span class="st">&#39;images&#39;</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Finished downloading dataset&quot;</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_cat(x): <span class="cf">return</span> x[<span class="dv">0</span>].isupper()</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> ImageDataLoaders.from_name_func(</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    path, get_image_files(path), valid_pct<span class="op">=</span><span class="fl">0.2</span>, seed<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    label_func<span class="op">=</span>is_cat, item_tfms<span class="op">=</span>Resize(<span class="dv">224</span>))</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;On the login node, this will download resnet34&quot;</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(dls, resnet34, metrics<span class="op">=</span>error_rate)</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>learn.fine_tune(<span class="dv">1</span>)</span></code></pre></div>
 </section>
 <section id="submission-file-for-the-classifier" class="slide level2">
 <h2>Submission file for the classifier</h2>
@@ -1413,7 +1419,12 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href=
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">-----------------------------------</span><span class="kw">|</span> <span class="ex">0.00%</span> [0/92 00:00<span class="op">&lt;</span><span class="pp">?</span>]</span>
 <span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">-----------------------------------</span><span class="kw">|</span> <span class="ex">2.17%</span> [2/92 00:14<span class="op">&lt;</span>10:35 1.7452]</span>
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">█----------------------------------</span><span class="kw">|</span> <span class="ex">3.26%</span> [3/92 00:14<span class="op">&lt;</span>07:01 1.6413]</span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">██---------------------------------</span><span class="kw">|</span> <span class="ex">5.43%</span> [5/92 00:15<span class="op">&lt;</span>04:36 1.6057]</span></code></pre></div></li>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">██---------------------------------</span><span class="kw">|</span> <span class="ex">5.43%</span> [5/92 00:15<span class="op">&lt;</span>04:36 1.6057]</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="ex">....</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 :</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="ex">epoch</span>     train_loss  valid_loss  error_rate  time    </span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span>         0.049855    0.021369    0.007442    00:42     </span></code></pre></div></li>
 <li class="fragment">🎉</li>
 <li class="fragment">🥳</li>
 </ul>
