@@ -1101,6 +1101,21 @@ srun: error: jsfc013: task 0: Exited with exit code 1
 
 ---
 
+### What is it doing?
+
+- This downloads the dataset:
+- ```python
+path = untar_data(URLs.PETS)/'images'
+```
+
+- And this one downloads the pre-trained weights:
+- ```python
+learn = vision_learner(dls, resnet34, metrics=error_rate)
+```
+
+---
+
+
 ## Remember, remember
 
 ![](images/queue-finished.svg)
@@ -1118,8 +1133,46 @@ srun: error: jsfc013: task 0: Exited with exit code 1
 
 ---
 
+
 ## On the login node:
 
+- Comment out the line which does AI training:
+- ```python
+# learn.fine_tune(1)
+```
+- Call our code on the login node!
+- ```bash
+source sc_venv_template/activate.sh # So that we have fast.ai library
+python fastai-demo.py
+```
+
+---
+
+## Downloading a dataset
+
+```bash
+$ source sc_venv_template/activate.sh
+$ python fastai-demo.py 
+Downloading dataset...
+ |████████-------------------------------| 23.50% [190750720/811706944 00:08<00:26]
+ Downloading: "https://download.pytorch.org/models/resnet34-b627a593.pth" to /p/project/ccstao/cstao05/.cache/torch/hub/checkpoints/resnet34-b627a593.pth
+100%|█████████████████████████████████████| 83.3M/83.3M [00:00<00:00, 266MB/s]
+```
+
+---
+
+## Run it again!
+
+- Uncomment the line that does training:
+- ```bash
+learn.fine_tune(1)
+```
+- Submit the job!
+- ```bash
+sbatch fastai-demo.sbatch
+```
+
+---
 
 
 

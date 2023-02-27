@@ -1331,6 +1331,19 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a h
 <section id="section-1" class="slide level2">
 <h2>🤔…</h2>
 </section>
+<section class="slide level2">
+
+<h3 id="what-is-it-doing">What is it doing?</h3>
+<ul>
+<li class="fragment">This downloads the dataset:</li>
+<li class="fragment"><div class="sourceCode" id="cb36"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> untar_data(URLs.PETS)<span class="op">/</span><span class="st">&#39;images&#39;</span></span></code></pre></div></li>
+<li class="fragment">And this one downloads the pre-trained
+weights:</li>
+<li class="fragment"><div class="sourceCode" id="cb37"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(dls, resnet34, metrics<span class="op">=</span>error_rate)</span></code></pre></div></li>
+</ul>
+</section>
 <section id="remember-remember" class="slide level2">
 <h2>Remember, remember</h2>
 <p><img data-src="images/queue-finished.svg" /></p>
@@ -1349,6 +1362,39 @@ class="slide level2">
 </section>
 <section id="on-the-login-node" class="slide level2">
 <h2>On the login node:</h2>
+<ul>
+<li class="fragment">Comment out the line which does AI training:</li>
+<li class="fragment"><div class="sourceCode" id="cb38"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># learn.fine_tune(1)</span></span></code></pre></div></li>
+<li class="fragment">Call our code on the login node!</li>
+<li class="fragment"><div class="sourceCode" id="cb39"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh <span class="co"># So that we have fast.ai library</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> fastai-demo.py</span></code></pre></div></li>
+</ul>
+</section>
+<section id="downloading-a-dataset" class="slide level2">
+<h2>Downloading a dataset</h2>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> source sc_venv_template/activate.sh</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python fastai-demo.py </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Downloading</span> dataset...</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">|</span><span class="ex">████████-------------------------------</span><span class="kw">|</span> <span class="ex">23.50%</span> [190750720/811706944 00:08<span class="op">&lt;</span>00:26]</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a> <span class="ex">Downloading:</span> <span class="st">&quot;https://download.pytorch.org/models/resnet34-b627a593.pth&quot;</span> to /p/project/ccstao/cstao05/.cache/torch/hub/checkpoints/resnet34-b627a593.pth</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="ex">100%</span><span class="kw">|</span><span class="ex">█████████████████████████████████████</span><span class="kw">|</span> <span class="ex">83.3M/83.3M</span> [00:00<span class="op">&lt;</span>00:00, 266MB/s]</span></code></pre></div>
+</section>
+<section id="run-it-again" class="slide level2">
+<h2>Run it again!</h2>
+<ul>
+<li class="fragment">Uncomment the line that does training:</li>
+<li class="fragment"><div class="sourceCode" id="cb41"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="ex">learn.fine_tune</span><span class="er">(</span><span class="ex">1</span><span class="kw">)</span></span></code></pre></div></li>
+<li class="fragment">Submit the job!</li>
+<li class="fragment"><div class="sourceCode" id="cb42"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> fastai-demo.sbatch</span></code></pre></div></li>
+</ul>
+</section>
+<section class="slide level2">
+
 </section>
 <section id="day-1-recap" class="slide level2">
 <h2>Day 1 recap</h2>
