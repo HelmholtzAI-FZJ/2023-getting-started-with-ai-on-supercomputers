@@ -349,8 +349,35 @@ PyTorch-Lightning</a></li>
 href="https://developer.nvidia.com/dali">https://developer.nvidia.com/dali</a></li>
 </ul>
 </section>
+<section id="access-file-vs-access-h5-file" class="slide level2">
+<h2>Access file VS Access H5 file</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>images_data <span class="op">=</span> data_loader.ImageNetKaggle(images_root, <span class="st">&quot;train&quot;</span>, transforms[<span class="st">&quot;train&quot;</span>]) </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataloaders <span class="op">=</span> DataLoader(images_data, batch_size<span class="op">=</span>batch_size, num_workers<span class="op">=</span>workers)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>start_t <span class="op">=</span> time.time()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> dataloaders:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    x</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>end_t <span class="op">=</span> time.time()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Time without h5 file: &quot;</span>, <span class="bu">str</span>(datetime.timedelta(seconds<span class="op">=</span><span class="bu">int</span>(end_t<span class="op">-</span>start_t))))       </span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Time</span> without h5 file:  0:00:29</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>images_data <span class="op">=</span> data_loader.ImagenetH5(h5_file, <span class="st">&quot;train&quot;</span>, transforms[<span class="st">&quot;train&quot;</span>]) </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dataloadersh5<span class="op">=</span> DataLoader(images_data, batch_size<span class="op">=</span>batch_size, num_workers<span class="op">=</span>workers)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>start_t <span class="op">=</span> time.time()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> dataloadersh5:</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    x</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>end_t <span class="op">=</span> time.time()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Time with h5 file: &quot;</span>, <span class="bu">str</span>(datetime.timedelta(seconds<span class="op">=</span><span class="bu">int</span>(end_t<span class="op">-</span>start_t))))</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Time</span> with h5 file:  0:00:26</span></code></pre></div>
+</section>
 <section id="demo" class="slide level2">
-<h2>DEMO</h2>
+<h2>Demo</h2>
 </section>
     </div>
   </div>

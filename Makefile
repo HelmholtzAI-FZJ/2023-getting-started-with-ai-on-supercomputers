@@ -7,7 +7,7 @@ EXPORTED_DOCS=\
 
 RM=/bin/rm
 
-PANDOC=/usr/local/bin/pandoc
+PANDOC=pandoc
 
 PANDOC_OPTIONS=-t revealjs -s \
 	-V revealjs-url=. \
