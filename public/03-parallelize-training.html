@@ -233,23 +233,61 @@
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> torch.device(args.device)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>images_data <span class="op">=</span> data_loader.ImagenetH5(h5_file, <span class="st">&quot;train&quot;</span>, transforms[<span class="st">&quot;train&quot;</span>]) </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dataloadersh5<span class="op">=</span> DataLoader(images_data, batch_size<span class="op">=</span>batch_size, num_workers<span class="op">=</span>workers)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> resnet50(<span class="va">True</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>model.to(device)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>criterion <span class="op">=</span> nn.CrossEntropyLoss()</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span>args.lr, momentum<span class="op">=</span>args.momentum, </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>weight_decay<span class="op">=</span>args.weight_decay)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Start training&quot;</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(args.epochs):</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    train_loss <span class="op">=</span> train_one_epoch(model, criterion, optimizer, dataloaders[<span class="st">&quot;train&quot;</span>], </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    device, epoch)</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    evaluate(model, criterion, dataloaders[<span class="st">&quot;val&quot;</span>], device<span class="op">=</span>device)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>images_data <span class="op">=</span> data_loader.ImagenetH5(args.h5_file, <span class="st">&quot;train&quot;</span>, transforms[<span class="st">&quot;train&quot;</span>]) </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dataloadersh5<span class="op">=</span> DataLoader(images_data, batch_size<span class="op">=</span>args.batch_size, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>num_workers<span class="op">=</span>args.workers)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> resnet50(<span class="va">True</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>model.to(device)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>criterion <span class="op">=</span> nn.CrossEntropyLoss()</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span>args.lr, momentum<span class="op">=</span>args.momentum, </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>weight_decay<span class="op">=</span>args.weight_decay)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(args.epochs):</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    train_loss <span class="op">=</span> train_one_epoch(model, criterion, optimizer, dataloaders[<span class="st">&quot;train&quot;</span>], </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    device, epoch)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    evaluate(model, criterion, dataloaders[<span class="st">&quot;val&quot;</span>], device<span class="op">=</span>device)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>checkpoint <span class="op">=</span> {<span class="st">&#39;model&#39;</span>: model.state_dict(), <span class="st">&#39;optimizer&#39;</span>: optimizer.state_dict(),</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;epoch&#39;</span>: epoch,<span class="st">&#39;args&#39;</span>: args}</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>torch.save(checkpoint, os.path.join(args.log, <span class="st">&#39;checkpoint.pth&#39;</span>))</span></code></pre></div>
+</section>
+<section id="one-gpu-training-1" class="slide level2">
+<h2>One GPU training</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash -x</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=1</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=1</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=96</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=outputs/%j.out</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=outputs/%j.err</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=02:00:00</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=booster</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:1</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2303</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --reservation=training-20230301</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> outputs</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> python <span class="at">-u</span> main.py  <span class="at">--log</span> <span class="st">&quot;logs/&quot;</span> </span></code></pre></div>
+</section>
+<section id="tensorboard" class="slide level2">
+<h2>TensorBoard</h2>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.tensorboard <span class="im">import</span> SummaryWriter</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>writer <span class="op">=</span> SummaryWriter(tb_dir)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>writer.add_scalar(<span class="st">&#39;loss/train&#39;</span>, train_loss, epoch)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span>  <span class="at">-L</span> 16000:localhost:16000 booster</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ml</span> TensorFlow</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tensorboard</span> <span class="at">--logdir</span><span class="op">=</span><span class="pp">[</span><span class="ss">PATH_TO_TENSOR_BOARD</span><span class="pp">]</span> <span class="at">--port</span><span class="op">=</span>16000</span></code></pre></div>
+</section>
+<section id="demo" class="slide level2">
+<h2>DEMO</h2>
 </section>
 <section id="parallel-ml" class="slide level2">
 <h2>Parallel ML</h2>
@@ -271,11 +309,86 @@ parallel)</li>
 <li class="fragment">All processes collectively use data parallel</li>
 </ul>
 </section>
-<section id="demo" class="slide level2">
+<section id="ddp-steps" class="slide level2">
+<h2>DDP steps</h2>
+<ol type="1">
+<li class="fragment">Set up the environement variable for the
+distributed mode (WORLD_SIZE, RANK, LOCAL_RANK …)</li>
+<li class="fragment">Initialize the torch.distributed package</li>
+<li class="fragment">Initialize a sampler to specify the sequence of
+indices/keys used in data loading.</li>
+<li class="fragment">Implements data parallelism of the model.</li>
+<li class="fragment">Allow only process to save checkpoints.</li>
+</ol>
+</section>
+<section id="terminologies" class="slide level2">
+<h2>Terminologies</h2>
+<ul>
+<li class="fragment">WORLD_SIZE: number of processes participating in
+the job.</li>
+<li class="fragment">RANK: the rank of the process in the network.</li>
+<li class="fragment">LOCAL_RANK: the rank of the process on the local
+machine.</li>
+<li class="fragment">MASTER_PORT: free port on machine with rank 0.</li>
+<li class="fragment">MASTER_ADDR: address of rank 0 node.</li>
+</ul>
+</section>
+<section id="ddp-code" class="slide level2">
+<h2>DDP code</h2>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>utils.init_distributed_mode(args.master_port)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>torch.distributed.init_process_group(backend<span class="op">=</span><span class="st">&#39;nccl&#39;</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> torch.device(args.device)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>torch.backends.cudnn.benchmark <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>image_datasets <span class="op">=</span> load_h5data(args)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>datasets_sampler <span class="op">=</span> {x: torch.utils.data.distributed.DistributedSampler(image_datasets[x])</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> x <span class="kw">in</span> [<span class="st">&#39;train&#39;</span>, <span class="st">&#39;val&#39;</span>]}</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>dataloaders <span class="op">=</span> {x: DataLoader(image_datasets[x], batch_size<span class="op">=</span>args.batch_size, sampler<span class="op">=</span>datasets_sampler[x], num_workers<span class="op">=</span>args.workers, pin_memory<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> x <span class="kw">in</span> [<span class="st">&#39;train&#39;</span>, <span class="st">&#39;val&#39;</span>]}</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> resnet50()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>model.to(device)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> torch.nn.parallel.DistributedDataParallel(model, device_ids<span class="op">=</span>[args.gpu])</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>model_without_ddp <span class="op">=</span> model.module</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>criterion <span class="op">=</span> nn.CrossEntropyLoss()</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span>args.lr, momentum<span class="op">=</span>args.momentum, weight_decay<span class="op">=</span>args.weight_decay)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(args.epochs):</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    datasets_sampler[<span class="st">&quot;train&quot;</span>].set_epoch(epoch)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    train_loss <span class="op">=</span> train_one_epoch(model, criterion, optimizer, dataloaders[<span class="st">&quot;train&quot;</span>], datasets_sampler[<span class="st">&quot;train&quot;</span>], device, epoch)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    evaluate(model, criterion, dataloaders[<span class="st">&quot;val&quot;</span>], device<span class="op">=</span>device)       </span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> utils.is_main_process():</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> args.log:</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>            checkpoint <span class="op">=</span> {</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;model&#39;</span>: model_without_ddp.state_dict(),</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;optimizer&#39;</span>: optimizer.state_dict(),</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;epoch&#39;</span>: epoch,</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;args&#39;</span>: args}</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>            utils.save_on_master(</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>                checkpoint,</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>                os.path.join(args.log, <span class="st">&#39;checkpoint.pth&#39;</span>))</span></code></pre></div>
+</section>
+<section id="demo-1" class="slide level2">
 <h2>DEMO</h2>
 </section>
-<section id="new-page" class="slide level2">
-<h2>New page</h2>
+<section id="day-2-recap" class="slide level2">
+<h2>DAY 2 RECAP</h2>
+<ul>
+<li class="fragment">Difference between reading from folders and reading
+from H5 file.</li>
+<li class="fragment">Use TensorBoard on the supercomputer.</li>
+<li class="fragment">Write parallel code.</li>
+<li class="fragment">Can submit multi-node multi-gpu training.</li>
+</ul>
+</section>
+<section id="any-questions" class="slide level2">
+<h2>ANY QUESTIONS??</h2>
+<h4 id="feedback-is-more-than-welcome">Feedback is more than
+welcome!</h4>
+</section>
+<section class="slide level2">
+
 </section>
     </div>
   </div>
