@@ -79,6 +79,12 @@ cd $DATA_datasets
 
 ---
 
+## H5 file
+
+![](images/h5.png)
+
+---
+
 ## Access file VS Access H5 file
 
 ```python
