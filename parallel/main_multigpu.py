@@ -31,17 +31,6 @@ def train_one_epoch(model, criterion, optimizer, data_loader, sampler, device, e
         loss.backward()
         
         optimizer.step()
-
-
-    # Total loss is devided by the number of 
-    total_loss /= len(sampler)
-    
-    torch.distributed.all_reduce(total_loss)
-
-    if utils.is_main_process():
-        print("Epoch {}: avg_loss {}".format(epoch, total_loss))
-
-    return total_loss
      
 
 def evaluate(model, criterion, data_loader, device):
@@ -113,13 +102,8 @@ def main(args):
 
     # enable benchmark mode in cuDNN to benchmark multiple convolution algorithms and select the fastest.
     torch.backends.cudnn.benchmark = True
-    
-    # only process rank 0 initialize the SummaryWriter.
-    if utils.is_main_process():
-        print(args)
-        writer = SummaryWriter(args.tb_dir)
-    
-   
+
+
     if args.kaggle:
         image_datasets = load_data(args)
     else:
@@ -152,29 +136,25 @@ def main(args):
         datasets_sampler["train"].set_epoch(epoch)
 
         train_loss = train_one_epoch(model, criterion, optimizer, dataloaders["train"], datasets_sampler["train"], device, epoch)
-
         evaluate(model, criterion, dataloaders["val"], device=device)
            
-        # Only process rank 0 can add scalar data to summary
-        if utils.is_main_process():
-            writer.add_scalar('loss/train', train_loss, epoch)
-        
         # Only process rank 0 can save checkpoints
-        if args.log:
-            checkpoint = {
-                'model': model_without_ddp.state_dict(),
-                'optimizer': optimizer.state_dict(),
-                'epoch': epoch,
-                'args': args}
-            utils.save_on_master(
-                checkpoint,
-                os.path.join(args.log, 'checkpoint.pth'))
-        
-           
-        total_time = time.time() - start_time
-        total_time_str = str(datetime.timedelta(seconds=int(total_time)))
         if utils.is_main_process():
-            print('Training time {}'.format(total_time_str))
+            if args.log:
+                checkpoint = {
+                    'model': model_without_ddp.state_dict(),
+                    'optimizer': optimizer.state_dict(),
+                    'epoch': epoch,
+                    'args': args}
+                utils.save_on_master(
+                    checkpoint,
+                    os.path.join(args.log, 'checkpoint.pth'))
+            
+           
+    total_time = time.time() - start_time
+    total_time_str = str(datetime.timedelta(seconds=int(total_time)))
+    if utils.is_main_process():
+        print('Training time {}'.format(total_time_str))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -183,8 +163,8 @@ if __name__ == "__main__":
     parser.add_argument('--gpu', type=list, default=[0,1,2,3])
     parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--data_dir', type=str)
-    parser.add_argument('--kaggle', type=bool, default=True)
-    parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/new_imagenet2.h5")
+    parser.add_argument('--kaggle', type=bool, default=False)
+    parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/ImageNetFinal.h5")
     parser.add_argument('--imagenet_root', type=str, default="/p/scratch/training2303/data/")
     parser.add_argument('--log', type=str)
     parser.add_argument('--tb_dir', type=str)

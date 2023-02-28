@@ -1,12 +1,13 @@
 import time 
 import datetime
-from torch.utils.data import DataLoader
 
+from tqdm import tqdm 
+
+from torch.utils.data import DataLoader
 from torchvision import transforms
 
 from resnet import resnet50 
 import data_loader
-
 
 def transformation():
     _IMAGE_MEAN_VALUE = [0.485, 0.456, 0.406]
@@ -37,17 +38,19 @@ def transformation():
 
 
 imagenet_root = "/p/scratch/training2303/data/"
-h5_file = "/p/scratch/training2303/data/new_imagenet2.h5"
-batch_size = 128
-workers = 24
+h5_file = "/p/scratch/training2303/data/ImageNetFinal.h5"
+batch_size = 2048
+workers = 40
 
 dataset_transforms = transformation()
 
 image_datasets = data_loader.ImageNetKaggle(imagenet_root, "train", dataset_transforms["train"]) 
-dataloaders = DataLoader(image_datasets, batch_size=batch_size,num_workers=workers, pin_memory=True)
+samplet_data torch.utils.data.distributed.DistributedSampler(image_datasets)
+dataloaders = DataLoader(image_datasets, batch_size=batch_size, num_workers=workers, sampler=samplet_data, pin_memory=True)
 
+print("Start loading without H5 file")
 start_time = time.time()
-for x in dataloaders:
+for x in tqdm(dataloaders):
     x
 
 end_time = time.time()
@@ -56,11 +59,12 @@ print("Time without h5 file: ", str(datetime.timedelta(seconds=int(end_time-star
 
 
 image_datasets = data_loader.ImagenetH5(h5_file, "train", dataset_transforms["train"]) 
-dataloadersh5= DataLoader(image_datasets, batch_size=batch_size,num_workers=workers, pin_memory=True)
+samplet_data torch.utils.data.distributed.DistributedSampler(image_datasets)
+dataloadersh5= DataLoader(image_datasets, batch_size=batch_size, num_workers=workers, sampler=samplet_data, pin_memory=True)
  
-
+print("Start loading with H5 file")
 start_time = time.time()
-for x in dataloadersh5:
+for x in tqdm(dataloadersh5):
     x
     
 end_time = time.time()

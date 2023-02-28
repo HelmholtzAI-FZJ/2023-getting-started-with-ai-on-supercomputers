@@ -42,7 +42,8 @@ parallel/ResNet18_224.ipynb
 parallel/to_h5.py
 parallel/mainh5.py
 parallel/srun_h5b.sh
-
+parallel/slurm-*.out
+parallel/outputs
 draft/
 
 # Python
