@@ -128,30 +128,25 @@ torch.backends.cudnn.benchmark = True
 image_datasets = load_h5data(args)
 datasets_sampler = {x: torch.utils.data.distributed.DistributedSampler(image_datasets[x])
                 for x in ['train', 'val']}
-dataloaders = {x: DataLoader(image_datasets[x], batch_size=args.batch_size, sampler=datasets_sampler[x], num_workers=args.workers, pin_memory=True)
+dataloaders = {x: DataLoader(image_datasets[x], batch_size=args.batch_size, 
+sampler=datasets_sampler[x], num_workers=args.workers, pin_memory=True)
                 for x in ['train', 'val']}
 model = resnet50()
 model.to(device)
 model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
 model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu])
-model_without_ddp = model.module
 
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
+optimizer = torch.optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum, 
+weight_decay=args.weight_decay)
 for epoch in range(args.epochs):
     datasets_sampler["train"].set_epoch(epoch)
     train_loss = train_one_epoch(model, criterion, optimizer, dataloaders["train"], datasets_sampler["train"], device, epoch)
     evaluate(model, criterion, dataloaders["val"], device=device)       
     if utils.is_main_process():
-        if args.log:
-            checkpoint = {
-                'model': model_without_ddp.state_dict(),
-                'optimizer': optimizer.state_dict(),
-                'epoch': epoch,
-                'args': args}
-            utils.save_on_master(
-                checkpoint,
-                os.path.join(args.log, 'checkpoint.pth'))
+        checkpoint = {'model': model.module.state_dict(), 'optimizer': optimizer.state_dict(), 
+        'epoch': epoch, 'args': args}
+        utils.save_on_master(checkpoint, os.path.join(args.log, 'checkpoint.pth'))
 ```
 
 ---
