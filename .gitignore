@@ -44,6 +44,7 @@ parallel/mainh5.py
 parallel/srun_h5b.sh
 parallel/slurm-*.out
 parallel/outputs
+parallel/slurm_outputs
 draft/
 
 # Python
