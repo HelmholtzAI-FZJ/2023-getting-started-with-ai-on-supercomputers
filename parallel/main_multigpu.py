@@ -7,9 +7,9 @@ import torch
 from torch import nn
 import torch.utils.data
 from torch.utils.data import DataLoader
-from torch.utils.tensorboard import SummaryWriter
 
-from torchvision import datasets, transforms
+
+from torchvision import transforms
 
 from resnet import resnet50 
 import data_loader
@@ -41,7 +41,7 @@ def evaluate(model, criterion, data_loader, device):
             image = image.to(device, non_blocking=True)
             target = target.to(device, non_blocking=True)
             output = model(image)
-            loss = criterion(output, target)
+            criterion(output, target)
 
 def transformation():
     _IMAGE_MEAN_VALUE = [0.485, 0.456, 0.406]
@@ -74,11 +74,11 @@ def load_h5data(args):
 
     dataset_transforms = transformation()
 
-    image_datasets = {x: data_loader.ImagenetH5(args.h5_file, x, dataset_transforms[x]) 
+    image_datasets = {x: data_loader.ImagenetH5(args.imagenet_root, args.h5_file, x, dataset_transforms[x]) 
                     for x in ['train', 'val']}
 
-
     return image_datasets
+
 
 def load_data(args):
     dataset_transforms = transformation()
@@ -103,13 +103,8 @@ def main(args):
     # enable benchmark mode in cuDNN to benchmark multiple convolution algorithms and select the fastest.
     torch.backends.cudnn.benchmark = True
 
-
-    if args.kaggle:
-        image_datasets = load_data(args)
-    else:
-        image_datasets = load_h5data(args)
+    image_datasets = load_h5data(args)
     
-
     # sampler is used to specify the sequence of indices/keys used in data loading
     datasets_sampler = {x: torch.utils.data.distributed.DistributedSampler(image_datasets[x])
                     for x in ['train', 'val']}
@@ -117,7 +112,6 @@ def main(args):
     dataloaders = {x: DataLoader(image_datasets[x], batch_size=args.batch_size, sampler=datasets_sampler[x], num_workers=args.workers, pin_memory=True)
                     for x in ['train', 'val']}
     
-
     model = resnet50()
     model.to(device)
 
@@ -135,7 +129,7 @@ def main(args):
         # it’s necessary to use set_epoch to guarantee a different shuffling order
         datasets_sampler["train"].set_epoch(epoch)
 
-        train_loss = train_one_epoch(model, criterion, optimizer, dataloaders["train"], datasets_sampler["train"], device, epoch)
+        train_one_epoch(model, criterion, optimizer, dataloaders["train"], datasets_sampler["train"], device, epoch)
         evaluate(model, criterion, dataloaders["val"], device=device)
            
         # Only process rank 0 can save checkpoints
@@ -163,12 +157,11 @@ if __name__ == "__main__":
     parser.add_argument('--gpu', type=list, default=[0,1,2,3])
     parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--data_dir', type=str)
-    parser.add_argument('--kaggle', type=bool, default=False)
-    parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/ImageNetFinal.h5")
+    parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/imagenet100k.h5")
     parser.add_argument('--imagenet_root', type=str, default="/p/scratch/training2303/data/")
     parser.add_argument('--log', type=str)
     parser.add_argument('--tb_dir', type=str)
-    parser.add_argument('--workers', type=int, default=24)
+    parser.add_argument('--workers', type=int, default=1)
     parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--epochs', type=int, default=1)
     parser.add_argument('--lr', type=float, default=1e-3)
@@ -180,5 +173,5 @@ if __name__ == "__main__":
     args.log = os.path.join(args.log, now)
     utils.mkdir(args.log)
     args.tb_dir = os.path.join(args.log, "tensor_board")
-    
+
     main(args)

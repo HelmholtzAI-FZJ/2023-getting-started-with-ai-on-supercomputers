@@ -9,7 +9,7 @@ import torch.utils.data
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
-from torchvision import datasets, transforms
+from torchvision import transforms
 
 from resnet import resnet50 
 import data_loader
@@ -45,7 +45,7 @@ def evaluate(model, criterion, data_loader, device):
             image = image.to(device, non_blocking=True)
             target = target.to(device, non_blocking=True)
             output = model(image)
-            loss = criterion(output, target)
+            criterion(output, target)
 
 def transformation():
     _IMAGE_MEAN_VALUE = [0.485, 0.456, 0.406]
@@ -78,7 +78,7 @@ def load_h5data(args):
 
     dataset_transforms = transformation()
 
-    image_datasets = {x: data_loader.ImagenetH5(args.h5_file, x, dataset_transforms[x]) 
+    image_datasets = {x: data_loader.ImagenetH5(args.imagenet_root, args.h5_file, x, dataset_transforms[x]) 
                     for x in ['train', 'val']}
 
     return image_datasets
@@ -100,7 +100,7 @@ def main(args):
     # return an object representing the device on which tensors will be allocated.
     device = torch.device(args.device)
 
-    image_datasets = load_h5data(args)
+    image_datasets = load_data(args)
 
     dataloaders = {x: DataLoader(image_datasets[x], batch_size=args.batch_size, shuffle=True, num_workers=args.workers, pin_memory=True)
                     for x in ['train', 'val']}
@@ -143,11 +143,11 @@ if __name__ == "__main__":
     parser.add_argument('--gpu', type=list, default=[0,1,2,3])
     parser.add_argument('--device', type=str, default='cuda')
     parser.add_argument('--data_dir', type=str)
-    parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/ImageNetFinal.h5")
+    parser.add_argument('--h5_file', type=str, default="/p/scratch/training2303/data/imagenet100k.h5")
     parser.add_argument('--imagenet_root', type=str, default="/p/scratch/training2303/data/")
     parser.add_argument('--log', type=str, default="logs/")
     parser.add_argument('--tb_dir', type=str)
-    parser.add_argument('--workers', type=int, default=24)
+    parser.add_argument('--workers', type=int, default=1)
     parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--epochs', type=int, default=10)
     parser.add_argument('--lr', type=float, default=1e-3)
