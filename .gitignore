@@ -50,3 +50,4 @@ draft/
 # Python
 __pycache__
 *.pyc
+public/email-survey.html
