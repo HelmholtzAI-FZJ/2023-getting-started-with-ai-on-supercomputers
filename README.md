@@ -63,7 +63,11 @@ Sabrina Narimene Benassou, JSC
 Please, fork this thing! Use it! And submit merge requests!
 
 ## Authors and acknowledgment
-Alexandre Otto Strube, Feb. 2023
+Alexandre Otto Strube, Sabrina Benassou Feb. 2023
+
+## Certificate
+Turns out indico does not have a certificate system - but one can use the badges as a template - and add an image to the back of it. I added the "participation certificate" word document here as a template for that. I am doing this with text so I can use better typography than allowed by indico. Generate a large bitmap from that page and simply add to further courses.
+
 
 ## License
 MIT License (https://opensource.org/licenses/MIT)
