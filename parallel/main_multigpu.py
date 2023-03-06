@@ -113,7 +113,8 @@ def main(args):
                     for x in ['train', 'val']}
     
     model = resnet50()
-
+    model.to(device)
+    
     # Synchronization of batchnorm statistics
     model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     # implements data parallelism of the model which can run across multiple machines. 
