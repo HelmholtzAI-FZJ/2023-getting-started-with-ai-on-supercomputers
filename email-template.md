@@ -18,7 +18,6 @@ Slack
 https://go.fzj.de/intro-sc-ai-2023-slack
 
 
-
 WHAT NEEDS TO BE DONE BEFORE THE COURSE?
 
 - If you don't have one, make an account on JuDOOR, our portal: https://judoor.fz-juelich.de/register
