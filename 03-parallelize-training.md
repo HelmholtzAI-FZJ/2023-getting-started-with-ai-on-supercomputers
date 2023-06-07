@@ -45,7 +45,7 @@ torch.save(checkpoint, os.path.join(args.log, 'checkpoint.pth'))
 #SBATCH --time=02:00:00
 #SBATCH --partition=booster
 #SBATCH --gres=gpu:1
-#SBATCH --account=training2303
+#SBATCH --account=training2321
 #SBATCH --reservation=training-20230301
 
 mkdir -p outputs

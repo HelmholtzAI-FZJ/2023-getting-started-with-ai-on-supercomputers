@@ -213,8 +213,8 @@ Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps
 ### Connecting to JUWELS BOOSTER
 
 #### Getting compute time
-- Go to [https://judoor.fz-juelich.de/projects/join/training2303](https://judoor.fz-juelich.de/projects/join/training2303)
-- Join the course project `training2303`
+- Go to [https://judoor.fz-juelich.de/projects/join/training2321](https://judoor.fz-juelich.de/projects/join/training2321)
+- Join the course project `training2321`
 - Sign the Usage Agreements ([Video](https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view))
 - Compute time allocation is based on compute projects. For every compute job, a compute project pays.
 - Time is measured in core-hours. One hour of Juwels BOOSTER is 48 core-hours. One hour of Jusuf is 128 core-h.
@@ -440,7 +440,7 @@ strube1@jusuf ~ $
 
 ```bash
 # Create a shortcut for the project on the home folder
-ln -s $PROJECT_training2303 ~/course
+ln -s $PROJECT_training2321 ~/course
 
 # Create a folder for myself
 mkdir course/$USER
@@ -694,7 +694,7 @@ Simple Linux Utility for Resource Management
 
 ``` {.bash .number-lines}
 #!/bin/bash -x
-#SBATCH --account=training2303           # Who pays?
+#SBATCH --account=training2321           # Who pays?
 #SBATCH --nodes=1                        # How many compute nodes
 #SBATCH --job-name=matrix-multiplication
 #SBATCH --ntasks-per-node=1              # How many mpi processes/node
@@ -887,7 +887,7 @@ if __name__ == "__main__":
 
 ``` {.bash .number-lines}
 #!/bin/bash -x
-#SBATCH --account=training2303
+#SBATCH --account=training2321
 #SBATCH --nodes=1
 #SBATCH --job-name=mlflow-demo
 #SBATCH --ntasks-per-node=1
@@ -997,7 +997,7 @@ learn.fine_tune(1)
 
 ```bash
 #!/bin/bash -x
-#SBATCH --account=training2303
+#SBATCH --account=training2321
 #SBATCH --mail-user=MYUSER@fz-juelich.de
 #SBATCH --mail-type=ALL
 #SBATCH --nodes=1
@@ -1268,7 +1268,7 @@ On the supercomputer:
 srun --time=00:05:00 \
      --nodes=1 --ntasks=1 \
      --partition=gpus \
-     --account training2303 \
+     --account training2321 \
      --cpu_bind=none \
      --pty /bin/bash -i
 

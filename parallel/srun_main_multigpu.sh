@@ -7,7 +7,7 @@
 #SBATCH --time=02:00:00
 #SBATCH --partition=develbooster
 #SBATCH --gres=gpu:4
-#SBATCH --account=training2303
+#SBATCH --account=training2321
 #SBATCH --output=slurm_outputs/%j.out
 #SBATCH --error=slurm_outputs/%j.err
 

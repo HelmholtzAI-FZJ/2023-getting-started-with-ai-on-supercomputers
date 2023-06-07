@@ -34,8 +34,8 @@ def transformation():
 
 
 
-imagenet_root = "/p/scratch/training2303/data/"
-h5_file = "/p/scratch/training2303/data/imagenet100k.h5"
+imagenet_root = "/p/scratch/training2321/data/"
+h5_file = "/p/scratch/training2321/data/imagenet100k.h5"
 batch_size = 128
 workers = 1
 

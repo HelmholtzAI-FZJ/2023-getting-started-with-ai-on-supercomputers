@@ -504,9 +504,9 @@ compile, etc</li>
 <h4 id="getting-compute-time">Getting compute time</h4>
 <ul>
 <li class="fragment">Go to <a
-href="https://judoor.fz-juelich.de/projects/join/training2303">https://judoor.fz-juelich.de/projects/join/training2303</a></li>
+href="https://judoor.fz-juelich.de/projects/join/training2321">https://judoor.fz-juelich.de/projects/join/training2321</a></li>
 <li class="fragment">Join the course project
-<code>training2303</code></li>
+<code>training2321</code></li>
 <li class="fragment">Sign the Usage Agreements (<a
 href="https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view">Video</a>)</li>
 <li class="fragment">Compute time allocation is based on compute
@@ -742,7 +742,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="
 are connected to the supercomputer</h4>
 <div class="sourceCode" id="cb9"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a shortcut for the project on the home folder</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="va">$PROJECT_training2303</span> ~/course</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="va">$PROJECT_training2321</span> ~/course</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a folder for myself</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> course/<span class="va">$USER</span></span>
@@ -971,7 +971,7 @@ example</h3>
 <p><code>code jusuf-matrix.sbatch</code></p>
 <div class="sourceCode" id="cb19"><pre
 class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">#!/bin/bash -x</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="co">#SBATCH --account=training2303           # Who pays?</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="co">#SBATCH --account=training2321           # Who pays?</span></span>
 <span id="cb19-3"><a href="#cb19-3"></a><span class="co">#SBATCH --nodes=1                        # How many compute nodes</span></span>
 <span id="cb19-4"><a href="#cb19-4"></a><span class="co">#SBATCH --job-name=matrix-multiplication</span></span>
 <span id="cb19-5"><a href="#cb19-5"></a><span class="co">#SBATCH --ntasks-per-node=1              # How many mpi processes/node</span></span>
@@ -1145,7 +1145,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a h
 <h3 id="save-as-mlflow-demo.sbatch">Save as mlflow-demo.sbatch</h3>
 <div class="sourceCode" id="cb28"><pre
 class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">#!/bin/bash -x</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="co">#SBATCH --account=training2303</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="co">#SBATCH --account=training2321</span></span>
 <span id="cb28-3"><a href="#cb28-3"></a><span class="co">#SBATCH --nodes=1</span></span>
 <span id="cb28-4"><a href="#cb28-4"></a><span class="co">#SBATCH --job-name=mlflow-demo</span></span>
 <span id="cb28-5"><a href="#cb28-5"></a><span class="co">#SBATCH --ntasks-per-node=1</span></span>
@@ -1246,7 +1246,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a h
 <code>fastai-demo.sbatch</code></h3>
 <div class="sourceCode" id="cb32"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash -x</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2303</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2321</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-user=MYUSER@fz-juelich.de</span></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-type=ALL</span></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=1</span></span>
@@ -1492,7 +1492,7 @@ Host *.jusuf
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="dt">\</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="dt">\</span></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">--partition</span><span class="op">=</span>gpus <span class="dt">\</span></span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2303 <span class="dt">\</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2321 <span class="dt">\</span></span>
 <span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="dt">\</span></span>
 <span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">--pty</span> /bin/bash <span class="at">-i</span></span>
 <span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a></span>

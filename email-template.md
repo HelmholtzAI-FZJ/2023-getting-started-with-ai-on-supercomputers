@@ -23,7 +23,7 @@ WHAT NEEDS TO BE DONE BEFORE THE COURSE?
 - If you don't have one, make an account on JuDOOR, our portal: https://judoor.fz-juelich.de/register
 Video: https://drive.google.com/file/d/1-DfiNBP4Gta0av4lQmubkXIXzr2FW4a-/view
 
-- Joining the course's project: https://judoor.fz-juelich.de/projects/join/training2303
+- Joining the course's project: https://judoor.fz-juelich.de/projects/join/training2321
 
 - Sign the usage agreements, as shown in this video: https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view
 
