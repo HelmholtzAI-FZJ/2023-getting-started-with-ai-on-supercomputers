@@ -2,13 +2,15 @@
 author: Alexandre Strube // Sabrina Benassou
 title: Getting Started with AI on Supercomputers 
 # subtitle: A primer in supercomputers`
-date: February 28, 2023
+date: June 27, 2023
 ---
 ## Communication:
 
-- [Zoom](https://fz-juelich-de.zoom.us/j/98120874933?pwd=NXJJNXo1Nkx4OGNVNEhkWXBNTWlZUT09)
-- [Slack](https://introscfeb2023.slack.com)
+- [Zoom](TODO)
+- [Slack](https://intro-ai-jsc-jun23.slack.com) [Invite link](https://join.slack.com/t/intro-ai-jsc-jun23/signup)
+- [JSC Training Page](https://go.fzj.de/intro-sc-ai-2023-course)
 - [This document: http://go.fzj.de/intro-sc-ai-2023](http://go.fzj.de/intro-sc-ai-2023)
+
 
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
 
