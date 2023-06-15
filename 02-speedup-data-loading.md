@@ -67,8 +67,9 @@ cd $DATA_datasets
     - HDF5, Zarr, mmap() in a parallel fs, LMDB
 - Use specialized data loading libraries
     - FFCV, DALI
-- Compression
+- Compression sush as squashfs 
     - data transfer can be slower than decompression (must be checked case by case)
+    - Beneficial in cases where numerous small files are at hand.
 
 ---
 
@@ -81,7 +82,7 @@ cd $DATA_datasets
 
 ## H5 file
 
-![](images/h5.png)
+![](images/hdf5.svg)
 
 ---
 
@@ -98,6 +99,7 @@ for x in dataloaders:
 end_t = time.time()
 print("Time without h5 file: ", str(datetime.timedelta(seconds=int(end_t-start_t))))       
 ```
+
 ```bash 
 Time without h5 file:  0:00:29
 ```     
