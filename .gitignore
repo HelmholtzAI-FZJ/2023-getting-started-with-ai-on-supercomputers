@@ -34,4 +34,4 @@ README.html
 email-template.html
 
 code/sc_venv_template
-code/data/*
+code/parallelize/data/*
