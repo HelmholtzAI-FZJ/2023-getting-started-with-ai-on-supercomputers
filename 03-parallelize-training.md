@@ -57,7 +57,7 @@ trainer.save_checkpoint("image_classification_model.pt")
 source ../sc_venv_template/activate.sh
 
 # run script 
-srun python3 ddp.py
+srun python3 one_gpu.py
 ```
 
 ```bash
