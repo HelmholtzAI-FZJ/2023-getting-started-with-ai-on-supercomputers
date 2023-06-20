@@ -331,10 +331,12 @@ ultra fast ⚡️</li>
 <ul>
 <li class="fragment">FFCV, DALI</li>
 </ul></li>
-<li class="fragment">Compression
+<li class="fragment">Compression sush as squashfs
 <ul>
 <li class="fragment">data transfer can be slower than decompression
 (must be checked case by case)</li>
+<li class="fragment">Beneficial in cases where numerous small files are
+at hand.</li>
 </ul></li>
 </ul>
 </section>
@@ -351,34 +353,41 @@ href="https://developer.nvidia.com/dali">https://developer.nvidia.com/dali</a></
 </section>
 <section id="h5-file" class="slide level2">
 <h2>H5 file</h2>
-<p><img data-src="images/h5.png" /></p>
+<p><img data-src="images/hdf5.svg" /></p>
 </section>
-<section id="access-file-vs-access-h5-file" class="slide level2">
-<h2>Access file VS Access H5 file</h2>
+<section id="access-ilsvrc-images" class="slide level2">
+<h2>Access ILSVRC images</h2>
 <div class="sourceCode" id="cb2"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>images_data <span class="op">=</span> data_loader.ImageNetKaggle(images_root, <span class="st">&quot;train&quot;</span>, transforms[<span class="st">&quot;train&quot;</span>]) </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataloaders <span class="op">=</span> DataLoader(images_data, batch_size<span class="op">=</span>batch_size, num_workers<span class="op">=</span>workers)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>start_t <span class="op">=</span> time.time()</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> dataloaders:</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    x</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>end_t <span class="op">=</span> time.time()</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Time without h5 file: &quot;</span>, <span class="bu">str</span>(datetime.timedelta(seconds<span class="op">=</span><span class="bu">int</span>(end_t<span class="op">-</span>start_t))))       </span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> Image.<span class="bu">open</span>(<span class="va">self</span>.samples[idx]).convert(<span class="st">&quot;RGB&quot;</span>)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Time</span> without h5 file:  0:00:29</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>image_datasets <span class="op">=</span> ImageNetKaggle(args.data_root, <span class="st">&quot;train&quot;</span>,  dataset_transforms) </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dataloaders <span class="op">=</span> DataLoader(image_datasets, batch_size<span class="op">=</span>args.batch_size, <span class="op">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    num_workers<span class="op">=</span>workers,  pin_memory<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Start loading ILSVRC images&quot;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> dataloaders:</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(x)</span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>images_data <span class="op">=</span> data_loader.ImagenetH5(h5_file, <span class="st">&quot;train&quot;</span>, transforms[<span class="st">&quot;train&quot;</span>]) </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dataloadersh5<span class="op">=</span> DataLoader(images_data, batch_size<span class="op">=</span>batch_size, num_workers<span class="op">=</span>workers)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>start_t <span class="op">=</span> time.time()</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> dataloadersh5:</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    x</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>end_t <span class="op">=</span> time.time()</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Time with h5 file: &quot;</span>, <span class="bu">str</span>(datetime.timedelta(seconds<span class="op">=</span><span class="bu">int</span>(end_t<span class="op">-</span>start_t))))</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 00 hours 07 min 53 sec</span></code></pre></div>
+</section>
+<section id="use-h5-file" class="slide level2">
+<h2>Use H5 file</h2>
 <div class="sourceCode" id="cb5"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Time</span> with h5 file:  0:00:26</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>.imgs <span class="op">=</span> h5py.File(os.path.join(data_root, <span class="st">&quot;ImageNetFinal.h5&quot;</span>), <span class="st">&#39;r&#39;</span>)[split] </span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> BytesIO(img_string) <span class="im">as</span> byte_stream:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> Image.<span class="bu">open</span>(byte_stream)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    img <span class="op">=</span> img.convert(<span class="st">&quot;RGB&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>image_datasets <span class="op">=</span> ImageNetH5(args.data_root, <span class="st">&quot;train&quot;</span>, dataset_transforms) </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>dataloadersh5<span class="op">=</span> DataLoader(image_datasets, batch_size<span class="op">=</span>args.batch_size, <span class="op">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    num_workers<span class="op">=</span>workers, pin_memory<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Start loading with H5 file&quot;</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> dataloadersh5:</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 00 hours 03 min 43 sec</span></code></pre></div>
 </section>
 <section id="demo" class="slide level2">
 <h2>Demo</h2>

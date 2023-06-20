@@ -4,30 +4,34 @@ title: Getting Started with AI on Supercomputers
 subtitle: Parallelize Training
 date: June 28, 2023
 ---
+
 ## One GPU training 
 
 ```python
-device = torch.device(args.device)
+# set the random seeds.
+seed_everything(42)
 
-images_data = data_loader.ImagenetH5(args.h5_file, "train", transforms["train"]) 
-dataloadersh5= DataLoader(images_data, batch_size=args.batch_size, 
-num_workers=args.workers)
+# 1. Download and organize the data
+download_data("https://pl-flash-data.s3.amazonaws.com/hymenoptera_data.zip", "data/")
 
-model = resnet50(True)
-model.to(device)
+datamodule = ImageClassificationData.from_folders(
+    train_folder="data/hymenoptera_data/train/",
+    val_folder="data/hymenoptera_data/val/",
+    test_folder="data/hymenoptera_data/test/",
+    batch_size=1,
+)
 
-criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum, 
-weight_decay=args.weight_decay)
+# 2. Build the model using desired Task
+model = ImageClassifier(backbone="resnet18", num_classes=datamodule.num_classes, pretrained=False)
 
-for epoch in range(args.epochs):
-    train_loss = train_one_epoch(model, criterion, optimizer, dataloaders["train"], 
-    device, epoch)
-    evaluate(model, criterion, dataloaders["val"], device=device)
+# 3. Create the trainer 
+trainer = flash.Trainer(max_epochs=50,  accelerator="gpu", devices=1)
 
-checkpoint = {'model': model.state_dict(), 'optimizer': optimizer.state_dict(),
-    'epoch': epoch,'args': args}
-torch.save(checkpoint, os.path.join(args.log, 'checkpoint.pth'))
+# 4. Train the model
+trainer.fit(model, datamodule=datamodule)
+
+# 5. Save the model!
+trainer.save_checkpoint("image_classification_model.pt")
 ```
 
 ---
@@ -37,46 +41,28 @@ torch.save(checkpoint, os.path.join(args.log, 'checkpoint.pth'))
 ``` bash 
 #!/bin/bash -x
 
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=96
-#SBATCH --output=outputs/%j.out
-#SBATCH --error=outputs/%j.err
-#SBATCH --time=02:00:00
-#SBATCH --partition=booster
+# SLURM SUBMIT SCRIPT
+#SBATCH --nodes=1             # This needs to match Trainer(num_nodes=...)
 #SBATCH --gres=gpu:1
+#SBATCH --ntasks-per-node=1   # This needs to match Trainer(devices=...)
+#SBATCH --mem=0
+#SBATCH --cpus-per-task=96
+#SBATCH --time=00:15:00
+#SBATCH --partition=booster
 #SBATCH --account=training2321
-#SBATCH --reservation=training-20230301
+#SBATCH --output=%j.out
+#SBATCH --error=%j.err
 
-mkdir -p outputs
-source sc_venv_template/activate.sh
+# activate env
+source ../sc_venv_template/activate.sh
 
-srun python -u main.py  --log "logs/" 
-```
-
----
-
-## TensorBoard
-
-```python 
-from torch.utils.tensorboard import SummaryWriter
-writer = SummaryWriter(tb_dir)
-writer.add_scalar('loss/train', train_loss, epoch)
+# run script 
+srun python3 ddp.py
 ```
 
 ```bash
-ssh  -L 16000:localhost:16000 booster
+elapsed: 00 hours 06 min 04 sec
 ```
-
-```bash
-ml TensorFlow
-tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
-```
-![](images/tb.png)
-
----
-
-## DEMO
 
 ---
 
@@ -89,21 +75,13 @@ Shamelessly stolen from [twitter](https://twitter.com/rasbt/status/1625494398778
 
 ## Parallel Training
 
-- [PyTorch's DDP (Distributed Data Parallel)](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html)
-- Multi-node, multi-GPU
-- Multiple processes: One process per model replica
-- Each process uses multiple GPUs: model parallel)
-- All processes collectively use data parallel
-
----
-
-## DDP steps
-
-1. Set up the environement variable for the distributed mode (WORLD_SIZE, RANK, LOCAL_RANK ...)
-2. Initialize the torch.distributed package
-3. Initialize a sampler to specify the sequence of indices/keys used in data loading.
-4. Implements data parallelism of the model. 
-5. Allow only process to save checkpoints.
+- [PyTorch's DDP (Distributed Data Parallel)](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html) works as follows:
+    - Each GPU across each node gets its own process.
+    - Each GPU gets visibility into a subset of the overall dataset. It will only ever see that subset.
+    - Each process inits the model.
+    - Each process performs a full forward and backward pass in parallel.
+    - The gradients are synced and averaged across all processes.
+    - Each process updates its optimizer.
 
 ---
 
@@ -117,36 +95,78 @@ Shamelessly stolen from [twitter](https://twitter.com/rasbt/status/1625494398778
 
 ---
 
-## DDP code
+## DDP steps
+
+1. Set up the environement variable for the distributed mode (WORLD_SIZE, RANK, LOCAL_RANK ...)
 
 ```python
-utils.init_distributed_mode(args.master_port)
-torch.distributed.init_process_group(backend='nccl')
-device = torch.device(args.device)
-torch.backends.cudnn.benchmark = True
+# The number of total processes started by Slurm.
+ntasks = os.getenv('SLURM_NTASKS')
 
-image_datasets = load_h5data(args)
-datasets_sampler = {x: torch.utils.data.distributed.DistributedSampler(image_datasets[x])
-                for x in ['train', 'val']}
-dataloaders = {x: DataLoader(image_datasets[x], batch_size=args.batch_size, 
-sampler=datasets_sampler[x], num_workers=args.workers, pin_memory=True)
-                for x in ['train', 'val']}
-model = resnet50()
-model.to(device)
-model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
-model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.gpu])
+# Index of the current process.
+rank = os.getenv('SLURM_PROCID')
 
-criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum, 
-weight_decay=args.weight_decay)
-for epoch in range(args.epochs):
-    datasets_sampler["train"].set_epoch(epoch)
-    train_loss = train_one_epoch(model, criterion, optimizer, dataloaders["train"], datasets_sampler["train"], device, epoch)
-    evaluate(model, criterion, dataloaders["val"], device=device)       
-    if utils.is_main_process():
-        checkpoint = {'model': model.module.state_dict(), 'optimizer': optimizer.state_dict(), 
-        'epoch': epoch, 'args': args}
-        utils.save_on_master(checkpoint, os.path.join(args.log, 'checkpoint.pth'))
+# Index of the current process on this node only.
+local_rank = os.getenv('SLURM_LOCALID')
+
+# The number of nodes
+nnodes = os.getenv("SLURM_NNODES")
+```
+
+---
+
+## DDP steps
+
+2. Initialize the torch.distributed package
+
+```python
+utils.init_distributed_mode(12354)
+```
+
+---
+
+## DDP steps
+
+3. Initialize a sampler to specify the sequence of indices/keys used in data loading.
+4. Implements data parallelism of the model. 
+5. Allow only process to save checkpoints.
+
+
+```python
+# 3. Create the trainer 
+trainer = flash.Trainer(max_epochs=50,  accelerator="gpu", devices=ntasks,\
+    num_nodes=nnodes)
+```
+
+---
+
+## DDP training
+
+```bash
+#!/bin/bash -x
+
+# SLURM SUBMIT SCRIPT
+#SBATCH --nodes=4             # This needs to match Trainer(num_nodes=...)
+#SBATCH --gres=gpu:4
+#SBATCH --ntasks-per-node=1   # This needs to match Trainer(devices=...)
+#SBATCH --mem=0
+#SBATCH --cpus-per-task=24
+#SBATCH --time=00:15:00
+#SBATCH --partition=booster
+#SBATCH --account=training2321
+#SBATCH --output=%j.out
+#SBATCH --error=%j.err
+
+CUDA_VISIBLE_DEVICES=0,1,2,3
+# activate env
+source ../sc_venv_template/activate.sh
+
+# run script 
+srun python3 ddp.py
+```
+
+```bash
+elapsed: 00 hours 01 min 16 sec
 ```
 
 ---
@@ -155,12 +175,45 @@ for epoch in range(args.epochs):
 
 --- 
 
+## TensorBoard
+
+```python 
+# 3. Create the logger 
+logger = TensorBoardLogger("tb_logs", name="my_model")
+
+# 4. Create the trainer and pass the logger 
+trainer = flash.Trainer(max_epochs=50,  accelerator="gpu", devices=ntasks, \
+    num_nodes=nnodes, logger=logger)
+```
+
+--- 
+
+## TensorBoard
+
+```bash
+ssh  -L 16000:localhost:16000 booster
+```
+
+```bash
+ml load Stages/2023 
+ml load GCC 
+ml TensorFlow
+tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
+```
+![](images/tb.png)
+
+---
+
+## DEMO
+
+---
+
 ## DAY 2 RECAP 
 
 - Difference between reading from folders and reading from H5 file.
-- Use TensorBoard on the supercomputer.
 - Write parallel code.
 - Can submit multi-node multi-gpu training.
+- Use TensorBoard on the supercomputer.
 
 ---
 

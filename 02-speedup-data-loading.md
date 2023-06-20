@@ -67,8 +67,9 @@ cd $DATA_datasets
     - HDF5, Zarr, mmap() in a parallel fs, LMDB
 - Use specialized data loading libraries
     - FFCV, DALI
-- Compression
+- Compression sush as squashfs 
     - data transfer can be slower than decompression (must be checked case by case)
+    - Beneficial in cases where numerous small files are at hand.
 
 ---
 
@@ -80,42 +81,58 @@ cd $DATA_datasets
 ---
 
 ## H5 file
-
-![](images/h5.png)
+![](images/hdf5.svg)
 
 ---
 
-## Access file VS Access H5 file
+## Access ILSVRC images
 
 ```python
-images_data = data_loader.ImageNetKaggle(images_root, "train", transforms["train"]) 
-dataloaders = DataLoader(images_data, batch_size=batch_size, num_workers=workers)
-
-start_t = time.time()
-for x in dataloaders:
-    x
-
-end_t = time.time()
-print("Time without h5 file: ", str(datetime.timedelta(seconds=int(end_t-start_t))))       
+x = Image.open(self.samples[idx]).convert("RGB")
 ```
+
+```python
+image_datasets = ImageNetKaggle(args.data_root, "train",  dataset_transforms) 
+dataloaders = DataLoader(image_datasets, batch_size=args.batch_size, \
+    num_workers=workers,  pin_memory=True)
+
+print("Start loading ILSVRC images")
+for x in dataloaders:
+    print(x)
+```
+
 ```bash 
-Time without h5 file:  0:00:29
+elapsed: 00 hours 07 min 53 sec
 ```     
 
-```python
-images_data = data_loader.ImagenetH5(h5_file, "train", transforms["train"]) 
-dataloadersh5= DataLoader(images_data, batch_size=batch_size, num_workers=workers)
- 
-start_t = time.time()
-for x in dataloadersh5:
-    x
-end_t = time.time()
-
-print("Time with h5 file: ", str(datetime.timedelta(seconds=int(end_t-start_t))))
-
-```
-```bash 
-Time with h5 file:  0:00:26
-```
 ---
+
+## Use H5 file
+
+```python
+self.imgs = h5py.File(os.path.join(data_root, "ImageNetFinal.h5"), 'r')[split] 
+```
+
+```python
+with BytesIO(img_string) as byte_stream:
+    img = Image.open(byte_stream)
+    img = img.convert("RGB")
+```
+
+```python
+image_datasets = ImageNetH5(args.data_root, "train", dataset_transforms) 
+dataloadersh5= DataLoader(image_datasets, batch_size=args.batch_size, \
+    num_workers=workers, pin_memory=True)
+
+print("Start loading with H5 file")
+for x in dataloadersh5:
+    print(x)
+```
+
+```bash 
+elapsed: 00 hours 03 min 43 sec
+```    
+
+---
+
 ## Demo
