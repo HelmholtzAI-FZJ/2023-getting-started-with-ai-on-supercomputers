@@ -321,22 +321,19 @@ machine.</li>
 </section>
 <section id="ddp-steps" class="slide level2">
 <h2>DDP steps</h2>
-<ol type="1">
+<ul>
 <li class="fragment">Set up the environement variable for the
 distributed mode (WORLD_SIZE, RANK, LOCAL_RANK …)</li>
-</ol>
-<div class="sourceCode" id="cb4"><pre
+<li class="fragment"><div class="sourceCode" id="cb4"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The number of total processes started by Slurm.</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ntasks <span class="op">=</span> os.getenv(<span class="st">&#39;SLURM_NTASKS&#39;</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Index of the current process.</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>rank <span class="op">=</span> os.getenv(<span class="st">&#39;SLURM_PROCID&#39;</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Index of the current process on this node only.</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>local_rank <span class="op">=</span> os.getenv(<span class="st">&#39;SLURM_LOCALID&#39;</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># The number of nodes</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>nnodes <span class="op">=</span> os.getenv(<span class="st">&quot;SLURM_NNODES&quot;</span>)</span></code></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Index of the current process.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>rank <span class="op">=</span> os.getenv(<span class="st">&#39;SLURM_PROCID&#39;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Index of the current process on this node only.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>local_rank <span class="op">=</span> os.getenv(<span class="st">&#39;SLURM_LOCALID&#39;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The number of nodes</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>nnodes <span class="op">=</span> os.getenv(<span class="st">&quot;SLURM_NNODES&quot;</span>)</span></code></pre></div></li>
+</ul>
 </section>
 <section id="ddp-steps-1" class="slide level2">
 <h2>DDP steps</h2>
