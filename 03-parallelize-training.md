@@ -99,16 +99,13 @@ Shamelessly stolen from [twitter](https://twitter.com/rasbt/status/1625494398778
 
 1. Set up the environement variable for the distributed mode (WORLD_SIZE, RANK, LOCAL_RANK ...)
 
-```python
+- ```python
 # The number of total processes started by Slurm.
 ntasks = os.getenv('SLURM_NTASKS')
-
 # Index of the current process.
 rank = os.getenv('SLURM_PROCID')
-
 # Index of the current process on this node only.
 local_rank = os.getenv('SLURM_LOCALID')
-
 # The number of nodes
 nnodes = os.getenv("SLURM_NNODES")
 ```
@@ -119,7 +116,7 @@ nnodes = os.getenv("SLURM_NNODES")
 
 2. Initialize the torch.distributed package
 
-```python
+- ```python
 utils.init_distributed_mode(12354)
 ```
 
@@ -132,7 +129,7 @@ utils.init_distributed_mode(12354)
 5. Allow only process to save checkpoints.
 
 
-```python
+- ```python
 # 3. Create the trainer 
 trainer = flash.Trainer(max_epochs=50,  accelerator="gpu", devices=ntasks,\
     num_nodes=nnodes)
@@ -200,7 +197,7 @@ ml load GCC
 ml TensorFlow
 tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
 ```
-![](images/tb.png)
+![](images/tb.png){ width=750px }
 
 ---
 
