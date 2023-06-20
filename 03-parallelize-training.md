@@ -75,7 +75,7 @@ Shamelessly stolen from [twitter](https://twitter.com/rasbt/status/1625494398778
 
 ## Parallel Training
 
-- [PyTorch's DDP (Distributed Data Parallel)](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html) works as follows:
+- [PyTorch's DDP (Distributed Data Parallel)](https://lightning.ai/docs/pytorch/stable/accelerators/gpu_intermediate.html) works as follows:
     - Each GPU across each node gets its own process.
     - Each GPU gets visibility into a subset of the overall dataset. It will only ever see that subset.
     - Each process inits the model.
