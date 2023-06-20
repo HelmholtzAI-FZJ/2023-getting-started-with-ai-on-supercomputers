@@ -6,8 +6,8 @@ date: June 27, 2023
 ---
 ## Communication:
 
-- [Zoom](TODO)
-- [Slack](https://intro-ai-jsc-jun23.slack.com) [Invite link](https://join.slack.com/t/intro-ai-jsc-jun23/signup)
+- [Zoom](https://go.fzj.de/intro-sc-ai-2023-zoom)
+- [Slack](https://go.fzj.de/intro-sc-ai-2023-slack)
 - [JSC Training Page](https://go.fzj.de/intro-sc-ai-2023-course)
 - [This document: http://go.fzj.de/intro-sc-ai-2023](http://go.fzj.de/intro-sc-ai-2023)
 
@@ -213,7 +213,7 @@ Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps
 ### Connecting to JUWELS BOOSTER
 
 #### Getting compute time
-- Go to [https://judoor.fz-juelich.de/projects/join/training2321](https://judoor.fz-juelich.de/projects/join/training2321)
+- Go to [https://go.fzj.de/intro-sc-ai-2023-project-join](https://go.fzj.de/intro-sc-ai-2023-project-join)
 - Join the course project `training2321`
 - Sign the Usage Agreements ([Video](https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view))
 - Compute time allocation is based on compute projects. For every compute job, a compute project pays.
@@ -815,6 +815,7 @@ Link: [MLflow quickstart](https://mlflow.org/docs/latest/quickstart.html)
 - ```
 mlflow[extras]
 fastai
+lightning-flash[image]
 ```
 - Run on the terminal: `./setup.sh`
 

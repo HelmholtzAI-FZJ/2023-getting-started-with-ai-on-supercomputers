@@ -81,7 +81,7 @@ cd $DATA_datasets
 ---
 
 ## H5 file
-![](images/hdf5.jpeg)
+![](images/hdf5.svg)
 
 ---
 
