@@ -8,7 +8,6 @@ Icon
 
 # Thumbnails
 ._*
-
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd
@@ -25,29 +24,14 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Specific files
-README.html
-email-template.html
-
-parallel/tiny-imagenet-200
-parallel/sc_venv_template
-parallel/logs
-parallel/output
-parallel/download_data.sh
-parallel/__pycache__
-parallel/imagenet_val.pkl
-parallel/imagenet_train.pkl
-parallel/imagenet_labels.pkl
-parallel/ResNet18_224.ipynb
-parallel/to_h5.py
-parallel/mainh5.py
-parallel/srun_h5b.sh
-parallel/slurm-*.out
-parallel/outputs
-parallel/slurm_outputs
-draft/
-
 # Python
 __pycache__
 *.pyc
 public/email-survey.html
+
+# Specific files
+README.html
+email-template.html
+
+code/sc_venv_template
+code/data/*
