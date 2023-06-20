@@ -131,51 +131,8 @@ for x in dataloadersh5:
 
 ```bash 
 elapsed: 00 hours 03 min 43 sec
-```     
-
-## Use squashfs 
-
-```bash 
-export DATA_PATH="/p/scratch/training2303/data/" 
-export SQSH_PATH="$DATA_PATH.sqsh"
-export MOUNT_PATH="/dev/shm/$(whoami)/sqsh/$(basename "$DATA_PATH")"
-[ -e "$SQSH_PATH" ] || mksquashfs "$DATA_PATH" "$SQSH_PATH"
-
-unmount_squashfuse() {
-    ((SLURM_LOCALID)) && return 0
-    [ -d "$MOUNT_PATH" ] && fusermount3 -u "$MOUNT_PATH"
-    rm -rf "$MOUNT_PATH"
-}
-export -f unmount_squashfuse
-
-mount_squashfuse() {
-    ((SLURM_LOCALID)) && return 0
-    [ -d "$MOUNT_PATH" ] && ls -l "$MOUNT_PATH"
-    [ -d "$MOUNT_PATH" ] && fusermount3 -u "$MOUNT_PATH" || true
-    rm -rf "$MOUNT_PATH"
-    mkdir -m 700 -p "$MOUNT_PATH"
-    trap 'bash -c unmount_squashfuse' EXIT SIGINT SIGTERM SIGCONT
-    squashfuse_ll "$SQSH_PATH" "$MOUNT_PATH" || exit 1
-    while true; do
-        sleep 90000
-    done
-}
-export -f mount_squashfuse
-
-wait_for_mount() {
-    mount_pid="$(pgrep -n -f -u "$(whoami)" -- ' -c mount_squashfuse$')"
-    while ps -p "$mount_pid" > /dev/null \
-            && ! mountpoint -q "$MOUNT_PATH"; do
-        sleep 1
-    done
-}
-export -f wait_for_mount
-
-srun --overlap bash -c mount_squashfuse &
-srun bash -c wait_for_mount
-srun python imageNet.py --data_root="$MOUNT_PATH" 
-
-```     
+```    
 
 ---
+
 ## Demo
