@@ -197,7 +197,7 @@ ml load GCC
 ml TensorFlow
 tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
 ```
-![](images/tb.png)
+![](images/tb.png){ width=750px }
 
 ---
 
