@@ -516,6 +516,28 @@ BOOSTER is 48 core-hours. One hour of Jusuf is 128 core-h.</li>
 BOOSTER: 8 * 64 * 48 = 24576 core-h!</li>
 </ul>
 </section>
+<section id="jupyter" class="slide level2">
+<h2>Jupyter</h2>
+<p><a
+href="https://jupyter-jsc.fz-juelich.de">jupyter-jsc.fz-juelich.de</a></p>
+<ul>
+<li class="fragment"><p>Jupyter-JSC uses the queue (wait for
+it)</p></li>
+<li class="fragment"><p>When you are working on it, you are using
+compute node time</p></li>
+<li class="fragment"><p><em>Yes, if you are just thinking and looking at
+the 📺, you are burning project time</em>🤦‍♂️</p></li>
+<li class="fragment"><p>It’s useful for small tests - not for
+full-fledged development</p></li>
+</ul>
+</section>
+<section id="jupyter-1" class="slide level2">
+<h2>Jupyter</h2>
+<h4
+id="pay-attention-to-the-partition---dont-run-it-on-the-login-node">Pay
+attention to the partition - DON’T RUN IT ON THE LOGIN NODE!!!</h4>
+<p><img data-src="images/jupyter-partition.png" /></p>
+</section>
 <section class="slide level2">
 
 <h3 id="connecting-to-juwels-booster-and-jusuf">Connecting to JUWELS
@@ -1029,28 +1051,6 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href=
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> output.412169 </span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> error.412169 </span></code></pre></div>
 <p>Or simply open it on VSCode!</p>
-</section>
-<section id="jupyter" class="slide level2">
-<h2>Jupyter</h2>
-<p><a
-href="https://jupyter-jsc.fz-juelich.de">jupyter-jsc.fz-juelich.de</a></p>
-<ul>
-<li class="fragment"><p>Jupyter-JSC calls slurm, just the same as your
-job</p></li>
-<li class="fragment"><p>When you are working on it, you are using
-compute node time</p></li>
-<li class="fragment"><p><em>Yes, if you are just thinking and looking at
-the 📺, you are burning project time</em>🤦‍♂️</p></li>
-<li class="fragment"><p>It’s useful for small tests - not for
-full-fledged development</p></li>
-</ul>
-</section>
-<section id="jupyter-1" class="slide level2">
-<h2>Jupyter</h2>
-<h4
-id="pay-attention-to-the-partition---dont-run-it-on-the-login-node">Pay
-attention to the partition - DON’T RUN IT ON THE LOGIN NODE!!!</h4>
-<p><img data-src="images/jupyter-partition.png" /></p>
 </section>
 <section id="extra-software-modules-and-kernels" class="slide level2">
 <h2>Extra software, modules and kernels</h2>
