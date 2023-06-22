@@ -409,6 +409,7 @@ Did everyone get the ip address?
 - I promise, the magic is worth it 🧝‍♂️
 - In the end it looks like this: `from="93.199.0.0/16,10.0.0.0/8"` 🎬
 - Keep it open, we will use it later
+
 ---
 
 ### SSH - Example: `93.199.0.0/16`
@@ -727,10 +728,10 @@ Simple Linux Utility for Resource Management
 
 ### Slurm submission file example
 
-`code jusuf-matrix.sbatch`
+`code juwelsbooster-matrix.sbatch`
 
 ``` {.bash .number-lines}
-#!/bin/bash -x
+#!/bin/bash
 #SBATCH --account=training2321           # Who pays?
 #SBATCH --nodes=1                        # How many compute nodes
 #SBATCH --job-name=matrix-multiplication
@@ -739,8 +740,8 @@ Simple Linux Utility for Resource Management
 #SBATCH --output=output.%j        # Where to write results
 #SBATCH --error=error.%j
 #SBATCH --time=00:01:00          # For how long can it run?
-#SBATCH --partition=gpus         # Machine partition
-#SBATCH --reservation=training-20230229 # For today only
+#SBATCH --partition=booster         # Machine partition
+#SBATCH --reservation=ai_sc_day1 # For today only
 
 module Stages/2023
 module load GCC OpenMPI PyTorch  # Load the correct modules on the compute node(s)
@@ -759,6 +760,12 @@ Submitted batch job 412169
 ```
 
 ---
+
+### Are we there yet?
+
+![](images/are-we-there-yet.gif)
+
+--- 
 
 ### Are we there yet? 🐴
 
@@ -779,6 +786,15 @@ squeue --me
 - CG (completing)
 
 ---
+
+### Reservations
+
+- Some partitions have reservations, which means that only certain users can use them at certain times.
+- For this course, we have:
+- Jusuf: `tr2321-20230627-gpu` and `tr2321-20230628-gpu`
+- Juwels Booster: `ai_sc_day1` and `ai_sc_day2`
+
+--- 
 
 ### Job is wrong, need to cancel
 
@@ -815,204 +831,87 @@ cd sc_venv_template
 
 ---
 
-## Example: MLflow
+## Example: Let's install some software!
 
-Link: [MLflow quickstart](https://mlflow.org/docs/latest/quickstart.html)
-
-- I won't teach MLflow btw - it's a demo on installing and running software
+- Even though we have PyTorch, we don't have PyTorch Lightning Flash
+- Same for fast.ai, gym and wandb
+- We will install them in a virtual environment
 
 ---
 
-## Example: MLflow
+### Example: Let's install some software!
 
 - Edit the file requirements.txt
-- Add two lines at the end: 
-- ```
-mlflow[extras]
+
+- Add these lines at the end: 
+-
+ ```bash
 fastai
 lightning-flash[image]
+gym
+wandb
 ```
+
 - Run on the terminal: `./setup.sh`
 
 ---
 
-## Example: MLflow
+### Example: Activating the virtual environment
 
-Activate the environment where MLFlow is with `source ./activate.sh`
-
-```python
+- `source ./activate.sh`
+- ```python
 source ./activate.sh 
 The activation script must be sourced, otherwise the virtual environment will not work.
 Setting vars
 The following modules were not unloaded:
   (Use "module --force purge" to unload all):
-
   1) Stages/2023
-
 The following have been reloaded with a version change:
   1) HDF5/1.12.2-serial => HDF5/1.12.2
-
-
 python
 Python 3.10.4 (main, Oct  4 2022, 08:48:14) [GCC 11.3.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
->>> import mlflow
->>> mlflow.__version__
-'2.1.1'
+>>> import fastai
+>>> fastai.__version__
+'2.7.12'
 ```
 
 ---
 
-## Example: MLFlow
-
-- Let's run it on the supercomputer!
-- Open the [MLFlow Quickstart](https://mlflow.org/docs/latest/quickstart.html)
-- Copy some example to a file mlflow-demo.py
-
----
-
-## Example: MLFlow
-
-```python
-import os
-from random import random, randint
-from mlflow import log_metric, log_param, log_artifacts
-
-if __name__ == "__main__":
-    # Log a parameter (key-value pair)
-    log_param("param1", randint(0, 100))
-
-    # Log a metric; metrics can be updated throughout the run
-    log_metric("foo", random())
-    log_metric("foo", random() + 1)
-    log_metric("foo", random() + 2)
-
-    # Log an artifact (output file)
-    if not os.path.exists("outputs"):
-        os.makedirs("outputs")
-    with open("outputs/test.txt", "w") as f:
-        f.write("hello world!")
-    log_artifacts("outputs")
-```
-
----
-
-## MLFlow: Submission file
-
-### Save as mlflow-demo.sbatch
-
-``` {.bash .number-lines}
-#!/bin/bash -x
-#SBATCH --account=training2321
-#SBATCH --nodes=1
-#SBATCH --job-name=mlflow-demo
-#SBATCH --ntasks-per-node=1
-#SBATCH --cpus-per-task=1
-#SBATCH --output=output.%j
-#SBATCH --error=err.%j
-#SBATCH --time=00:10:00
-#SBATCH --partition=gpus
-#SBATCH --reservation=training-20230229 # For today only
-
-# Make sure we are on the right directory
-cd /p/home/jusers/$USER/jusuf/course/$USER
-
-# This loads modules and python packages
-source sc_venv_template/activate.sh
-
-# Run the demo
-srun python mlflow-demo.py
-
-```
-
----
-
-Example: MLFlow
-
-```bash
-sbatch mlflow-demo.sbatch
-squeue --me
-```
-
----
-
-## Example: MLFlow
-
-`mlflow ui --port 3000`
-
-- Opens a connection on port 3000... *OF THE SUPERCOMPUTER*.
-- We need to do something else: SSH PORT FORWARDING
-
----
-
-## Example: MLFlow
-
-![](images/supercomputer-firewall.svg)
-
----
-
-## Port Forwarding
-
-![](images/port-forwarding.svg)
-
-`ssh -L :1234:localhost:3000 jusuf`
-
----
-
-## Port forwarding demo:
-
-- On local computer: `ssh -L :1234:localhost:3000 jusuf`
-- On jusuf:
-- ```bash
-cd $HOME/course/$USER/sc_venv_template
-source activate.sh
-mlflow server --port 3000
-```
-- On the browser: [http://localhost:1234](http://localhost:1234)
-
----
-
-## A fisrt AI code!
-
-- Let's copy the demo from [Fast.AI's course](https://github.com/fastai/fastbook/blob/master/01_intro.ipynb) (highly recommended)
-
----
-
-## Let's train a pet classifier
+### Let's train a 🐈 classifier!
 
 - This is a minimal demo, to show some quirks of the supercomputer
-
----
-
-## FastAI's demo image classifier
-
-### Save this as `fastai-demo.py`
-
-```python
+- Save it as cats.py
+- ```python 
 from fastai.vision.all import *
-
+from fastai.callback.tensorboard import *
+#
 print("Downloading dataset...")
 path = untar_data(URLs.PETS)/'images'
 print("Finished downloading dataset")
-
+#
 def is_cat(x): return x[0].isupper()
+#
+# Create the dataloaders and resize the images
 dls = ImageDataLoaders.from_name_func(
     path, get_image_files(path), valid_pct=0.2, seed=42,
     label_func=is_cat, item_tfms=Resize(224))
-
 print("On the login node, this will download resnet34")
-learn = vision_learner(dls, resnet34, metrics=error_rate)
-learn.fine_tune(1)
+learn = vision_learner(dls, resnet34, metrics=accuracy)
+#
+# Trains the model for 3 epochs with this dataset
+learn.unfreeze()
+learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
 ```
 
 ---
 
-## Submission file for the classifier
+### Submission file for the classifier
 
-### Save this as `fastai-demo.sbatch`
+#### Save this as `fastai.sbatch`
 
 ```bash
-#!/bin/bash -x
+#!/bin/bash
 #SBATCH --account=training2321
 #SBATCH --mail-user=MYUSER@fz-juelich.de
 #SBATCH --mail-type=ALL
@@ -1021,15 +920,45 @@ learn.fine_tune(1)
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
 #SBATCH --output=output.%j
-#SBATCH --error=err.%j
+#SBATCH --error=error.%j
 #SBATCH --time=00:10:00
-#SBATCH --partition=gpus
-#SBATCH --reservation=training-20230229 # For today only
+#SBATCH --partition=booster
+#SBATCH --reservation=ai_sc_day1 # For today only
 
-cd /p/home/jusers/$USER/jusuf/course/$USER
+cd /p/home/jusers/$USER/juwels/course/$USER
 source sc_venv_template/activate.sh # Now we finally use the fastai module
 
-srun python fastai-demo.py
+srun python cats.py
+```
+
+--- 
+
+### Submit it
+
+`sbatch fastai.sbatch`
+
+---
+
+### Submission time
+
+- Check error and output logs, check queue
+
+---
+
+### Probably not much happening...
+
+- ```bash
+$ cat output.7948496 
+The activation script must be sourced, otherwise the virtual environment will not work.
+Setting vars
+Downloading dataset...
+```
+- ```bash
+$ cat err.7948496 
+The following modules were not unloaded:
+  (Use "module --force purge" to unload all):
+
+  1) Stages/2023
 ```
 
 ---
@@ -1040,7 +969,9 @@ srun python fastai-demo.py
 
 ## What happened?
 
+- It might be that it's not enough time for the job to give up
 - Check the `error.${JOBID}` file
+- If you run it longer, you will get the actual error
 - Long error message which ends with
 - ```python
   File "/p/software/jusuf/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py", line 1391, in https_open
@@ -1078,6 +1009,8 @@ learn = vision_learner(dls, resnet34, metrics=error_rate)
 
 ---
 
+## Remember, remember
+
 ![](images/compute-nodes-no-net.svg)
 
 ---
@@ -1094,17 +1027,17 @@ learn = vision_learner(dls, resnet34, metrics=error_rate)
 
 - Comment out the line which does AI training:
 - ```python
-# learn.fine_tune(1)
+# learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
 ```
 - Call our code on the login node!
 - ```bash
 source sc_venv_template/activate.sh # So that we have fast.ai library
-python fastai-demo.py
+python cats.py
 ```
 
 ---
 
-## Downloading a dataset
+## Run the downloader on the login node
 
 ```bash
 $ source sc_venv_template/activate.sh
@@ -1119,13 +1052,13 @@ Downloading dataset...
 
 ## Run it again on the compute nodes!
 
-- Uncomment the line that does training:
+- Un-comment back the line that does training:
 - ```bash
-learn.fine_tune(1)
+learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
 ```
 - Submit the job!
 - ```bash
-sbatch fastai-demo.sbatch
+sbatch fastai.sbatch
 ```
 
 ---
@@ -1141,7 +1074,7 @@ watch squeue --me
 
 ## Check output files
 
-- You can seem them at VSCode
+- You can see them within VSCode
 - ```bash
 The activation script must be sourced, otherwise the virtual environment will not work.
 Setting vars
@@ -1164,51 +1097,60 @@ epoch     train_loss  valid_loss  error_rate  time
 
 ---
 
-## Adding MLFLow to the Fast.AI demo
+### Tools for results analysis
 
-- Follow the example from [mlflow.fastai](https://mlflow.org/docs/latest/python_api/mlflow.fastai.html)
-- Add this at the beginning of your code:
+- We already ran the code and have results
+- To analyze them, there's a neat tool called Tensorboard
+- And we already have the code for it on our example!
 - ```python
-import mlflow.fastai
-from mlflow import MlflowClient
-```
-- Change the training line to this:
-
-- ``` python
-# Enable auto logging
-mlflow.fastai.autolog()
-# Start MLflow session
-with mlflow.start_run() as run:
-        learn.fine_tune(1) # We are using a pre-trained model
+learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
 ```
 
 ---
 
-## MLFLOW+Fast.AI 
+## Example: Tensorboard
 
-#### Do the ssh port forward and check with `mlflow ui` on the login node
+`tensorboard --logdir=runs  --port=9999 serve`
 
-```python
-from fastai.vision.all import *
-import mlflow.fastai
-from mlflow import MlflowClient
+- Opens a connection on port 9999... *OF THE SUPERCOMPUTER*.
+- We need to do something else: SSH PORT FORWARDING
 
-path = untar_data(URLs.PETS)/'images'
+---
 
-def is_cat(x): return x[0].isupper()
-dls = ImageDataLoaders.from_name_func(
-    path, get_image_files(path), valid_pct=0.2, seed=42,
-    label_func=is_cat, item_tfms=Resize(224))
+## Example: Tensorboard
 
-learn = vision_learner(dls, resnet34, metrics=error_rate)
+![](images/supercomputer-firewall.svg)
 
-# Enable auto logging
-mlflow.fastai.autolog()
+---
 
-# Start MLflow session
-with mlflow.start_run() as run:
-    learn.fine_tune(1)
+## Port Forwarding
+
+![](images/port-forwarding.svg)
+
+`ssh -L :1234:localhost:3000 booster`
+
+---
+
+## Port forwarding demo:
+
+- On local computer:
+- ```bash
+ssh -L :1234:localhost:9999 booster
+````
+- On juwels booster:
+- ```bash
+cd $HOME/course/$USER/sc_venv_template
+source activate.sh
+tensorboard --logdir=runs  --port=9999 serve
 ```
+- On the browser: [http://localhost:1234](http://localhost:1234)
+
+---
+
+### Tensorboard on Juwels Booster
+
+![](images/tensorboard-cats.png)
+
 
 ---
 
@@ -1221,9 +1163,8 @@ As of now, I expect you managed to:
 - A working ssh connection to the supercomputers 🖥️
 - Can edit and transfer files via VSCode 📝
 - Submit jobs and read results 📫
-- Access services on the login and compute nodes 🧙‍♀️
+- Access web services on the login nodes 🧙‍♀️
 - Is ready to make great code! 💪
-
 
 ---
 
@@ -1289,11 +1230,12 @@ srun --time=00:05:00 \
      --pty /bin/bash -i
 
 bash-4.4$ hostname # This is running on a compute node of the supercomputer
-jsfc013
+jwb0002
 
 bash-4.4$ cd $HOME/course/$USER
 bash-4.4$ source sc_venv_template/activate.sh
-bash-4.4$ mlflow ui
+bash-4.4$ tensorboard --logdir=runs  --port=9999 serve
+
 ```
 ---
 
@@ -1301,11 +1243,15 @@ bash-4.4$ mlflow ui
 
 On your machine:
 
-- `ssh -L :3334:localhost:5000 jsfc013i.jusuf`
+- ```bash
+ssh -L :3334:localhost:9999 jwb002i.booster
+```
 
 - Mind the `i` letter I added at the end of the hostname
 
 - Now you can access the service on your local browser at [http://localhost:3334](http://localhost:3334)
 
 ---
+
+### Now that's really the end! 😓
 
