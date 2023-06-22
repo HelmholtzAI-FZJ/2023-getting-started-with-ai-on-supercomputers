@@ -6,11 +6,13 @@
 #SBATCH --ntasks-per-node=1  
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=96
-#SBATCH --time=00:15:00
+#SBATCH --time=02:00:00
 #SBATCH --partition=booster
 #SBATCH --account=training2321
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
+
+export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 # activate env
 source ../sc_venv_template/activate.sh

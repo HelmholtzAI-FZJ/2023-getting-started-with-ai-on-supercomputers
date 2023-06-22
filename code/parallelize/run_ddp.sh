@@ -1,18 +1,17 @@
 #!/bin/bash -x
 
 # SLURM SUBMIT SCRIPT
-#SBATCH --nodes=4             # This needs to match Trainer(num_nodes=...)
+#SBATCH --nodes=1             # This needs to match Trainer(num_nodes=...)
 #SBATCH --gres=gpu:4
-#SBATCH --ntasks-per-node=1   # This needs to match Trainer(devices=...)
+#SBATCH --ntasks-per-node=4    # This needs to match Trainer(devices=...)
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=24
-#SBATCH --time=00:15:00
+#SBATCH --time=01:00:00
 #SBATCH --partition=booster
 #SBATCH --account=training2321
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 
-CUDA_VISIBLE_DEVICES=0,1,2,3
 
 # activate env
 source ../sc_venv_template/activate.sh
