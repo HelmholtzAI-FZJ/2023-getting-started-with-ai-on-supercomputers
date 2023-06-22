@@ -8,17 +8,12 @@ date: June 28, 2023
 ## One GPU training 
 
 ```python
-# set the random seeds.
-seed_everything(42)
-
 # 1. Download and organize the data
 download_data("https://pl-flash-data.s3.amazonaws.com/hymenoptera_data.zip", "data/")
 
 datamodule = ImageClassificationData.from_folders(
-    train_folder="data/hymenoptera_data/train/",
-    val_folder="data/hymenoptera_data/val/",
-    test_folder="data/hymenoptera_data/test/",
-    batch_size=1,
+    train_folder="data/hymenoptera_data/train/", val_folder="data/hymenoptera_data/val/",
+    test_folder="data/hymenoptera_data/test/", batch_size=16,
 )
 
 # 2. Build the model using desired Task
@@ -42,9 +37,9 @@ trainer.save_checkpoint("image_classification_model.pt")
 #!/bin/bash -x
 
 # SLURM SUBMIT SCRIPT
-#SBATCH --nodes=1             # This needs to match Trainer(num_nodes=...)
+#SBATCH --nodes=1              # This needs to match Trainer(num_nodes=...) 
 #SBATCH --gres=gpu:1
-#SBATCH --ntasks-per-node=1   # This needs to match Trainer(devices=...)
+#SBATCH --ntasks-per-node=1    # This needs to match Trainer(devices=...)
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=96
 #SBATCH --time=00:15:00
@@ -53,11 +48,14 @@ trainer.save_checkpoint("image_classification_model.pt")
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 
+CUDA_VISIBLE_DEVICES=0,1,2,3
+export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
+
 # activate env
 source ../sc_venv_template/activate.sh
 
-# run script 
-srun python3 one_gpu.py
+# run script
+srun python3 ddp.py
 ```
 
 ```bash
@@ -66,10 +64,275 @@ elapsed: 00 hours 06 min 04 sec
 
 ---
 
-## Parallel ML
+## But what about many GPUs?
 
-![](images/paralellism-types.jpg)
-Shamelessly stolen from [twitter](https://twitter.com/rasbt/status/1625494398778892292)
+- It's when things get interesting
+
+---
+
+## Data Parallel
+
+![](images/data-parallel.svg)
+
+---
+
+## Data Parallel
+
+![](images/data-parallel-multiple-data.svg)
+
+---
+
+## Data Parallel - Averaging
+
+![](images/data-parallel-averaging.svg)
+
+---
+
+## Data Parallel
+
+### There are other approaches too!
+
+- For the sake of completeness:
+    - Asynchronous Stochastic Gradient Descent
+        - Don't average the parameters, but send the updates (gradients post learning rate and momentum) asynchronously
+        - Advantageous for slow networks
+        - Problem: stale gradient (things might change while calculating gradients)
+        - The more nodes, the worse it gets
+        - Won't talk about it anymore
+
+---
+
+## Data Parallel
+
+### There are other approaches too!
+
+- Decentralized Asychronous Stochastic Gradient Descent
+    - Updates are peer-to-peer
+    - The updates are heavily compressed and quantized
+    - Disadvantage: extra computation per minibatch, more memory needed
+
+- WE DON'T NEED THOSE
+
+---
+
+## That's it for data parallel!
+
+- Use different data for each GPU
+- Everything else is the same
+- Average after each epoch
+
+---
+
+## There are more levels!
+
+![](images/lets-go-deeper.jpg)
+
+--- 
+
+## Data Parallel - Multi Node
+
+![](images/data-parallel-multi-node.svg)
+
+---
+
+## Data Parallel - Multi Node
+
+![](images/data-parallel-multi-node-averaging.svg)
+
+---
+
+## Before we go further...
+
+- Data parallel is usually good enough 👌
+- If you need more than this, you should be giving this course, not me 🤷‍♂️
+
+---
+
+## Model Parallel
+
+- Model *itself* is too big to fit in one single GPU 🐋
+- Each GPU holds a slice of the model 🍕
+- Data moves from one GPU to the next
+
+---
+
+## Model Parallel
+
+![](images/model-parallel.svg)
+
+---
+
+
+## Model Parallel
+
+![](images/model-parallel-pipeline-1.svg)
+
+---
+
+## Model Parallel
+
+![](images/model-parallel-pipeline-2.svg)
+
+---
+
+## Model Parallel
+
+![](images/model-parallel-pipeline-3.svg)
+
+---
+
+## Model Parallel
+
+![](images/model-parallel-pipeline-4.svg)
+
+---
+
+## Model Parallel
+
+![](images/model-parallel-pipeline-5.svg)
+
+---
+
+## Model Parallel
+
+![](images/model-parallel-pipeline-6.svg)
+
+---
+
+## Model Parallel
+
+![](images/model-parallel-pipeline-7.svg)
+
+---
+
+## Model Parallel
+
+![](images/model-parallel-pipeline-8.svg)
+
+---
+
+## Model Parallel
+
+![](images/model-parallel-pipeline-9.svg)
+
+---
+
+## Model Parallel
+
+![](images/model-parallel-pipeline-10.svg)
+
+---
+
+## What's the problem here? 🧐
+
+---
+
+## Model Parallel
+
+- Waste of resources
+- While one GPU is working, others are waiting the whole process to end
+- ![](images/no_pipe.png)
+    - [Source: GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism](https://arxiv.org/abs/1811.06965)
+
+
+---
+
+## Model Parallel - Pipelining
+
+![](images/model-parallel-pipeline-1.svg)
+
+---
+
+## Model Parallel - Pipelining
+
+![](images/model-parallel-pipeline-2-multibatch.svg)
+
+---
+
+## Model Parallel - Pipelining
+
+![](images/model-parallel-pipeline-3-multibatch.svg)
+
+---
+
+## Model Parallel - Pipelining
+
+![](images/model-parallel-pipeline-4-multibatch.svg)
+
+---
+
+## Model Parallel - Pipelining
+
+![](images/model-parallel-pipeline-5-multibatch.svg)
+
+---
+
+## Model Parallel - Pipelining
+
+![](images/model-parallel-pipeline-6-multibatch.svg)
+
+---
+
+## Model Parallel - Pipelining
+
+![](images/model-parallel-pipeline-7-multibatch.svg)
+
+---
+
+## Model Parallel - Pipelining
+
+![](images/model-parallel-pipeline-8-multibatch.svg)
+
+---
+
+## Model Parallel - Pipelining
+
+![](images/model-parallel-pipeline-9-multibatch.svg)
+
+---
+
+## This is an oversimplification!
+
+- Actually, you split the input minibatch into multiple microbatches.
+- There's still idle time - an unavoidable "bubble" 🫧
+- ![](images/pipe.png)
+
+---
+
+## Model Parallel - Multi Node
+
+- In this case, each node does the same as the others. 
+- At each step, they all synchronize their weights.
+
+---
+
+## Model Parallel - Multi Node
+
+![](images/model-parallel-multi-node.svg)
+
+---
+
+## Model Parallel - going bigger
+
+- You can also have layers spreaded over multiple gpus
+- One can even pipeline among nodes....
+
+---
+
+## Recap
+
+- Data parallelism:
+    - Split the data over multiple GPUs
+    - Each GPU runs the whole model
+    - The gradients are averaged at each step
+- Data parallelism, multi-node:
+    - Same, but gradients are averaged across nodes
+- Model parallelism:
+    - Split the model over multiple GPUs
+    - Each GPU does the forward/backward pass
+    - The gradients are averaged at the end
+- Model parallelism, multi-node:
+    - Same, but gradients are averaged across nodes
 
 ---
 
@@ -131,7 +394,7 @@ utils.init_distributed_mode(12354)
 
 - ```python
 # 3. Create the trainer 
-trainer = flash.Trainer(max_epochs=50,  accelerator="gpu", devices=ntasks,\
+trainer = flash.Trainer(max_epochs=50,  accelerator="gpu",
     num_nodes=nnodes)
 ```
 
@@ -155,6 +418,8 @@ trainer = flash.Trainer(max_epochs=50,  accelerator="gpu", devices=ntasks,\
 #SBATCH --error=%j.err
 
 CUDA_VISIBLE_DEVICES=0,1,2,3
+export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
+
 # activate env
 source ../sc_venv_template/activate.sh
 
@@ -179,7 +444,7 @@ elapsed: 00 hours 01 min 16 sec
 logger = TensorBoardLogger("tb_logs", name="my_model")
 
 # 4. Create the trainer and pass the logger 
-trainer = flash.Trainer(max_epochs=50,  accelerator="gpu", devices=ntasks, \
+trainer = flash.Trainer(max_epochs=50,  accelerator="gpu",
     num_nodes=nnodes, logger=logger)
 ```
 
