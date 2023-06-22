@@ -6,7 +6,7 @@ from PIL import Image
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 
-class ImageNetKaggle(Dataset):
+class ImageNet(Dataset):
     def __init__(self, root, split, transform=None):
         self.samples = []
         self.targets = []
@@ -49,7 +49,6 @@ class ImageNetKaggle(Dataset):
         return x, self.targets[idx]
 
 
-
 def transformation():
     _IMAGE_MEAN_VALUE = [0.485, 0.456, 0.406]
     _IMAGE_STD_VALUE = [0.229, 0.224, 0.225]
@@ -83,15 +82,11 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=2048)
     args = parser.parse_args()
 
-    workers = int(os.getenv('SLURM_CPUS_PER_TASK'))
+    image_datasets = ImageNet(args.data_root, "train",  transformation()) 
+    dataloaders = DataLoader(image_datasets, batch_size=args.batch_size, num_workers=int(os.getenv('SLURM_CPUS_PER_TASK')),  pin_memory=True)
 
-    dataset_transforms = transformation()
-
-    image_datasets = ImageNetKaggle(args.data_root, "train",  dataset_transforms) 
-    dataloaders = DataLoader(image_datasets, batch_size=args.batch_size, num_workers=workers,  pin_memory=True)
-
-    print("Start loading ILSVRC images")
+    print("Start loading ImageNet images")
     for x in dataloaders:
-        print(x)
+        pass
 
 

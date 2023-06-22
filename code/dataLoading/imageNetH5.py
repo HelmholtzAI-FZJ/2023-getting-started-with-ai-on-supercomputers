@@ -87,14 +87,10 @@ if __name__ == "__main__":
     parser.add_argument("--batch_size", type=int, default=2048)
     args = parser.parse_args()
 
-    workers = int(os.getenv('SLURM_CPUS_PER_TASK'))
-
-    dataset_transforms = transformation()
-
-    image_datasets = ImageNetH5(args.data_root, "train", dataset_transforms) 
-    dataloadersh5= DataLoader(image_datasets, batch_size=args.batch_size, num_workers=workers, pin_memory=True)
+    image_datasets = ImageNetH5(args.data_root, "train", transformation()) 
+    dataloadersh5= DataLoader(image_datasets, batch_size=args.batch_size, num_workers=int(os.getenv('SLURM_CPUS_PER_TASK')), pin_memory=True)
     
     print("Start loading with H5 file")
     for x in dataloadersh5:
-        print(x)
+        pass
         

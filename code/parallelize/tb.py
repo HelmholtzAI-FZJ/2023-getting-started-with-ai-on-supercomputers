@@ -1,13 +1,39 @@
 import os
+
+import pytorch_lightning as pl 
 from pytorch_lightning import seed_everything
-from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import TensorBoardLogger
+from torchvision import transforms
 
-import flash
-from flash.core.data.utils import download_data
-from flash.image import ImageClassificationData, ImageClassifier
-
+from dataModule import ImageNetDataModule
+from resnet50 import resnet50Model
 import utils
+
+
+def transformation():
+    _IMAGE_MEAN_VALUE = [0.485, 0.456, 0.406]
+    _IMAGE_STD_VALUE = [0.229, 0.224, 0.225]
+    
+    return dict(
+        train=transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Resize((256, 256)),
+            transforms.RandomCrop(224),
+            transforms.RandomHorizontalFlip(),
+            
+            transforms.Normalize(_IMAGE_MEAN_VALUE, _IMAGE_STD_VALUE)
+        ]),
+        val=transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Resize((224, 224)),
+
+            transforms.Normalize(_IMAGE_MEAN_VALUE, _IMAGE_STD_VALUE)
+        ]),
+        test=transforms.Compose([        
+            transforms.ToTensor(),
+            transforms.Resize((224, 224)),
+            transforms.Normalize(_IMAGE_MEAN_VALUE, _IMAGE_STD_VALUE)
+        ]))
 
 # set the random seeds.
 seed_everything(42)
@@ -26,24 +52,17 @@ nnodes = os.getenv("SLURM_NNODES")
 
 utils.init_distributed_mode(12354)
 
-# 1. Download and organize the data
-download_data("https://pl-flash-data.s3.amazonaws.com/hymenoptera_data.zip", "data/")
-
-datamodule = ImageClassificationData.from_folders(
-    train_folder="data/hymenoptera_data/train/",
-    val_folder="data/hymenoptera_data/val/",
-    test_folder="data/hymenoptera_data/test/",
-    batch_size=1,
-)
+# 1. Organize the data
+datamodule = ImageNetDataModule("/p/scratch/training2303/data/", 128, int(os.getenv('SLURM_CPUS_PER_TASK')), transformation())
 
 # 2. Build the model using desired Task
-model = ImageClassifier(backbone="resnet18", num_classes=datamodule.num_classes, pretrained=False)
+model = resnet50Model()
 
 # 3. Create the logger 
 logger = TensorBoardLogger("tb_logs", name="my_model")
 
-# 4. Create the trainer and pass the logger 
-trainer = flash.Trainer(max_epochs=50,  accelerator="gpu", devices=ntasks, num_nodes=nnodes, logger=logger)
+# 4. Create the trainer
+trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes, strategy="ddp", logger=logger)
 
 # 5. Train the model
 trainer.fit(model, datamodule=datamodule)
