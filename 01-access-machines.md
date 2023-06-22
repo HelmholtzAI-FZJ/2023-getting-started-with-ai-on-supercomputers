@@ -222,6 +222,27 @@ Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps
 
 ---
 
+## Jupyter
+
+[jupyter-jsc.fz-juelich.de](https://jupyter-jsc.fz-juelich.de)
+
+- Jupyter-JSC uses the queue (wait for it)
+- When you are working on it, you are using compute node time
+
+- *Yes, if you are just thinking and looking at the 📺, you are burning project time*🤦‍♂️
+
+- It's useful for small tests - not for full-fledged development
+
+---
+
+## Jupyter
+
+#### Pay attention to the partition - DON'T RUN IT ON THE LOGIN NODE!!!
+
+![](images/jupyter-partition.png)
+
+---
+
 ### Connecting to JUWELS BOOSTER and JUSUF
 
 #### SSH
@@ -762,28 +783,6 @@ cat error.412169
 ```
 
 Or simply open it on VSCode!
-
----
-
-## Jupyter
-
-[jupyter-jsc.fz-juelich.de](https://jupyter-jsc.fz-juelich.de)
-
-- Jupyter-JSC calls slurm, just the same as your job
-- When you are working on it, you are using compute node time
-
-- *Yes, if you are just thinking and looking at the 📺, you are burning project time*🤦‍♂️
-
-- It's useful for small tests - not for full-fledged development
-
----
-
-## Jupyter
-
-#### Pay attention to the partition - DON'T RUN IT ON THE LOGIN NODE!!!
-
-![](images/jupyter-partition.png)
-
 
 ---
 
