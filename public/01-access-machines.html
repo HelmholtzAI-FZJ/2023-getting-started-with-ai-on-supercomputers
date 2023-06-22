@@ -237,8 +237,13 @@ href="https://go.fzj.de/intro-sc-ai-2023-slack">Slack</a></li>
 <li class="fragment"><a
 href="https://go.fzj.de/intro-sc-ai-2023-course">JSC Training
 Page</a></li>
+<li class="fragment"><a
+href="https://go.fzj.de/intro-sc-ai-2023-project-join">Judoor project
+page invite</a></li>
 <li class="fragment"><a href="http://go.fzj.de/intro-sc-ai-2023">This
 document: http://go.fzj.de/intro-sc-ai-2023</a></li>
+<li class="fragment">Our mailing list for <a
+href="https://lists.fz-juelich.de/mailman/listinfo/ml">AI news</a></li>
 </ul>
 <p><img
 data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
@@ -247,10 +252,16 @@ data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
 <h2>Goals for this course:</h2>
 <ul>
 <li class="fragment">Make sure you know how to access and use our
-machines</li>
-<li class="fragment">Distribute your ML workload.</li>
+machines 👩‍💻</li>
+<li class="fragment">Put your data in way that supercomputer can use it
+fast 💨</li>
+<li class="fragment">Distribute your ML workload 💪</li>
 <li class="fragment">Important: This is <em><em>NOT</em></em> a basic AI
-course</li>
+course 🙇‍♂️
+<ul>
+<li class="fragment">If you need one, check <a
+href="https://course.fast.ai">fast.ai</a></li>
+</ul></li>
 </ul>
 <p><img
 data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
@@ -326,6 +337,19 @@ data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
 </section>
 <section class="slide level2">
 
+<h3 id="note">Note</h3>
+<p>Please open this document on your own browser! We will need it for
+the exercises. <a
+href="http://go.fzj.de/intro-sc-ai-2023">http://go.fzj.de/intro-sc-ai-2023</a></p>
+<figure>
+<img data-src="images/intro-sc-ai-2023-qr.png"
+alt="Mobile friendly, but you need it on your computer, really" />
+<figcaption aria-hidden="true">Mobile friendly, but you need it on your
+computer, really</figcaption>
+</figure>
+</section>
+<section class="slide level2">
+
 <h3 id="jülich-supercomputers">Jülich Supercomputers</h3>
 <figure>
 <img data-src="images/machines.png" alt="JSC Supercomputer Stragegy" />
@@ -339,7 +363,10 @@ data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
 <li class="fragment">Compute cluster: Many computers bound together
 locally</li>
 <li class="fragment">Supercomputer: A damn lot of computers bound
-together locally</li>
+together locally😒
+<ul>
+<li class="fragment">with a fancy network 🤯</li>
+</ul></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -348,11 +375,12 @@ together locally</li>
 <ul>
 <li class="fragment">Login Nodes: Normal machines, for compilation, data
 transfer, scripting, etc. No GPUs.</li>
-<li class="fragment">Compute Nodes: Guess what :-)</li>
+<li class="fragment">Compute Nodes: Guess what?
+<ul>
+<li class="fragment">For compute! With GPUs! 🤩</li>
+</ul></li>
 <li class="fragment">High-speed, ultra-low-latency network</li>
 <li class="fragment">Shared networked file systems</li>
-<li class="fragment">Scratch file system accessible from compute
-nodes</li>
 <li class="fragment">Key stats:
 <ul>
 <li class="fragment">Number of Nodes</li>
@@ -369,16 +397,16 @@ nodes</li>
 <ul>
 <li class="fragment">936 Nodes</li>
 <li class="fragment">AMD EPYC Rome 7402 CPU 2.7 GHz (2 × 24 cores x 2
-SMT threads = 96 virtual cores/node)</li>
+threads = 96 virtual cores/node)</li>
 <li class="fragment">512 GiB memory</li>
 <li class="fragment">Network Mellanox HDR infiniband (FAST💨 and
 EXPENSIVE💸)</li>
-<li class="fragment">4x NVIDIA A100 with 40gb.</li>
-</ul>
-<p>TL;DR: 89856 cores, 3744 GPUs, 468 TB RAM 💪</p>
-<p>Way deeper technical info at <a
+<li class="fragment">4x NVIDIA A100 with 40gb 😻</li>
+<li class="fragment">TL;DR: 89856 cores, 3744 GPUs, 468 TB RAM 💪</li>
+<li class="fragment">Way deeper technical info at <a
 href="https://apps.fz-juelich.de/jsc/hps/juwels/booster-overview.html">Juwels
-Booster Overview</a></p>
+Booster Overview</a></li>
+</ul>
 </section>
 <section class="slide level2">
 
@@ -389,11 +417,12 @@ Booster Overview</a></p>
 node)</li>
 <li class="fragment">256 GiB memory</li>
 <li class="fragment">61 nodes with 4x NVIDIA V100 with 16gb.</li>
-</ul>
-<p>TL;DR: Smaller than JUWELS Booster, but still packs a punch 🤜</p>
-<p>Way deeper technical info at <a
+<li class="fragment">TL;DR: Smaller than JUWELS Booster, but still packs
+a punch 🤜</li>
+<li class="fragment">Way deeper technical info at <a
 href="https://apps.fz-juelich.de/jsc/hps/jusuf/cluster/configuration.html">JUSUF
-Overview</a></p>
+Overview</a></li>
+</ul>
 </section>
 <section id="how-do-i-use-a-supercomputer" class="slide level2">
 <h2>How do I use a Supercomputer?</h2>
@@ -521,14 +550,13 @@ BOOSTER: 8 * 64 * 48 = 24576 core-h!</li>
 <p><a
 href="https://jupyter-jsc.fz-juelich.de">jupyter-jsc.fz-juelich.de</a></p>
 <ul>
-<li class="fragment"><p>Jupyter-JSC uses the queue (wait for
-it)</p></li>
-<li class="fragment"><p>When you are working on it, you are using
-compute node time</p></li>
-<li class="fragment"><p><em>Yes, if you are just thinking and looking at
-the 📺, you are burning project time</em>🤦‍♂️</p></li>
-<li class="fragment"><p>It’s useful for small tests - not for
-full-fledged development</p></li>
+<li class="fragment">Jupyter-JSC uses the queue</li>
+<li class="fragment">When you are working on it, you are using project
+time ⌛️</li>
+<li class="fragment"><em>Yes, if you are just thinking and looking at
+the 📺, you are burning project time</em>🤦‍♂️</li>
+<li class="fragment">It’s useful for small tests - not for full-fledged
+development 🙄</li>
 </ul>
 </section>
 <section id="jupyter-1" class="slide level2">
@@ -592,14 +620,16 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="
 <li class="fragment"><a
 href="https://code.visualstudio.com/download">Download VScode:
 code.visualstudio.com</a></li>
-<li class="fragment">Install it</li>
+<li class="fragment">Install and run it
+<ul>
+<li class="fragment">On the local terminal, type <code>code</code></li>
+</ul></li>
 <li class="fragment">Install <a
 href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack">Remote
 Development Tools</a></li>
 <li class="fragment">Install <a
 href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh">Remote:
 SSH</a></li>
-<li class="fragment">On the local terminal, type <code>code</code></li>
 </ul>
 </section>
 <section id="vscode-1" class="slide level2">
@@ -649,15 +679,13 @@ href="https://judoor.fz-juelich.de">Judoor</a></li>
 <h3 id="ssh-5">SSH</h3>
 <h4 id="find-your-ipname-range">Find your ip/name range</h4>
 <ul>
-<li class="fragment">Terminal: <code>curl ifconfig.me</code></li>
-</ul>
-<div class="sourceCode" id="cb5"><pre
+<li class="fragment"><p>Terminal: <code>curl ifconfig.me</code></p></li>
+<li class="fragment"><div class="sourceCode" id="cb5"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl ifconfig.me </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">93.199.55.160%</span></span></code></pre></div>
-<p>(Ignore the <code>%</code> sign)</p>
-<ul>
-<li class="fragment">Let’s keep this inside vscode:
-<code>code key.txt</code> and paste the number you got</li>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">93.199.55.160%</span></span></code></pre></div></li>
+<li class="fragment"><p>(Ignore the <code>%</code> sign)</p></li>
+<li class="fragment"><p>Let’s keep this inside vscode:
+<code>code key.txt</code> and paste the number you got</p></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -681,22 +709,32 @@ href="https://www.whatismyip.com">https://www.whatismyip.com</a></li>
 </section>
 <section class="slide level2">
 
+<h3 id="ssh-8">SSH</h3>
+<p>Did everyone get the ip address?</p>
+</section>
+<section class="slide level2">
+
 <h3 id="ssh---example-93.199.55.160">SSH - Example:
 <code>93.199.55.160</code></h3>
 <ul>
 <li class="fragment">Go to VSCode and make it simpler, replace the 2nd
-half with <code>0.0/16</code>: <code>93.199.0.0/16</code></li>
-<li class="fragment">(because the last numbers change)</li>
+half with <code>"0.0/16"</code>:
+<ul>
+<li class="fragment">It was <code>93.199.55.160</code></li>
+<li class="fragment">Becomes <code>93.199.0.0/16</code> (with YOUR
+number, not with the example)</li>
+</ul></li>
 <li class="fragment">Add a <code>from=""</code> around it</li>
 <li class="fragment">So, it looks like this, now:
 <code>from="93.199.0.0/16"</code></li>
 <li class="fragment">Add a second magic number, with a comma:
 <code>,10.0.0.0/8</code> 🧙‍♀️</li>
 <li class="fragment">I promise, the magic is worth it 🧝‍♂️</li>
+<li class="fragment">In the end it looks like this:
+<code>from="93.199.0.0/16,10.0.0.0/8"</code> 🎬</li>
+<li class="fragment"><h2 id="keep-it-open-we-will-use-it-later">Keep it
+open, we will use it later</h2></li>
 </ul>
-</section>
-<section class="slide level2">
-
 <h3 id="ssh---example-93.199.0.016">SSH - Example:
 <code>93.199.0.0/16</code></h3>
 <h4 id="copy-your-ssh-key">Copy your ssh key</h4>
@@ -712,7 +750,7 @@ which you just opened</li>
 </section>
 <section class="slide level2">
 
-<h3 id="ssh-8">SSH</h3>
+<h3 id="ssh-9">SSH</h3>
 <h4 id="example-93.199.0.016">Example: <code>93.199.0.0/16</code></h4>
 <ul>
 <li class="fragment">Put them together and copy again:</li>
@@ -722,21 +760,22 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="
 </section>
 <section class="slide level2">
 
-<h3 id="ssh-9">SSH</h3>
-<p><img data-src="images/manage-ssh-keys.png" /></p>
+<h3 id="ssh-10">SSH</h3>
 <ul>
 <li class="fragment">Let’s add it on <a
 href="https://judoor.fz-juelich.de">Judoor</a></li>
+<li class="fragment"><img data-src="images/manage-ssh-keys.png" /></li>
 <li class="fragment">Do it for JUWELS, JUSUF and JUDAC with the same
 key</li>
 </ul>
 </section>
 <section class="slide level2">
 
-<h3 id="ssh-10">SSH</h3>
+<h3 id="ssh-11">SSH</h3>
 <h4 id="add-new-key-to-judoor">Add new key to <a
 href="https://judoor.fz-juelich.de">Judoor</a></h4>
-<p><img data-src="images/manage-ssh-keys-from-and-key.png" /></p>
+<p><img data-src="images/manage-ssh-keys-from-and-key.png"
+width="850" /></p>
 <p>This might take some minutes</p>
 </section>
 <section class="slide level2">

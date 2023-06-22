@@ -9,7 +9,9 @@ date: June 27, 2023
 - [Zoom](https://go.fzj.de/intro-sc-ai-2023-zoom)
 - [Slack](https://go.fzj.de/intro-sc-ai-2023-slack)
 - [JSC Training Page](https://go.fzj.de/intro-sc-ai-2023-course)
+- [Judoor project page invite](https://go.fzj.de/intro-sc-ai-2023-project-join)
 - [This document: http://go.fzj.de/intro-sc-ai-2023](http://go.fzj.de/intro-sc-ai-2023)
+- Our mailing list for [AI news](https://lists.fz-juelich.de/mailman/listinfo/ml)
 
 
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
@@ -19,9 +21,11 @@ date: June 27, 2023
 
 ## Goals for this course:
 
-- Make sure you know how to access and use our machines
-- Distribute your ML workload.
-- Important: This is _*NOT*_ a basic AI course
+- Make sure you know how to access and use our machines 👩‍💻
+- Put your data in way that supercomputer can use it fast 💨
+- Distribute your ML workload 💪
+- Important: This is _*NOT*_ a basic AI course 🙇‍♂️
+  - If you need one, check [fast.ai](https://course.fast.ai)
 
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
 
@@ -58,6 +62,15 @@ date: June 27, 2023
 
 ---
 
+### Note
+
+Please open this document on your own browser! We will need it for the exercises.
+[http://go.fzj.de/intro-sc-ai-2023](http://go.fzj.de/intro-sc-ai-2023)
+
+![Mobile friendly, but you need it on your computer, really](images/intro-sc-ai-2023-qr.png)
+
+---
+
 ### Jülich Supercomputers
 
 ![JSC Supercomputer Stragegy](images/machines.png)
@@ -66,18 +79,19 @@ date: June 27, 2023
 
 ### What is a supercomputer?
 
-- Compute cluster: Many computers bound together locally
-- Supercomputer: A damn lot of computers bound together locally
+- Compute cluster: Many computers bound together locally 
+- Supercomputer: A damn lot of computers bound together locally😒
+  - with a fancy network 🤯
 
 ---
 
 ### Anatomy of a supercomputer
 
 -  Login Nodes: Normal machines, for compilation, data transfer,  scripting, etc. No GPUs.
-- Compute Nodes: Guess what :-)
+- Compute Nodes: Guess what? 
+  - For compute! With GPUs! 🤩
 - High-speed, ultra-low-latency network
 - Shared networked file systems
-- Scratch file system accessible from compute nodes
 - Key stats:
     - Number of Nodes
     - CPUs, Number of Cores, Single-core Performance
@@ -90,14 +104,12 @@ date: June 27, 2023
 ### JUWELS Booster Compute Nodes
 
 - 936 Nodes
-- AMD EPYC Rome 7402 CPU 2.7 GHz (2 × 24 cores x 2 SMT threads = 96 virtual cores/node)
+- AMD EPYC Rome 7402 CPU 2.7 GHz (2 × 24 cores x 2 threads = 96 virtual cores/node)
 - 512 GiB memory
 - Network Mellanox HDR infiniband (FAST💨 and EXPENSIVE💸)
-- 4x NVIDIA A100 with 40gb.
-
-TL;DR: 89856 cores, 3744 GPUs, 468 TB RAM 💪
-
-Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.de/jsc/hps/juwels/booster-overview.html)
+- 4x NVIDIA A100 with 40gb 😻
+- TL;DR: 89856 cores, 3744 GPUs, 468 TB RAM 💪
+- Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.de/jsc/hps/juwels/booster-overview.html)
 
 ---
 
@@ -107,10 +119,8 @@ Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.d
 - AMD EPYC Rome 7742 CPU 2.25 GHz (2 × 64 cores / node)
 - 256 GiB memory
 - 61 nodes with 4x NVIDIA V100 with 16gb.
-
-TL;DR: Smaller than JUWELS Booster, but still packs a punch 🤜
-
-Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps/jusuf/cluster/configuration.html)
+- TL;DR: Smaller than JUWELS Booster, but still packs a punch 🤜
+- Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps/jusuf/cluster/configuration.html)
 
 ---
 
@@ -226,12 +236,10 @@ Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps
 
 [jupyter-jsc.fz-juelich.de](https://jupyter-jsc.fz-juelich.de)
 
-- Jupyter-JSC uses the queue (wait for it)
-- When you are working on it, you are using compute node time
-
+- Jupyter-JSC uses the queue 
+- When you are working on it, you are using project time ⌛️
 - *Yes, if you are just thinking and looking at the 📺, you are burning project time*🤦‍♂️
-
-- It's useful for small tests - not for full-fledged development
+- It's useful for small tests - not for full-fledged development 🙄
 
 ---
 
@@ -293,10 +301,10 @@ The keys randomart image is:
 ## VSCode
 
 - [Download VScode: code.visualstudio.com](https://code.visualstudio.com/download)
-- Install it
+- Install and run it
+  - On the local terminal, type `code`
 - Install [Remote Development Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
 - Install [Remote: SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
-- On the local terminal, type `code`
 
 ---
 
@@ -354,12 +362,12 @@ Copy contents to the config file and save it.
 
 - Terminal: `curl ifconfig.me`
 
-```bash
+- ```bash
 $ curl ifconfig.me 
 93.199.55.160%
 ```
 
-(Ignore the `%` sign)
+- (Ignore the `%` sign)
 
 - Let's keep this inside vscode: `code key.txt` and paste the number you got
 
@@ -383,15 +391,24 @@ $ curl ifconfig.me
 
 ---
 
+### SSH
+
+Did everyone get the ip address?
+
+
+---
+
 ### SSH - Example: `93.199.55.160`
 
-- Go to VSCode and make it simpler, replace the 2nd half with `0.0/16`: `93.199.0.0/16`
-- (because the last numbers change)
+- Go to VSCode and make it simpler, replace the 2nd half with `"0.0/16"`:
+  - It was `93.199.55.160`
+  - Becomes `93.199.0.0/16` (with YOUR number, not with the example)
 - Add a `from=""` around it
 - So, it looks like this, now: `from="93.199.0.0/16"`
 - Add a second magic number, with a comma: `,10.0.0.0/8` 🧙‍♀️
 - I promise, the magic is worth it 🧝‍♂️
-
+- In the end it looks like this: `from="93.199.0.0/16,10.0.0.0/8"` 🎬
+- Keep it open, we will use it later
 ---
 
 ### SSH - Example: `93.199.0.0/16`
@@ -419,9 +436,8 @@ from="93.199.0.0/16,10.0.0.0/8" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd
 
 ### SSH
 
-![](images/manage-ssh-keys.png)
-
 - Let's add it on [Judoor](https://judoor.fz-juelich.de)
+- ![](images/manage-ssh-keys.png)
 - Do it for JUWELS, JUSUF and JUDAC with the same key
 
 ---
@@ -430,7 +446,7 @@ from="93.199.0.0/16,10.0.0.0/8" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd
 
 #### Add new key to [Judoor](https://judoor.fz-juelich.de)
 
-![](images/manage-ssh-keys-from-and-key.png)
+![](images/manage-ssh-keys-from-and-key.png){ width=850px }
 
 This might take some minutes
 
