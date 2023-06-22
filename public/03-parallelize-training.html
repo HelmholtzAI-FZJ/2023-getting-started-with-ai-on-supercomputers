@@ -231,30 +231,25 @@
 <section id="one-gpu-training" class="slide level2">
 <h2>One GPU training</h2>
 <div class="sourceCode" id="cb1"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the random seeds.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>seed_everything(<span class="dv">42</span>)</span>
+class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Download and organize the data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>download_data(<span class="st">&quot;https://pl-flash-data.s3.amazonaws.com/hymenoptera_data.zip&quot;</span>, <span class="st">&quot;data/&quot;</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Download and organize the data</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>download_data(<span class="st">&quot;https://pl-flash-data.s3.amazonaws.com/hymenoptera_data.zip&quot;</span>, <span class="st">&quot;data/&quot;</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>datamodule <span class="op">=</span> ImageClassificationData.from_folders(</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    train_folder<span class="op">=</span><span class="st">&quot;data/hymenoptera_data/train/&quot;</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    val_folder<span class="op">=</span><span class="st">&quot;data/hymenoptera_data/val/&quot;</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    test_folder<span class="op">=</span><span class="st">&quot;data/hymenoptera_data/test/&quot;</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    batch_size<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Build the model using desired Task</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ImageClassifier(backbone<span class="op">=</span><span class="st">&quot;resnet18&quot;</span>, num_classes<span class="op">=</span>datamodule.num_classes, pretrained<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Create the trainer </span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> flash.Trainer(max_epochs<span class="op">=</span><span class="dv">50</span>,  accelerator<span class="op">=</span><span class="st">&quot;gpu&quot;</span>, devices<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Train the model</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>trainer.fit(model, datamodule<span class="op">=</span>datamodule)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Save the model!</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>trainer.save_checkpoint(<span class="st">&quot;image_classification_model.pt&quot;</span>)</span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>datamodule <span class="op">=</span> ImageClassificationData.from_folders(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    train_folder<span class="op">=</span><span class="st">&quot;data/hymenoptera_data/train/&quot;</span>, val_folder<span class="op">=</span><span class="st">&quot;data/hymenoptera_data/val/&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    test_folder<span class="op">=</span><span class="st">&quot;data/hymenoptera_data/test/&quot;</span>, batch_size<span class="op">=</span><span class="dv">16</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Build the model using desired Task</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ImageClassifier(backbone<span class="op">=</span><span class="st">&quot;resnet18&quot;</span>, num_classes<span class="op">=</span>datamodule.num_classes, pretrained<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Create the trainer </span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> flash.Trainer(max_epochs<span class="op">=</span><span class="dv">50</span>,  accelerator<span class="op">=</span><span class="st">&quot;gpu&quot;</span>, devices<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Train the model</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>trainer.fit(model, datamodule<span class="op">=</span>datamodule)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Save the model!</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>trainer.save_checkpoint(<span class="st">&quot;image_classification_model.pt&quot;</span>)</span></code></pre></div>
 </section>
 <section id="one-gpu-training-1" class="slide level2">
 <h2>One GPU training</h2>
@@ -281,11 +276,258 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="
 <div class="sourceCode" id="cb3"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 00 hours 06 min 04 sec</span></code></pre></div>
 </section>
-<section id="parallel-ml" class="slide level2">
-<h2>Parallel ML</h2>
-<p><img data-src="images/paralellism-types.jpg" /> Shamelessly stolen
-from <a
-href="https://twitter.com/rasbt/status/1625494398778892292">twitter</a></p>
+<section id="but-what-about-many-gpus" class="slide level2">
+<h2>But what about many GPUs?</h2>
+<ul>
+<li class="fragment">It’s when things get interesting</li>
+</ul>
+</section>
+<section id="data-parallel" class="slide level2">
+<h2>Data Parallel</h2>
+<p><img data-src="images/data-parallel.svg" /></p>
+</section>
+<section id="data-parallel-1" class="slide level2">
+<h2>Data Parallel</h2>
+<p><img data-src="images/data-parallel-multiple-data.svg" /></p>
+</section>
+<section id="data-parallel---averaging" class="slide level2">
+<h2>Data Parallel - Averaging</h2>
+<p><img data-src="images/data-parallel-averaging.svg" /></p>
+</section>
+<section id="data-parallel-2" class="slide level2">
+<h2>Data Parallel</h2>
+<h3 id="there-are-other-approaches-too">There are other approaches
+too!</h3>
+<ul>
+<li class="fragment">For the sake of completeness:
+<ul>
+<li class="fragment">Asynchronous Stochastic Gradient Descent
+<ul>
+<li class="fragment">Don’t average the parameters, but send the updates
+(gradients post learning rate and momentum) asynchronously</li>
+<li class="fragment">Advantageous for slow networks</li>
+<li class="fragment">Problem: stale gradient (things might change while
+calculating gradients)</li>
+<li class="fragment">The more nodes, the worse it gets</li>
+<li class="fragment">Won’t talk about it anymore</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="data-parallel-3" class="slide level2">
+<h2>Data Parallel</h2>
+<h3 id="there-are-other-approaches-too-1">There are other approaches
+too!</h3>
+<ul>
+<li class="fragment">Decentralized Asychronous Stochastic Gradient
+Descent
+<ul>
+<li class="fragment">Updates are peer-to-peer</li>
+<li class="fragment">The updates are heavily compressed and
+quantized</li>
+<li class="fragment">Disadvantage: extra computation per minibatch, more
+memory needed</li>
+</ul></li>
+<li class="fragment">WE DON’T NEED THOSE</li>
+</ul>
+</section>
+<section id="thats-it-for-data-parallel" class="slide level2">
+<h2>That’s it for data parallel!</h2>
+<ul>
+<li class="fragment">Use different data for each GPU</li>
+<li class="fragment">Everything else is the same</li>
+<li class="fragment">Average after each epoch</li>
+</ul>
+</section>
+<section id="there-are-more-levels" class="slide level2">
+<h2>There are more levels!</h2>
+<p><img data-src="images/lets-go-deeper.jpg" /></p>
+</section>
+<section id="data-parallel---multi-node" class="slide level2">
+<h2>Data Parallel - Multi Node</h2>
+<p><img data-src="images/data-parallel-multi-node.svg" /></p>
+</section>
+<section id="data-parallel---multi-node-1" class="slide level2">
+<h2>Data Parallel - Multi Node</h2>
+<p><img data-src="images/data-parallel-multi-node-averaging.svg" /></p>
+</section>
+<section id="before-we-go-further" class="slide level2">
+<h2>Before we go further…</h2>
+<ul>
+<li class="fragment">Data parallel is usually good enough 👌</li>
+<li class="fragment">If you need more than this, you should be giving
+this course, not me 🤷‍♂️</li>
+</ul>
+</section>
+<section id="model-parallel" class="slide level2">
+<h2>Model Parallel</h2>
+<ul>
+<li class="fragment">Model <em>itself</em> is too big to fit in one
+single GPU 🐋</li>
+<li class="fragment">Each GPU holds a slice of the model 🍕</li>
+<li class="fragment">Data moves from one GPU to the next</li>
+</ul>
+</section>
+<section id="model-parallel-1" class="slide level2">
+<h2>Model Parallel</h2>
+<p><img data-src="images/model-parallel.svg" /></p>
+</section>
+<section id="model-parallel-2" class="slide level2">
+<h2>Model Parallel</h2>
+<p><img data-src="images/model-parallel-pipeline-1.svg" /></p>
+</section>
+<section id="model-parallel-3" class="slide level2">
+<h2>Model Parallel</h2>
+<p><img data-src="images/model-parallel-pipeline-2.svg" /></p>
+</section>
+<section id="model-parallel-4" class="slide level2">
+<h2>Model Parallel</h2>
+<p><img data-src="images/model-parallel-pipeline-3.svg" /></p>
+</section>
+<section id="model-parallel-5" class="slide level2">
+<h2>Model Parallel</h2>
+<p><img data-src="images/model-parallel-pipeline-4.svg" /></p>
+</section>
+<section id="model-parallel-6" class="slide level2">
+<h2>Model Parallel</h2>
+<p><img data-src="images/model-parallel-pipeline-5.svg" /></p>
+</section>
+<section id="model-parallel-7" class="slide level2">
+<h2>Model Parallel</h2>
+<p><img data-src="images/model-parallel-pipeline-6.svg" /></p>
+</section>
+<section id="model-parallel-8" class="slide level2">
+<h2>Model Parallel</h2>
+<p><img data-src="images/model-parallel-pipeline-7.svg" /></p>
+</section>
+<section id="model-parallel-9" class="slide level2">
+<h2>Model Parallel</h2>
+<p><img data-src="images/model-parallel-pipeline-8.svg" /></p>
+</section>
+<section id="model-parallel-10" class="slide level2">
+<h2>Model Parallel</h2>
+<p><img data-src="images/model-parallel-pipeline-9.svg" /></p>
+</section>
+<section id="model-parallel-11" class="slide level2">
+<h2>Model Parallel</h2>
+<p><img data-src="images/model-parallel-pipeline-10.svg" /></p>
+</section>
+<section id="whats-the-problem-here" class="slide level2">
+<h2>What’s the problem here? 🧐</h2>
+</section>
+<section id="model-parallel-12" class="slide level2">
+<h2>Model Parallel</h2>
+<ul>
+<li class="fragment">Waste of resources</li>
+<li class="fragment">While one GPU is working, others are waiting the
+whole process to end</li>
+<li class="fragment"><img data-src="images/no_pipe.png" />
+<ul>
+<li class="fragment"><a href="https://arxiv.org/abs/1811.06965">Source:
+GPipe: Efficient Training of Giant Neural Networks using Pipeline
+Parallelism</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="model-parallel---pipelining" class="slide level2">
+<h2>Model Parallel - Pipelining</h2>
+<p><img data-src="images/model-parallel-pipeline-1.svg" /></p>
+</section>
+<section id="model-parallel---pipelining-1" class="slide level2">
+<h2>Model Parallel - Pipelining</h2>
+<p><img
+data-src="images/model-parallel-pipeline-2-multibatch.svg" /></p>
+</section>
+<section id="model-parallel---pipelining-2" class="slide level2">
+<h2>Model Parallel - Pipelining</h2>
+<p><img
+data-src="images/model-parallel-pipeline-3-multibatch.svg" /></p>
+</section>
+<section id="model-parallel---pipelining-3" class="slide level2">
+<h2>Model Parallel - Pipelining</h2>
+<p><img
+data-src="images/model-parallel-pipeline-4-multibatch.svg" /></p>
+</section>
+<section id="model-parallel---pipelining-4" class="slide level2">
+<h2>Model Parallel - Pipelining</h2>
+<p><img
+data-src="images/model-parallel-pipeline-5-multibatch.svg" /></p>
+</section>
+<section id="model-parallel---pipelining-5" class="slide level2">
+<h2>Model Parallel - Pipelining</h2>
+<p><img
+data-src="images/model-parallel-pipeline-6-multibatch.svg" /></p>
+</section>
+<section id="model-parallel---pipelining-6" class="slide level2">
+<h2>Model Parallel - Pipelining</h2>
+<p><img
+data-src="images/model-parallel-pipeline-7-multibatch.svg" /></p>
+</section>
+<section id="model-parallel---pipelining-7" class="slide level2">
+<h2>Model Parallel - Pipelining</h2>
+<p><img
+data-src="images/model-parallel-pipeline-8-multibatch.svg" /></p>
+</section>
+<section id="model-parallel---pipelining-8" class="slide level2">
+<h2>Model Parallel - Pipelining</h2>
+<p><img
+data-src="images/model-parallel-pipeline-9-multibatch.svg" /></p>
+</section>
+<section id="this-is-an-oversimplification" class="slide level2">
+<h2>This is an oversimplification!</h2>
+<ul>
+<li class="fragment">Actually, you split the input minibatch into
+multiple microbatches.</li>
+<li class="fragment">There’s still idle time - an unavoidable “bubble”
+🫧</li>
+<li class="fragment"><img data-src="images/pipe.png" /></li>
+</ul>
+</section>
+<section id="model-parallel---multi-node" class="slide level2">
+<h2>Model Parallel - Multi Node</h2>
+<ul>
+<li class="fragment">In this case, each node does the same as the
+others.</li>
+<li class="fragment">At each step, they all synchronize their
+weights.</li>
+</ul>
+</section>
+<section id="model-parallel---multi-node-1" class="slide level2">
+<h2>Model Parallel - Multi Node</h2>
+<p><img data-src="images/model-parallel-multi-node.svg" /></p>
+</section>
+<section id="model-parallel---going-bigger" class="slide level2">
+<h2>Model Parallel - going bigger</h2>
+<ul>
+<li class="fragment">You can also have layers spreaded over multiple
+gpus</li>
+<li class="fragment">One can even pipeline among nodes….</li>
+</ul>
+</section>
+<section id="recap" class="slide level2">
+<h2>Recap</h2>
+<ul>
+<li class="fragment">Data parallelism:
+<ul>
+<li class="fragment">Split the data over multiple GPUs</li>
+<li class="fragment">Each GPU runs the whole model</li>
+<li class="fragment">The gradients are averaged at each step</li>
+</ul></li>
+<li class="fragment">Data parallelism, multi-node:
+<ul>
+<li class="fragment">Same, but gradients are averaged across nodes</li>
+</ul></li>
+<li class="fragment">Model parallelism:
+<ul>
+<li class="fragment">Split the model over multiple GPUs</li>
+<li class="fragment">Each GPU does the forward/backward pass</li>
+<li class="fragment">The gradients are averaged at the end</li>
+</ul></li>
+<li class="fragment">Model parallelism, multi-node:
+<ul>
+<li class="fragment">Same, but gradients are averaged across nodes</li>
+</ul></li>
+</ul>
 </section>
 <section id="parallel-training" class="slide level2">
 <h2>Parallel Training</h2>

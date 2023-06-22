@@ -85,24 +85,32 @@ cd $DATA_datasets
 
 ---
 
-## Access ILSVRC images
+## Access ImageNet images
 
 ```python
-x = Image.open(self.samples[idx]).convert("RGB")
+def __getitem__(self, idx):
+    x = Image.open(self.samples[idx]).convert("RGB")
+    if self.transform:
+        x = self.transform(x)
+    return x, self.targets[idx]
 ```
 
+---
+
+## Access ImageNet images
+
 ```python
-image_datasets = ImageNetKaggle(args.data_root, "train",  dataset_transforms) 
+image_datasets = ImageNet(args.data_root, "train",  dataset_transforms) 
 dataloaders = DataLoader(image_datasets, batch_size=args.batch_size, \
     num_workers=workers,  pin_memory=True)
 
-print("Start loading ILSVRC images")
-for x in dataloaders:
-    print(x)
+print("Start loading ImageNet images")
+for data in dataloaders:
+    pass
 ```
 
 ```bash 
-elapsed: 00 hours 07 min 53 sec
+elapsed: 00 hours 07 min 29 sec
 ```     
 
 ---
@@ -110,14 +118,22 @@ elapsed: 00 hours 07 min 53 sec
 ## Use H5 file
 
 ```python
-self.imgs = h5py.File(os.path.join(data_root, "ImageNetFinal.h5"), 'r')[split] 
+def __getitem__(self, index: int):
+    img_string = self.imgs["images"][index]
+
+    with BytesIO(img_string) as byte_stream:
+        img = Image.open(byte_stream)
+        img = img.convert("RGB")
+
+    if self.transform:
+        img = self.transform(img)
+
+    return img, self.targets[index]
 ```
 
-```python
-with BytesIO(img_string) as byte_stream:
-    img = Image.open(byte_stream)
-    img = img.convert("RGB")
-```
+---
+
+## Use H5 file
 
 ```python
 image_datasets = ImageNetH5(args.data_root, "train", dataset_transforms) 
@@ -126,11 +142,11 @@ dataloadersh5= DataLoader(image_datasets, batch_size=args.batch_size, \
 
 print("Start loading with H5 file")
 for x in dataloadersh5:
-    print(x)
+    pass
 ```
 
 ```bash 
-elapsed: 00 hours 03 min 43 sec
+elapsed: 00 hours 03 min 48 sec
 ```    
 
 ---
