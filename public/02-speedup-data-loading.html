@@ -367,7 +367,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a hr
 <section id="access-imagenet-images-1" class="slide level2">
 <h2>Access ImageNet images</h2>
 <div class="sourceCode" id="cb3"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>image_datasets <span class="op">=</span> ImageNet(args.data_root, <span class="st">&quot;train&quot;</span>,  dataset_transforms) </span>
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>image_datasets <span class="op">=</span> ImageNet(args.data_root, <span class="st">&quot;train&quot;</span>,  transformation()) </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dataloaders <span class="op">=</span> DataLoader(image_datasets, batch_size<span class="op">=</span>args.batch_size, <span class="op">\</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    num_workers<span class="op">=</span>workers,  pin_memory<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -395,7 +395,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a hr
 <section id="use-h5-file-1" class="slide level2">
 <h2>Use H5 file</h2>
 <div class="sourceCode" id="cb6"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>image_datasets <span class="op">=</span> ImageNetH5(args.data_root, <span class="st">&quot;train&quot;</span>, dataset_transforms) </span>
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>image_datasets <span class="op">=</span> ImageNetH5(args.data_root, <span class="st">&quot;train&quot;</span>, transformation()) </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dataloadersh5<span class="op">=</span> DataLoader(image_datasets, batch_size<span class="op">=</span>args.batch_size, <span class="op">\</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    num_workers<span class="op">=</span>workers, pin_memory<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>

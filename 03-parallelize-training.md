@@ -8,19 +8,15 @@ date: June 28, 2023
 ## One GPU training 
 
 ```python
-# 1. Download and organize the data
-download_data("https://pl-flash-data.s3.amazonaws.com/hymenoptera_data.zip", "data/")
-
-datamodule = ImageClassificationData.from_folders(
-    train_folder="data/hymenoptera_data/train/", val_folder="data/hymenoptera_data/val/",
-    test_folder="data/hymenoptera_data/test/", batch_size=16,
-)
+# 1. Organize the data
+datamodule = ImageNetDataModule("/p/scratch/training2303/data/", \
+    128, int(os.getenv('SLURM_CPUS_PER_TASK')), transformation())
 
 # 2. Build the model using desired Task
-model = ImageClassifier(backbone="resnet18", num_classes=datamodule.num_classes, pretrained=False)
+model = resnet50Model()
 
-# 3. Create the trainer 
-trainer = flash.Trainer(max_epochs=50,  accelerator="gpu", devices=1)
+# 3. Create the trainer
+trainer = pl.Trainer(max_epochs=10,  accelerator="gpu")
 
 # 4. Train the model
 trainer.fit(model, datamodule=datamodule)
@@ -35,31 +31,28 @@ trainer.save_checkpoint("image_classification_model.pt")
 
 ``` bash 
 #!/bin/bash -x
-
 # SLURM SUBMIT SCRIPT
-#SBATCH --nodes=1              # This needs to match Trainer(num_nodes=...) 
+#SBATCH --nodes=1                # This needs to match Trainer(num_nodes=...)
 #SBATCH --gres=gpu:1
-#SBATCH --ntasks-per-node=1    # This needs to match Trainer(devices=...)
+#SBATCH --ntasks-per-node=1      # This needs to match Trainer(devices=...)
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=96
-#SBATCH --time=00:15:00
+#SBATCH --time=02:00:00
 #SBATCH --partition=booster
 #SBATCH --account=training2321
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
-
-CUDA_VISIBLE_DEVICES=0,1,2,3
+#SBATCH --reservation=ai_sc_day2
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 # activate env
 source ../sc_venv_template/activate.sh
-
-# run script
+# run script from above
 srun python3 ddp.py
 ```
 
 ```bash
-elapsed: 00 hours 06 min 04 sec
+elapsed: 04 hours 50 min 39 sec
 ```
 
 ---
@@ -391,24 +384,27 @@ utils.init_distributed_mode(12354)
 4. Implements data parallelism of the model. 
 5. Allow only process to save checkpoints.
 
-
 - ```python
-# 3. Create the trainer 
-trainer = flash.Trainer(max_epochs=50,  accelerator="gpu",
-    num_nodes=nnodes)
+# 3. Create the trainer
+trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes)
+# 4. Train the model
+trainer.fit(model, datamodule=datamodule)
+# 5. Save the model!
+trainer.save_checkpoint("image_classification_model.pt")
 ```
 
 ---
 
 ## DDP training
 
+1 node and 4 GPU
+
 ```bash
 #!/bin/bash -x
-
 # SLURM SUBMIT SCRIPT
-#SBATCH --nodes=4             # This needs to match Trainer(num_nodes=...)
+#SBATCH --nodes=1             # This needs to match Trainer(num_nodes=...)
 #SBATCH --gres=gpu:4
-#SBATCH --ntasks-per-node=1   # This needs to match Trainer(devices=...)
+#SBATCH --ntasks-per-node=1    # This needs to match Trainer(devices=...)
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=24
 #SBATCH --time=00:15:00
@@ -416,21 +412,91 @@ trainer = flash.Trainer(max_epochs=50,  accelerator="gpu",
 #SBATCH --account=training2321
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
-
-CUDA_VISIBLE_DEVICES=0,1,2,3
+#SBATCH --reservation=ai_sc_day2
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 # activate env
 source ../sc_venv_template/activate.sh
+# run script 
+srun python3 ddp.py
+```
 
+---
+
+## DDP training
+
+16 nodes and 4 GPU each 
+
+```bash
+#!/bin/bash -x
+# SLURM SUBMIT SCRIPT
+#SBATCH --nodes=16             # This needs to match Trainer(num_nodes=...)
+#SBATCH --gres=gpu:4
+#SBATCH --ntasks-per-node=1    # This needs to match Trainer(devices=...)
+#SBATCH --mem=0
+#SBATCH --cpus-per-task=24
+#SBATCH --time=00:15:00
+#SBATCH --partition=booster
+#SBATCH --account=training2321
+#SBATCH --output=%j.out
+#SBATCH --error=%j.err
+#SBATCH --reservation=ai_sc_day2
+export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
+
+# activate env
+source ../sc_venv_template/activate.sh
 # run script 
 srun python3 ddp.py
 ```
 
 ```bash
-elapsed: 00 hours 01 min 16 sec
+elapsed: 00 hours 06 min 06 sec
 ```
 
+---
+
+## DDP training
+
+With 16 nodes: 
+
+```bash
+elapsed: 00 hours 06 min 06 sec
+```
+
+With 32 nodes: 
+
+```bash
+elapsed: 00 hours 03 min 46 sec
+```
+
+With 62 nodes: 
+```bash
+elapsed: 00 hours 02 min 15 sec
+```
+---
+
+## Data Parallel
+
+<!-- What changed? -->
+
+- It was 
+- ```python
+trainer = pl.Trainer(max_epochs=10,  accelerator="gpu")
+``` 
+- Became 
+- ```python
+trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes)
+```
+- It was
+- ```bash
+#SBATCH --nodes=1                # This needs to match Trainer(num_nodes=...)
+#SBATCH --gres=gpu:1
+```
+- Became
+- ```bash
+#SBATCH --nodes=32                # This needs to match Trainer(num_nodes=...)
+#SBATCH --gres=gpu:4
+```
 ---
 
 ## DEMO
@@ -444,7 +510,7 @@ elapsed: 00 hours 01 min 16 sec
 logger = TensorBoardLogger("tb_logs", name="my_model")
 
 # 4. Create the trainer and pass the logger 
-trainer = flash.Trainer(max_epochs=50,  accelerator="gpu",
+trainer = flash.Trainer(max_epochs=10,  accelerator="gpu",
     num_nodes=nnodes, logger=logger)
 ```
 
