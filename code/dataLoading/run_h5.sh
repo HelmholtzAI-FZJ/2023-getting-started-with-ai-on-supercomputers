@@ -9,6 +9,8 @@
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 
+#SBATCH --reservation=ai_sc_day2
+
 CUDA_VISIBLE_DEVICES=0,1,2,3
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
