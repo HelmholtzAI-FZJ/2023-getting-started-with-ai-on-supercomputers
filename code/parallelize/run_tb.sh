@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 # SLURM SUBMIT SCRIPT
-#SBATCH --nodes=4             
+#SBATCH --nodes=64             
 #SBATCH --gres=gpu:4
 #SBATCH --ntasks-per-node=1  
 #SBATCH --mem=0
@@ -12,7 +12,7 @@
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 
-CUDA_VISIBLE_DEVICES=0,1,2,3
+export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 # activate env
 source ../sc_venv_template/activate.sh
