@@ -1,7 +1,6 @@
 import pytorch_lightning as pl
-import torch.nn as nn
-import torch.nn.functional as F
 import torch
+import torch.nn.functional as F
 from torchvision.models import resnet50
 
 class resnet50Model(pl.LightningModule):
@@ -12,11 +11,23 @@ class resnet50Model(pl.LightningModule):
     def forward(self, x):
         return self.model(x)
 
-    def training_step(self, batch, batch_idx):
-        x, y = batch
-        y_hat = self(x)
-        loss = F.cross_entropy(y_hat, y)
-        return loss
+    def training_step(self,batch):
+        # REQUIRED- run at every batch of training data
+        # extracting input and output from the batch
+        x,labels=batch
+         
+        # forward pass on a batch
+        pred=self.forward(x)
+ 
+        # calculating the loss
+        train_loss = F.cross_entropy(pred, labels)
+         
+        # logs for tensorboard
+        self.log("training_loss", train_loss)
+    
+        return train_loss
+
+
 
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=0.02)

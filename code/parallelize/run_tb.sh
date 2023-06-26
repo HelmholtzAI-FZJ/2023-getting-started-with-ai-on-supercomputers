@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 # SLURM SUBMIT SCRIPT
-#SBATCH --nodes=64             
+#SBATCH --nodes=32             
 #SBATCH --gres=gpu:4
 #SBATCH --ntasks-per-node=1  
 #SBATCH --mem=0
@@ -11,6 +11,8 @@
 #SBATCH --account=training2321
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
+
+#SBATCH --reservation=ai_sc_day2
 
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
