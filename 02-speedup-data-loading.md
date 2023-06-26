@@ -100,7 +100,7 @@ def __getitem__(self, idx):
 ## Access ImageNet images
 
 ```python
-image_datasets = ImageNet(args.data_root, "train",  dataset_transforms) 
+image_datasets = ImageNet(args.data_root, "train",  transformation()) 
 dataloaders = DataLoader(image_datasets, batch_size=args.batch_size, \
     num_workers=workers,  pin_memory=True)
 
@@ -136,7 +136,7 @@ def __getitem__(self, index: int):
 ## Use H5 file
 
 ```python
-image_datasets = ImageNetH5(args.data_root, "train", dataset_transforms) 
+image_datasets = ImageNetH5(args.data_root, "train", transformation()) 
 dataloadersh5= DataLoader(image_datasets, batch_size=args.batch_size, \
     num_workers=workers, pin_memory=True)
 
