@@ -9,24 +9,23 @@ Dear colleagues,
 
 the next "Getting started with AI on supercomputers" course is approaching! Thank you all very much for your participation.
 
-The course is online, over zoom:
-Join our Cloud HD Video Meeting
+The course is online, over zoom. It will be recorded. If you don't want to be recorded, please turn off your camera and microphone.
 https://go.fzj.de/intro-sc-ai-2023-zoom
 
 We will use Slack for communication. Please log in BEFORE the course:
-Slack
 https://go.fzj.de/intro-sc-ai-2023-slack
 
 
 WHAT NEEDS TO BE DONE BEFORE THE COURSE?
 
 - If you don't have one, make an account on JuDOOR, our portal: https://judoor.fz-juelich.de/register
-Video: https://drive.google.com/file/d/1-DfiNBP4Gta0av4lQmubkXIXzr2FW4a-/view
+Instruction video: https://drive.google.com/file/d/1-DfiNBP4Gta0av4lQmubkXIXzr2FW4a-/view
 
 - Joining the course's project: https://go.fzj.de/intro-sc-ai-2023-project-join
 
 - Sign the usage agreements, as shown in this video: https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view
 
+- Install software (see below). On windows you DO need administrator rights. We can't support other softwares during the course.
 
 ---
 
@@ -48,13 +47,13 @@ PLEASE MAKE SURE WSL IS ACTUALLY INSTALLED - Try running it. Check this example:
 
 - The `ssh` command. It's installed by default on Mac and Linux, and should be on Windows after the aforementioned steps.
 
-- Some knowledge of the python language.
+- Some knowledge of the Python language.
 
 ---
 
 The course material is available at https://go.fzj.de/intro-sc-ai-2023 - I will be making some final commits to it, so make sure you reload it every now and then.
 
-See you tomorrow, 
+See you soon, 
 
 Alex and Sabrina
 
