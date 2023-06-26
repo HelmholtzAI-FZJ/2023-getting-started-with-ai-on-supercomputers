@@ -12,6 +12,8 @@
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 
+#SBATCH --reservation=ai_sc_day2
+
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 # activate env

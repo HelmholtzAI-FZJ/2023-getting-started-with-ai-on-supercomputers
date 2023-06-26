@@ -59,10 +59,10 @@ datamodule = ImageNetDataModule("/p/scratch/training2303/data/", 128, int(os.get
 model = resnet50Model()
 
 # 3. Create the logger 
-logger = TensorBoardLogger("tb_logs", name="my_model")
+logger = TensorBoardLogger("tb_logs", name="resnet50")
 
 # 4. Create the trainer
-trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes, strategy="ddp", logger=logger)
+trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes, logger=logger)
 
 # 5. Train the model
 trainer.fit(model, datamodule=datamodule)

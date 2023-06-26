@@ -58,7 +58,7 @@ datamodule = ImageNetDataModule("/p/scratch/training2303/data/", 128, int(os.get
 model = resnet50Model()
 
 # 3. Create the trainer
-trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes, strategy="ddp")
+trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes, devices=4)
 
 # 4. Train the model
 trainer.fit(model, datamodule=datamodule)

@@ -9,7 +9,8 @@
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 
-CUDA_VISIBLE_DEVICES=0,1,2,3
+#SBATCH --reservation=ai_sc_day2
+
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 source /p/project/hai_tbidia/benassou1/ct_scan/sc_venv_template/activate.sh
