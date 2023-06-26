@@ -329,7 +329,7 @@ elapsed: 04 hours 50 min 39 sec
 
 ---
 
-## Parallel Training
+## Parallel Training with PyTorch DDP
 
 - [PyTorch's DDP (Distributed Data Parallel)](https://lightning.ai/docs/pytorch/stable/accelerators/gpu_intermediate.html) works as follows:
     - Each GPU across each node gets its own process.
@@ -404,7 +404,7 @@ trainer.save_checkpoint("image_classification_model.pt")
 # SLURM SUBMIT SCRIPT
 #SBATCH --nodes=1             # This needs to match Trainer(num_nodes=...)
 #SBATCH --gres=gpu:4
-#SBATCH --ntasks-per-node=1    # This needs to match Trainer(devices=...)
+#SBATCH --ntasks-per-node=4    # This needs to match Trainer(devices=...)
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=24
 #SBATCH --time=00:15:00
@@ -413,12 +413,16 @@ trainer.save_checkpoint("image_classification_model.pt")
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 #SBATCH --reservation=ai_sc_day2
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
-
 # activate env
 source ../sc_venv_template/activate.sh
 # run script 
 srun python3 ddp.py
+```
+
+```bash
+elapsed: 01 hours 15 min 10 sec
 ```
 
 ---
@@ -432,7 +436,7 @@ srun python3 ddp.py
 # SLURM SUBMIT SCRIPT
 #SBATCH --nodes=16             # This needs to match Trainer(num_nodes=...)
 #SBATCH --gres=gpu:4
-#SBATCH --ntasks-per-node=1    # This needs to match Trainer(devices=...)
+#SBATCH --ntasks-per-node=4    # This needs to match Trainer(devices=...)
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=24
 #SBATCH --time=00:15:00
@@ -441,8 +445,8 @@ srun python3 ddp.py
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 #SBATCH --reservation=ai_sc_day2
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
-
 # activate env
 source ../sc_venv_template/activate.sh
 # run script 
@@ -457,6 +461,18 @@ elapsed: 00 hours 06 min 06 sec
 
 ## DDP training
 
+With 4 nodes: 
+
+```bash
+elapsed: 00 hours 20 min 27 sec
+```
+
+With 8 nodes: 
+
+```bash
+elapsed: 00 hours 10 min 50 sec
+```
+
 With 16 nodes: 
 
 ```bash
@@ -467,11 +483,6 @@ With 32 nodes:
 
 ```bash
 elapsed: 00 hours 03 min 46 sec
-```
-
-With 62 nodes: 
-```bash
-elapsed: 00 hours 02 min 15 sec
 ```
 ---
 
