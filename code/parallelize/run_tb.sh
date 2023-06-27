@@ -7,7 +7,7 @@
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=24
 #SBATCH --time=02:00:00
-#SBATCH --partition=develbooster
+#SBATCH --partition=booster
 #SBATCH --account=training2321
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err

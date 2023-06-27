@@ -464,13 +464,13 @@ elapsed: 00 hours 06 min 06 sec
 With 4 nodes: 
 
 ```bash
-elapsed: 00 hours 20 min 27 sec
+elapsed: 00 hours 20 min 01 sec
 ```
 
 With 8 nodes: 
 
 ```bash
-elapsed: 00 hours 10 min 50 sec
+elapsed: 00 hours 10 min 42 sec
 ```
 
 With 16 nodes: 
@@ -482,7 +482,7 @@ elapsed: 00 hours 06 min 06 sec
 With 32 nodes: 
 
 ```bash
-elapsed: 00 hours 03 min 46 sec
+elapsed: 00 hours 04 min 21 sec
 ```
 ---
 
