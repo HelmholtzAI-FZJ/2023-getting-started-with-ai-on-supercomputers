@@ -1044,7 +1044,7 @@ class="sourceCode numberSource bash number-lines"><code class="sourceCode bash">
 <span id="cb19-10"><a href="#cb19-10"></a><span class="co">#SBATCH --partition=booster         # Machine partition</span></span>
 <span id="cb19-11"><a href="#cb19-11"></a><span class="co">#SBATCH --reservation=ai_sc_day1 # For today only</span></span>
 <span id="cb19-12"><a href="#cb19-12"></a></span>
-<span id="cb19-13"><a href="#cb19-13"></a><span class="ex">module</span> Stages/2023</span>
+<span id="cb19-13"><a href="#cb19-13"></a><span class="ex">module</span> load Stages/2023</span>
 <span id="cb19-14"><a href="#cb19-14"></a><span class="ex">module</span> load GCC OpenMPI PyTorch  <span class="co"># Load the correct modules on the compute node(s)</span></span>
 <span id="cb19-15"><a href="#cb19-15"></a></span>
 <span id="cb19-16"><a href="#cb19-16"></a><span class="ex">srun</span> python matrix.py            <span class="co"># srun tells the supercomputer how to run it</span></span></code></pre></div>
@@ -1053,7 +1053,7 @@ class="sourceCode numberSource bash number-lines"><code class="sourceCode bash">
 
 <h3 id="submitting-a-job-sbatch">Submitting a job: SBATCH</h3>
 <div class="sourceCode" id="cb20"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> jusuf-matrix.sbatch</span>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> juwelsbooster-matrix.sbatch</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Submitted</span> batch job 412169</span></code></pre></div>
 </section>
