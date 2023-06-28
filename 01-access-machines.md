@@ -743,7 +743,7 @@ Simple Linux Utility for Resource Management
 #SBATCH --partition=booster         # Machine partition
 #SBATCH --reservation=ai_sc_day1 # For today only
 
-module Stages/2023
+module load Stages/2023
 module load GCC OpenMPI PyTorch  # Load the correct modules on the compute node(s)
 
 srun python matrix.py            # srun tells the supercomputer how to run it
@@ -754,7 +754,7 @@ srun python matrix.py            # srun tells the supercomputer how to run it
 ### Submitting a job: SBATCH
 
 ```bash
-sbatch jusuf-matrix.sbatch
+sbatch juwelsbooster-matrix.sbatch
 
 Submitted batch job 412169
 ```
