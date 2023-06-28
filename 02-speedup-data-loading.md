@@ -80,11 +80,6 @@ cd $DATA_datasets
 
 ---
 
-## H5 file
-![](images/hdf5.jpeg)
-
----
-
 ## Access ImageNet images
 
 ```python
@@ -112,6 +107,11 @@ for data in dataloaders:
 ```bash 
 elapsed: 00 hours 07 min 29 sec
 ```     
+
+---
+
+## H5 file
+![](images/hdf5.jpeg)
 
 ---
 
