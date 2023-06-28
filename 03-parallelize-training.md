@@ -395,6 +395,28 @@ trainer.save_checkpoint("image_classification_model.pt")
 
 ---
 
+## DDP steps
+
+```python
+# 1. Organize the data
+datamodule = ImageNetDataModule("/p/scratch/training2303/data/", \
+    128, int(os.getenv('SLURM_CPUS_PER_TASK')), transformation())
+
+# 2. Build the model using desired Task
+model = resnet50Model()
+
+# 3. Create the trainer
+trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes)
+
+# 4. Train the model
+trainer.fit(model, datamodule=datamodule)
+
+# 5. Save the model!
+trainer.save_checkpoint("image_classification_model.pt")
+```
+
+---
+
 ## DDP training
 
 1 node and 4 GPU

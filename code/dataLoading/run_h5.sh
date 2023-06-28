@@ -3,7 +3,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=96
 #SBATCH --time=02:00:00
-#SBATCH --partition=develbooster
+#SBATCH --partition=booster
 #SBATCH --gres=gpu:1
 #SBATCH --account=training2321
 #SBATCH --output=%j.out
