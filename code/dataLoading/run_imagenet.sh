@@ -13,7 +13,7 @@
 
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
-source /p/project/hai_tbidia/benassou1/ct_scan/sc_venv_template/activate.sh
+source $HOME/course/$USER/sc_venv_template/activate.sh
 
 
 start=$(date +%s)

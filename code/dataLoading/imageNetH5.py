@@ -83,7 +83,7 @@ def transformation():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_root", type=str, default="/p/scratch/training2303/data/")
+    parser.add_argument("--data_root", type=str, default="/p/scratch/training2321/data/")
     parser.add_argument("--batch_size", type=int, default=2048)
     args = parser.parse_args()
 
