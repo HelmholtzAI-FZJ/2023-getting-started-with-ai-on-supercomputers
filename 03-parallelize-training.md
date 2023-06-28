@@ -9,7 +9,7 @@ date: June 28, 2023
 
 ```python
 # 1. Organize the data
-datamodule = ImageNetDataModule("/p/scratch/training2303/data/", \
+datamodule = ImageNetDataModule("/p/scratch/training2321/data/", \
     128, int(os.getenv('SLURM_CPUS_PER_TASK')), transformation())
 
 # 2. Build the model using desired Task
@@ -399,7 +399,7 @@ trainer.save_checkpoint("image_classification_model.pt")
 
 ```python
 # 1. Organize the data
-datamodule = ImageNetDataModule("/p/scratch/training2303/data/", \
+datamodule = ImageNetDataModule("/p/scratch/training2321/data/", \
     128, int(os.getenv('SLURM_CPUS_PER_TASK')), transformation())
 
 # 2. Build the model using desired Task

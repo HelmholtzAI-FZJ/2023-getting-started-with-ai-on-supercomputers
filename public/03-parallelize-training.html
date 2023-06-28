@@ -232,7 +232,7 @@
 <h2>One GPU training</h2>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Organize the data</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>datamodule <span class="op">=</span> ImageNetDataModule(<span class="st">&quot;/p/scratch/training2303/data/&quot;</span>, <span class="op">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>datamodule <span class="op">=</span> ImageNetDataModule(<span class="st">&quot;/p/scratch/training2321/data/&quot;</span>, <span class="op">\</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">128</span>, <span class="bu">int</span>(os.getenv(<span class="st">&#39;SLURM_CPUS_PER_TASK&#39;</span>)), transformation())</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Build the model using desired Task</span></span>
@@ -607,7 +607,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a hr
 <h2>DDP steps</h2>
 <div class="sourceCode" id="cb7"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Organize the data</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>datamodule <span class="op">=</span> ImageNetDataModule(<span class="st">&quot;/p/scratch/training2303/data/&quot;</span>, <span class="op">\</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>datamodule <span class="op">=</span> ImageNetDataModule(<span class="st">&quot;/p/scratch/training2321/data/&quot;</span>, <span class="op">\</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">128</span>, <span class="bu">int</span>(os.getenv(<span class="st">&#39;SLURM_CPUS_PER_TASK&#39;</span>)), transformation())</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Build the model using desired Task</span></span>
