@@ -229,6 +229,7 @@
 
 <section id="communication" class="slide level2">
 <h2>Communication:</h2>
+<p>Links for the complimentary parts of this course:</p>
 <ul>
 <li class="fragment"><a
 href="https://go.fzj.de/intro-sc-ai-2023-zoom">Zoom</a></li>
@@ -244,6 +245,15 @@ page invite</a></li>
 document: http://go.fzj.de/intro-sc-ai-2023</a></li>
 <li class="fragment">Our mailing list for <a
 href="https://lists.fz-juelich.de/mailman/listinfo/ml">AI news</a></li>
+<li class="fragment"><a
+href="https://indico3-jsc.fz-juelich.de/event/114/surveys/37">Survey at
+the end of the course</a></li>
+<li class="fragment"><a
+href="https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template">Virtual
+Environment template</a></li>
+<li class="fragment"><a
+href="https://go.fzj.de/intro-sc-ai-2023-repo">SOURCE CODE OF THE WHOLE
+COURSE on Github - Including presentations</a></li>
 </ul>
 <p><img
 data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
@@ -534,7 +544,7 @@ compile, etc</li>
 <li class="fragment">Go to <a
 href="https://go.fzj.de/intro-sc-ai-2023-project-join">https://go.fzj.de/intro-sc-ai-2023-project-join</a></li>
 <li class="fragment">Join the course project
-<code>training2321</code></li>
+<code>training2324</code></li>
 <li class="fragment">Sign the Usage Agreements (<a
 href="https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view">Video</a>)</li>
 <li class="fragment">Compute time allocation is based on compute
@@ -804,7 +814,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="
 are connected to the supercomputer</h4>
 <div class="sourceCode" id="cb9"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a shortcut for the project on the home folder</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="va">$PROJECT_training2321</span> ~/course</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="va">$PROJECT_training2324</span> ~/course</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a folder for myself</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> course/<span class="va">$USER</span></span>
@@ -1033,7 +1043,7 @@ example</h3>
 <p><code>code juwelsbooster-matrix.sbatch</code></p>
 <div class="sourceCode" id="cb19"><pre
 class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="co">#SBATCH --account=training2321           # Who pays?</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="co">#SBATCH --account=training2324           # Who pays?</span></span>
 <span id="cb19-3"><a href="#cb19-3"></a><span class="co">#SBATCH --nodes=1                        # How many compute nodes</span></span>
 <span id="cb19-4"><a href="#cb19-4"></a><span class="co">#SBATCH --job-name=matrix-multiplication</span></span>
 <span id="cb19-5"><a href="#cb19-5"></a><span class="co">#SBATCH --ntasks-per-node=1              # How many mpi processes/node</span></span>
@@ -1207,7 +1217,7 @@ classifier</h3>
 <code>fastai.sbatch</code></h4>
 <div class="sourceCode" id="cb28"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2321</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2324</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-user=MYUSER@fz-juelich.de</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-type=ALL</span></span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=1</span></span>
@@ -1385,12 +1395,17 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a h
 </section>
 <section id="example-tensorboard" class="slide level2">
 <h2>Example: Tensorboard</h2>
-<p><code>tensorboard --logdir=runs  --port=9999 serve</code></p>
 <ul>
+<li class="fragment">The command
+<code>tensorboard --logdir=runs  --port=9999 serve</code></li>
 <li class="fragment">Opens a connection on port 9999… <em>OF THE
 SUPERCOMPUTER</em>.</li>
-<li class="fragment">We need to do something else: SSH PORT
-FORWARDING</li>
+<li class="fragment">This port is behind the firewall. You can’t access
+it directly…</li>
+<li class="fragment">We need to do bypass the firewall 🏴‍☠️
+<ul>
+<li class="fragment">SSH PORT FORWARDING</li>
+</ul></li>
 </ul>
 </section>
 <section id="example-tensorboard-1" class="slide level2">
@@ -1399,19 +1414,24 @@ FORWARDING</li>
 </section>
 <section id="port-forwarding" class="slide level2">
 <h2>Port Forwarding</h2>
-<p><img data-src="images/port-forwarding.svg" /></p>
-<p><code>ssh -L :1234:localhost:3000 booster</code></p>
+<figure>
+<img data-src="images/port-forwarding.svg"
+alt="A tunnel which exposes the supercomputer’s port 3000 as port 1234 locally" />
+<figcaption aria-hidden="true">A tunnel which exposes the
+supercomputer’s port 3000 as port 1234 locally</figcaption>
+</figure>
 </section>
 <section id="port-forwarding-demo" class="slide level2">
 <h2>Port forwarding demo:</h2>
 <ul>
-<li class="fragment">On local computer:</li>
+<li class="fragment">On local computer, open a new terminal and
+paste:</li>
 <li class="fragment"><div class="sourceCode" id="cb42"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-L</span> :1234:localhost:9999 booster</span></code></pre></div></li>
-<li class="fragment">On juwels booster:</li>
+<li class="fragment">As soon as you connect, paste this:</li>
 <li class="fragment"><div class="sourceCode" id="cb43"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span>/sc_venv_template</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> activate.sh</span>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tensorboard</span> <span class="at">--logdir</span><span class="op">=</span>runs  <span class="at">--port</span><span class="op">=</span>9999 serve</span></code></pre></div></li>
 <li class="fragment">On the browser: <a
 href="http://localhost:1234">http://localhost:1234</a></li>
@@ -1493,7 +1513,7 @@ Host *.jusuf
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="dt">\</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="dt">\</span></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">--partition</span><span class="op">=</span>gpus <span class="dt">\</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2321 <span class="dt">\</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2324 <span class="dt">\</span></span>
 <span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="dt">\</span></span>
 <span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">--pty</span> /bin/bash <span class="at">-i</span></span>
 <span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>

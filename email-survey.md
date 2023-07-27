@@ -11,12 +11,12 @@ First of all, I would like to thank each and every one of you for the attendance
 We tried a number of new things, and I hope the course was easy enough to follow, while
 being difficult enough to bring you new questions! 🙇‍♂️
 
-There is plenty of compute hours on the training2321 project for you to play around with 
+There is plenty of compute hours on the training2324 project for you to play around with 
 the code we provided, and to hopefully integrate some of what you learned on your own 
 codes! Let's make those GPUs scream! 😱
 
 We were asked for certificates for the course. Don’t worry, we will prepare them. Meanwhile, 
-it would be very nice if you would give us some feedback, here: https://indico3-jsc.fz-juelich.de/event/75/surveys/13
+it would be very nice if you would give us some feedback, here: https://indico3-jsc.fz-juelich.de/event/114/surveys/37
 
 Again, thanks for your time!
 

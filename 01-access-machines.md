@@ -6,12 +6,17 @@ date: June 27, 2023
 ---
 ## Communication:
 
+Links for the complimentary parts of this course: 
+
 - [Zoom](https://go.fzj.de/intro-sc-ai-2023-zoom)
 - [Slack](https://go.fzj.de/intro-sc-ai-2023-slack)
 - [JSC Training Page](https://go.fzj.de/intro-sc-ai-2023-course)
 - [Judoor project page invite](https://go.fzj.de/intro-sc-ai-2023-project-join)
 - [This document: http://go.fzj.de/intro-sc-ai-2023](http://go.fzj.de/intro-sc-ai-2023)
 - Our mailing list for [AI news](https://lists.fz-juelich.de/mailman/listinfo/ml)
+- [Survey at the end of the course](https://indico3-jsc.fz-juelich.de/event/114/surveys/37)
+- [Virtual Environment template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
+- [SOURCE CODE OF THE WHOLE COURSE on Github - Including presentations](https://go.fzj.de/intro-sc-ai-2023-repo)
 
 
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
@@ -224,7 +229,7 @@ Please open this document on your own browser! We will need it for the exercises
 
 #### Getting compute time
 - Go to [https://go.fzj.de/intro-sc-ai-2023-project-join](https://go.fzj.de/intro-sc-ai-2023-project-join)
-- Join the course project `training2321`
+- Join the course project `training2324`
 - Sign the Usage Agreements ([Video](https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view))
 - Compute time allocation is based on compute projects. For every compute job, a compute project pays.
 - Time is measured in core-hours. One hour of Juwels BOOSTER is 48 core-hours. One hour of Jusuf is 128 core-h.
@@ -478,7 +483,7 @@ strube1@jusuf ~ $
 
 ```bash
 # Create a shortcut for the project on the home folder
-ln -s $PROJECT_training2321 ~/course
+ln -s $PROJECT_training2324 ~/course
 
 # Create a folder for myself
 mkdir course/$USER
@@ -732,7 +737,7 @@ Simple Linux Utility for Resource Management
 
 ``` {.bash .number-lines}
 #!/bin/bash
-#SBATCH --account=training2321           # Who pays?
+#SBATCH --account=training2324           # Who pays?
 #SBATCH --nodes=1                        # How many compute nodes
 #SBATCH --job-name=matrix-multiplication
 #SBATCH --ntasks-per-node=1              # How many mpi processes/node
@@ -912,7 +917,7 @@ learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
 
 ```bash
 #!/bin/bash
-#SBATCH --account=training2321
+#SBATCH --account=training2324
 #SBATCH --mail-user=MYUSER@fz-juelich.de
 #SBATCH --mail-type=ALL
 #SBATCH --nodes=1
@@ -1110,10 +1115,11 @@ learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
 
 ## Example: Tensorboard
 
-`tensorboard --logdir=runs  --port=9999 serve`
-
+- The command `tensorboard --logdir=runs  --port=9999 serve`
 - Opens a connection on port 9999... *OF THE SUPERCOMPUTER*.
-- We need to do something else: SSH PORT FORWARDING
+- This port is behind the firewall. You can't access it directly... 
+- We need to do bypass the firewall 🏴‍☠️
+  - SSH PORT FORWARDING
 
 ---
 
@@ -1125,22 +1131,22 @@ learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
 
 ## Port Forwarding
 
-![](images/port-forwarding.svg)
+![
+A tunnel which exposes the supercomputer's port 3000 as port 1234 locally](images/port-forwarding.svg)
 
-`ssh -L :1234:localhost:3000 booster`
 
 ---
 
 ## Port forwarding demo:
 
-- On local computer:
+- On local computer, open a new terminal and paste:
 - ```bash
 ssh -L :1234:localhost:9999 booster
 ````
-- On juwels booster:
+- As soon as you connect, paste this: 
 - ```bash
-cd $HOME/course/$USER/sc_venv_template
-source activate.sh
+cd $HOME/course/$USER
+source sc_venv_template/activate.sh
 tensorboard --logdir=runs  --port=9999 serve
 ```
 - On the browser: [http://localhost:1234](http://localhost:1234)
@@ -1225,7 +1231,7 @@ On the supercomputer:
 srun --time=00:05:00 \
      --nodes=1 --ntasks=1 \
      --partition=gpus \
-     --account training2321 \
+     --account training2324 \
      --cpu_bind=none \
      --pty /bin/bash -i
 

@@ -9,7 +9,7 @@ date: June 28, 2023
 
 ```python
 # 1. Organize the data
-datamodule = ImageNetDataModule("/p/scratch/training2321/data/", \
+datamodule = ImageNetDataModule("/p/scratch/training2324/data/", \
     128, int(os.getenv('SLURM_CPUS_PER_TASK')), transformation())
 
 # 2. Build the model using desired Task
@@ -39,7 +39,7 @@ trainer.save_checkpoint("image_classification_model.pt")
 #SBATCH --cpus-per-task=96
 #SBATCH --time=02:00:00
 #SBATCH --partition=booster
-#SBATCH --account=training2321
+#SBATCH --account=training2324
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 #SBATCH --reservation=ai_sc_day2
@@ -399,7 +399,7 @@ trainer.save_checkpoint("image_classification_model.pt")
 
 ```python
 # 1. Organize the data
-datamodule = ImageNetDataModule("/p/scratch/training2321/data/", \
+datamodule = ImageNetDataModule("/p/scratch/training2324/data/", \
     128, int(os.getenv('SLURM_CPUS_PER_TASK')), transformation())
 
 # 2. Build the model using desired Task
@@ -431,7 +431,7 @@ trainer.save_checkpoint("image_classification_model.pt")
 #SBATCH --cpus-per-task=24
 #SBATCH --time=00:15:00
 #SBATCH --partition=booster
-#SBATCH --account=training2321
+#SBATCH --account=training2324
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 #SBATCH --reservation=ai_sc_day2
@@ -463,7 +463,7 @@ elapsed: 01 hours 15 min 10 sec
 #SBATCH --cpus-per-task=24
 #SBATCH --time=00:15:00
 #SBATCH --partition=booster
-#SBATCH --account=training2321
+#SBATCH --account=training2324
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 #SBATCH --reservation=ai_sc_day2

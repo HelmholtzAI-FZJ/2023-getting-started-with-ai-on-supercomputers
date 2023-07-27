@@ -53,7 +53,7 @@ nnodes = os.getenv("SLURM_NNODES")
 utils.init_distributed_mode(12354)
 
 # 1. Organize the data
-datamodule = ImageNetDataModule("/p/scratch/training2321/data/", 128, int(os.getenv('SLURM_CPUS_PER_TASK')), transformation())
+datamodule = ImageNetDataModule("/p/scratch/training2324/data/", 128, int(os.getenv('SLURM_CPUS_PER_TASK')), transformation())
 
 # 2. Build the model using desired Task
 model = resnet50Model()
