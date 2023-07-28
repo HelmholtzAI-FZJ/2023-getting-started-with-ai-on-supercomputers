@@ -2,21 +2,21 @@
 author: Alexandre Strube // Sabrina Benassou
 title: Getting Started with AI on Supercomputers 
 # subtitle: A primer in supercomputers`
-date: June 27, 2023
+date: September 26, 2023
 ---
 
 Dear colleagues,
 
 the next "Getting started with AI on supercomputers" course is approaching! Thank you all very much for your participation.
 
-The course is online, over zoom. It will be recorded. If you don't want to be recorded, please turn off your camera and microphone.
+The course is online, over zoom. It will be recorded. This is the link:
 https://go.fzj.de/intro-sc-ai-2023-zoom
 
-We will use Slack for communication. Please log in BEFORE the course:
-https://go.fzj.de/intro-sc-ai-2023-slack
+*********
+IMPORTANT
+*********
 
-
-WHAT NEEDS TO BE DONE BEFORE THE COURSE?
+Checklist for BEFORE the course:
 
 - If you don't have one, make an account on JuDOOR, our portal: https://judoor.fz-juelich.de/register
 Instruction video: https://drive.google.com/file/d/1-DfiNBP4Gta0av4lQmubkXIXzr2FW4a-/view
@@ -26,6 +26,9 @@ Instruction video: https://drive.google.com/file/d/1-DfiNBP4Gta0av4lQmubkXIXzr2F
 - Sign the usage agreements, as shown in this video: https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view
 
 - Install software (see below). On windows you DO need administrator rights. We can't support other softwares during the course.
+
+- We will use Slack for communication. Please log in BEFORE the course: https://go.fzj.de/intro-sc-ai-2023-slack
+
 
 ---
 
