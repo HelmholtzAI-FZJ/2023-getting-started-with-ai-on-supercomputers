@@ -556,9 +556,7 @@ ssh  -L 16000:localhost:16000 booster
 ```
 
 ```bash
-ml load Stages/2023 
-ml load GCC 
-ml TensorFlow
+source $HOME/course/$USER/sc_venv_template/activate.sh
 tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
 ```
 ![](images/tb.png){ width=750px }
