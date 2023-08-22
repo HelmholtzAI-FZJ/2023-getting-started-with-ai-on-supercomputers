@@ -5,11 +5,11 @@
 #SBATCH --time=02:00:00
 #SBATCH --partition=booster
 #SBATCH --gres=gpu:1
-#SBATCH --account=training2321
+#SBATCH --account=training23214
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 
-##SBATCH --reservation=ai_sc_day2
+#SBATCH --reservation=ai_sc_day2
 
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
