@@ -5,7 +5,7 @@
 #SBATCH --time=02:00:00
 #SBATCH --partition=booster
 #SBATCH --gres=gpu:1
-#SBATCH --account=training23214
+#SBATCH --account=training2324
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 
