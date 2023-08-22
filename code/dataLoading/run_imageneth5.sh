@@ -15,4 +15,4 @@ export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 source $HOME/course/$USER/sc_venv_template/activate.sh
 
-time srun python imageNet.py -r "/p/scratch/training2324/data/" 
+time srun python imageNetH5.py -r "/p/scratch/training2324/data/ImageNet.h5"
