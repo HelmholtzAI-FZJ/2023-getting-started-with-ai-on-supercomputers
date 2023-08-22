@@ -80,40 +80,13 @@ cd $DATA_datasets
 
 ---
 
-The ImageNet dataset
-```bash
-`-- ILSVRC
-    |-- Annotations
-    |   `-- CLS-LOC
-    |       |-- train
-    |       |   |-- n01440764
-    |       |   |-- n01443537
-    |       |   |-- n01484850
-    |       |   |-- n01491361
-    |       |   |-- n01755581
-    |       |   |-- ....
-    |       `-- val
-    `-- Data
-        `-- CLS-LOC
-            |-- imagenet_labels.pkl
-            |-- imagenet_val.pkl
-            `-- train
-                |-- n01697457
-                |   |-- n01697457_10012.JPEG
-                |   |-- n01697457_10016.JPEG
-                |   |-- n01697457_1004.JPEG
-                |   |-- n01697457_1005.JPEG
-                |   |-- n01697457_10072.JPEG
-                |   |-- ...
-                |-- n01740131
-                |   |-- n01740131_10044.JPEG
-                |   |-- n01740131_10045.JPEG
-                |   |-- n01740131_10052.JPEG
-                |   |-- n01740131_10054.JPEG
-                |   |-- n01740131_10057.JPEG
-                |   |-- ...
-                |-- ...
-```             
+## The ImageNet dataset
+#### Large Scale Visual Recognition Challenge (ILSVRC)
+- An image dataset organized according to the WordNet hierarchy. 
+- Evaluates algorithms for object detection and image classification at large scale. 
+- It has 1000 classes, that comprises 1.2 million images for training, and 5,000 images for the validation set.
+
+![](images/imagenet_banner.jpeg)
 ---
 
 ## Some imports 
@@ -121,8 +94,8 @@ The ImageNet dataset
 ```python
 import os 
 from io import BytesIO
-import argparse
-import json
+
+import click
 import h5py
 
 from torch.utils.data import Dataset, DataLoader
@@ -133,83 +106,24 @@ from PIL import Image
 
 ---
 
-## Data Augmentation
-
-```python
-def transformation():
-    _IMAGE_MEAN_VALUE = [0.485, 0.456, 0.406]
-    _IMAGE_STD_VALUE = [0.229, 0.224, 0.225]
-    
-    return dict(
-        train=transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Resize((256, 256)),
-            transforms.RandomCrop(224),
-            transforms.RandomHorizontalFlip(),
-            
-            transforms.Normalize(_IMAGE_MEAN_VALUE, _IMAGE_STD_VALUE)
-        ]),
-        val=transforms.Compose([
-            transforms.ToTensor(),
-            transforms.Resize((224, 224)),
-
-            transforms.Normalize(_IMAGE_MEAN_VALUE, _IMAGE_STD_VALUE)
-        ]),
-        test=transforms.Compose([        
-            transforms.ToTensor(),
-            transforms.Resize((224, 224)),
-            transforms.Normalize(_IMAGE_MEAN_VALUE, _IMAGE_STD_VALUE)
-        ]))
-```
-
----
-
 ## ImageNet class
 
 ```python
 class ImageNet(Dataset):
-    def __init__(self, root, split, transform=None):
-        self.samples = []
-        self.targets = []
-        self.transform = transform[split]
-        self.syn_to_class = {}
-
-        with open(os.path.join(root, "imagenet_class_index.json"), "rb") as f:
-            json_file = json.load(f)
-            for class_id, v in json_file.items():
-                self.syn_to_class[v[0]] = int(class_id)
-
-        with open(os.path.join(root, "ILSVRC2012_val_labels.json"), "rb") as f:
-            self.val_to_syn = json.load(f)
-
-        samples_dir = os.path.join(root, "ILSVRC/Data/CLS-LOC", split)
-        for entry in os.listdir(samples_dir):
-            if split == "train":
-                syn_id = entry
-                target = self.syn_to_class[syn_id]
-                syn_folder = os.path.join(samples_dir, syn_id)
-                for sample in os.listdir(syn_folder):
-                    sample_path = os.path.join(syn_folder, sample)
-                    self.samples.append(sample_path)
-                    self.targets.append(target)
-            elif split == "val":
-                syn_id = self.val_to_syn[entry]
-                target = self.syn_to_class[syn_id]
-                sample_path = os.path.join(samples_dir, entry)
-                self.samples.append(sample_path)
-                self.targets.append(target)
-
+    
+    def __init__(self, root, transform=None):
+        self.root = root
+        with open(os.path.join(self.root, "train_data.pkl"), "rb") as f:
+            train_data = pickle.load(f)
+        self.samples = list(train_data.keys())
+        self.targets = list(train_data.values())
+        self.transform = transform
         
     def __len__(self):
         return len(self.samples)
 
-```
-
----
-
-```python
     def __getitem__(self, idx):
-        x = Image.open(self.samples[idx]).convert("RGB")
+        x = Image.open(os.path.join(self.root, self.samples[idx])).convert("RGB")
         if self.transform:
             x = self.transform(x)
         return x, self.targets[idx]
@@ -220,113 +134,201 @@ class ImageNet(Dataset):
 ## Access ImageNet images
 
 ```python
-parser = argparse.ArgumentParser()
-parser.add_argument("--data_root", type=str, default="/p/scratch/training2324/data/")
-parser.add_argument("--batch_size", type=int, default=2048)
-args = parser.parse_args()
+@click.command()
+@click.option("--data_root", "-r")
+def main(data_root):
 
-image_datasets = ImageNet(args.data_root, "train",  transformation()) 
-dataloaders = DataLoader(image_datasets, batch_size=args.batch_size, \
-    num_workers=int(os.getenv('SLURM_CPUS_PER_TASK')),  pin_memory=True)
+    transform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Resize((256, 256))
+        ])
 
-print("Start loading ImageNet images")
-for x in dataloaders:
-    pass
+    image_datasets = ImageNet(data_root, transform) 
+    dataloaders = DataLoader(image_datasets, batch_size=1024, \
+        num_workers=int(os.getenv('SLURM_CPUS_PER_TASK')))
+
+    for _ in dataloaders:
+        pass
 ```
 
-```bash 
-elapsed: 00 hours 07 min 29 sec
+```python
+if __name__ == "__main__":
+    main()
+```
+
+```bash
+real	9m54.053s
 ```     
 
 ---
 
 ## H5 file
-![](images/hdf5.jpeg)
+
+```python
+def main():
+    root = "/p/scratch/training2324/data/"
+    splits = ["train", "val"]
+
+    with open(os.path.join(root, "train_data.pkl"), "rb") as f:
+        train_data = pickle.load(f)
+
+    train_samples = list(train_data.keys())
+    train_targets = list(train_data.values())
+
+    with open(os.path.join(root, "val_data.pkl"), "rb") as f:
+        val_data = pickle.load(f)
+
+    val_samples = list(val_data.keys())
+    val_targets = list(val_data.values())
+```
+
+```python
+train_samples = ['ILSVRC/Data/CLS-LOC/train/n03146219/n03146219_8050.JPEG',
+ 'ILSVRC/Data/CLS-LOC/train/n03146219/n03146219_12728.JPEG',
+ 'ILSVRC/Data/CLS-LOC/train/n03146219/n03146219_9736.JPEG',
+ 'ILSVRC/Data/CLS-LOC/train/n03146219/n03146219_22069.JPEG',
+ ...]
+
+train_targets = [524,
+ 524,
+ 524,
+ 524,
+ ...]
+```
+---
+
+## H5 file creation
+
+```python
+    with h5py.File('/p/scratch/training2324/data/ImageNet1k.h5', "w") as f:
+        for split in splits:
+            if split == "train":
+                create_data(f, root, train_samples, train_targets, split, \
+                len(train_samples))
+            else :
+                create_data(f, root, val_samples, val_targets, split, \
+                len(val_samples))
+```
+![](images/h5filecreation.svg)
 
 ---
 
-## Use H5 file
+## Groups for different sets
+
+```python
+group = g.create_group(split)
+```
+
+![](images/h5filewithgroup.svg)
+
+---
+
+## dataset creation
+
+```python
+dt_sample = h5py.vlen_dtype(np.dtype(np.uint8))
+dt_target = np.dtype('int16')
+
+dset = group.create_dataset(
+                'images',
+                (length,),
+                dtype=dt_sample,
+            )
+
+dtargets = group.create_dataset(
+        'targets',
+        (length,),
+        dtype=dt_target,
+    )
+
+```
+
+---
+
+![](images/groupsanddatasets.svg)
+
+---
+
+## Read and save data
+
+```python
+for idx, (sample, target) in tqdm(enumerate(zip(train_samples, train_targets))):        
+    with open(sample, 'rb') as f:
+        img_string = f.read() # Read image as string
+        dset[idx] = np.array(list(img_string), dtype=np.uint8)
+        dtargets[idx] = target
+```
+
+---
+
+![](images/datasetsimage1.svg)
+
+---
+
+## H5 file
+![](images/h5file.svg)
+
+---
+
+## H5 file with pytorch dataset
 
 ```python
 class ImageNetH5(Dataset):
-
-    def __init__(self, data_root, split, transform=None):
-
-        self.imgs = h5py.File(os.path.join(data_root, "ImageNetFinal.h5"), 'r')[split] 
-    
-        self.targets = []
-        self.transform = transform[split]
-        self.syn_to_class = {}
-
-        with open(os.path.join(data_root, "imagenet_class_index.json"), "rb") as f:
-            json_file = json.load(f)
-            for class_id, v in json_file.items():
-                self.syn_to_class[v[0]] = int(class_id)
-
-        with open(os.path.join(data_root, "ILSVRC2012_val_labels.json"), "rb") as f:
-            self.val_to_syn = json.load(f)
-
-        samples_dir = os.path.join(data_root, "ILSVRC/Data/CLS-LOC", split)
-        for entry in os.listdir(samples_dir):
-            if split == "train":
-                syn_id = entry
-                target = self.syn_to_class[syn_id]
-                syn_folder = os.path.join(samples_dir, syn_id)
-                for sample in os.listdir(syn_folder):
-                    self.targets.append(target)
-            elif split == "val":
-                syn_id = self.val_to_syn[entry]
-                target = self.syn_to_class[syn_id]
-                self.targets.append(target)
+    def __init__(self, train_data_path, split, transform=None):
+        self.h5file = h5py.File(train_data_path, 'r')[split]     
+        self.imgs = self.h5file["images"] # Read images dataset
+        self.targets = self.h5file["targets"] # Read targets dataset
+        self.transform = transform
 
     def __len__(self) -> int:
-        return self.imgs["images"].shape[0]
+        return self.imgs.shape[0]
 
-```
-
----
-
-```python
-    def __getitem__(self, index: int):
-        img_string = self.imgs["images"][index]
-
+    def __getitem__(self, idx):
+        img_string = self.imgs[idx] # Get the image string 
+        target = self.targets[idx]
         with BytesIO(img_string) as byte_stream:
-            img = Image.open(byte_stream)
+            img = Image.open(byte_stream) # open the image string as Image object
             img = img.convert("RGB")
-
         if self.transform:
-            img = self.transform(img)
-    
-        return img, self.targets[index]
+            img = self.transform(img) 
+        return img, target
 ```
 
 ---
 
-## Use H5 file
+## Access H5 file with pytorch dataset
 
 ```python
-parser = argparse.ArgumentParser()
-parser.add_argument("--data_root", type=str, default="/p/scratch/training2324/data/")
-parser.add_argument("--batch_size", type=int, default=2048)
-args = parser.parse_args()
+@click.command()
+@click.option("--h5_path", "-r")
+def main(h5_path):
 
-image_datasets = ImageNetH5(args.data_root, "train", transformation()) 
-dataloadersh5= DataLoader(image_datasets, batch_size=args.batch_size, \
-    num_workers=int(os.getenv('SLURM_CPUS_PER_TASK')), pin_memory=True)
+    transform = transforms.Compose([
+            transforms.ToTensor(),
+            transforms.Resize((256, 256))
+        ])
 
-print("Start loading with H5 file")
-for x in dataloadersh5:
-    pass
+    image_datasets = ImageNetH5(h5_path, "train", transform) 
+    dataloadersh5= DataLoader(image_datasets, batch_size=1024, \
+        num_workers=int(os.getenv('SLURM_CPUS_PER_TASK')), pin_memory=True)
+    
+    for _ in dataloadersh5:
+        pass
+```
+
+```python
+if __name__ == "__main__":
+    main()
 ```
 
 ```bash 
-elapsed: 00 hours 03 min 48 sec
+real	8m32.848s
 ```    
 
 ---
 
 ## Demo
 
-Please clone the repository provided by the link bellow
+- Please clone the repository provided by the link bellow
 
-git clone https://gitlab.jsc.fz-juelich.de/MLDL_FZJ/juhaicu/jsc_public/sharedspace/teaching/2023-getting-started-with-ai-on-supercomputers.git  
+- git clone https://gitlab.jsc.fz-juelich.de/MLDL_FZJ/juhaicu/jsc_public/sharedspace/teaching/2023-getting-started-with-ai-on-supercomputers.git  
