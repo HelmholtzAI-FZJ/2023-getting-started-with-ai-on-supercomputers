@@ -8,20 +8,21 @@
 #SBATCH --cpus-per-task=96
 #SBATCH --time=04:00:00
 #SBATCH --partition=booster
-#SBATCH --account=training2321
+#SBATCH --account=training2324
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 
-# #SBATCH --reservation=ai_sc_day2
+#SBATCH --reservation=ai_sc_day2
 
+# To get number of cpu per task
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 # activate env
-source ../sc_venv_template/activate.sh
+source $HOME/course/$USER/sc_venv_template/activate.sh
 
 # run script from above
 start=$(date +%s)
-srun python3 one_gpu.py
+srun python3 gpu_training.py
 ELAPSED=$(($(date +%s) - start))
 
 printf "elapsed: %s\n\n" "$(date -d@$ELAPSED -u +%H\ hours\ %M\ min\ %S\ sec)"
