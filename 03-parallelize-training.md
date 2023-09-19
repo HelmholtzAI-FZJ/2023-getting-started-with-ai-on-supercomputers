@@ -5,22 +5,76 @@ subtitle: Parallelize Training
 date: September 28, 2023
 ---
 
+## Lightning Data Module 
+
+```python
+class ImageNetDataModule(pl.LightningDataModule):
+    def __init__(
+        self,
+        data_root: str,
+        batch_size: int,
+        num_workers: int,
+        dataset_transforms: dict(),
+    ):
+        super().__init__()
+        self.data_root = data_root
+        self.batch_size = batch_size
+        self.dataset_transforms = dataset_transforms
+        self.num_workers = num_workers
+
+    def setup(self, stage: Optional[str] = None):
+        self.train = ImageNet(self.data_root, self.dataset_transforms) 
+            
+    def train_dataloader(self):
+        return DataLoader(self.train, batch_size=self.batch_size, \
+            num_workers=self.num_workers, drop_last=True)
+```
+
+---
+
+## Lightning Module
+
+``` python
+class resnet50Model(pl.LightningModule):
+    def __init__(self):
+        super().__init__()
+        self.model = resnet50(pretrained=False)
+
+    def forward(self, x):
+        return self.model(x)
+
+    def training_step(self,batch):
+        x, labels = batch
+        pred=self.forward(x)
+        train_loss = F.cross_entropy(pred, labels)
+        self.log("training_loss", train_loss)
+    
+        return train_loss
+
+    def configure_optimizers(self):
+            return torch.optim.Adam(self.parameters(), lr=0.02)
+
+```
+
+--- 
+
 ## One GPU training 
 
 ```python
-# 1. Organize the data
-datamodule = ImageNetDataModule("/p/scratch/training2324/data/", \
-    128, int(os.getenv('SLURM_CPUS_PER_TASK')), transformation())
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Resize((256, 256))
+])
 
+# 1. Organize the data
+datamodule = ImageNetDataModule("/p/scratch/training2324/data/", 256, \
+    int(os.getenv('SLURM_CPUS_PER_TASK')), transform)
 # 2. Build the model using desired Task
 model = resnet50Model()
-
 # 3. Create the trainer
-trainer = pl.Trainer(max_epochs=10,  accelerator="gpu")
-
+trainer = pl.Trainer(max_epochs=1,  accelerator="gpu")
 # 4. Train the model
 trainer.fit(model, datamodule=datamodule)
-
 # 5. Save the model!
 trainer.save_checkpoint("image_classification_model.pt")
 ```
@@ -31,29 +85,33 @@ trainer.save_checkpoint("image_classification_model.pt")
 
 ``` bash 
 #!/bin/bash -x
-# SLURM SUBMIT SCRIPT
-#SBATCH --nodes=1                # This needs to match Trainer(num_nodes=...)
+#SBATCH --nodes=1            
 #SBATCH --gres=gpu:1
-#SBATCH --ntasks-per-node=1      # This needs to match Trainer(devices=...)
+#SBATCH --ntasks-per-node=1  
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=96
-#SBATCH --time=02:00:00
+#SBATCH --time=04:00:00
 #SBATCH --partition=booster
-#SBATCH --account=training2324
+#SBATCH --account=training2321
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 #SBATCH --reservation=ai_sc_day2
-export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
+# To get number of cpu per task
+export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 # activate env
 source ../sc_venv_template/activate.sh
 # run script from above
-srun python3 ddp.py
+srun python3 gpu_training.py
 ```
 
 ```bash
 elapsed: 04 hours 50 min 39 sec
 ```
+
+---
+
+## DEMO
 
 ---
 
@@ -370,26 +428,15 @@ nnodes = os.getenv("SLURM_NNODES")
 
 ## DDP steps
 
-2. Initialize the torch.distributed package
+2. Initialize a sampler to specify the sequence of indices/keys used in data loading.
+3. Implements data parallelism of the model. 
+4. Allow only process to save checkpoints.
 
 - ```python
-utils.init_distributed_mode(12354)
-```
-
----
-
-## DDP steps
-
-3. Initialize a sampler to specify the sequence of indices/keys used in data loading.
-4. Implements data parallelism of the model. 
-5. Allow only process to save checkpoints.
-
-- ```python
-# 3. Create the trainer
+datamodule = ImageNetDataModule("/p/scratch/training2324/data/", 256, \
+    int(os.getenv('SLURM_CPUS_PER_TASK')), transform)
 trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes)
-# 4. Train the model
 trainer.fit(model, datamodule=datamodule)
-# 5. Save the model!
 trainer.save_checkpoint("image_classification_model.pt")
 ```
 
@@ -398,20 +445,23 @@ trainer.save_checkpoint("image_classification_model.pt")
 ## DDP steps
 
 ```python
-# 1. Organize the data
-datamodule = ImageNetDataModule("/p/scratch/training2324/data/", \
-    128, int(os.getenv('SLURM_CPUS_PER_TASK')), transformation())
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Resize((256, 256))
+])
 
-# 2. Build the model using desired Task
+# 1. The number of nodes
+nnodes = os.getenv("SLURM_NNODES")
+# 2. Organize the data
+datamodule = ImageNetDataModule("/p/scratch/training2324/data/", 128, \
+    int(os.getenv('SLURM_CPUS_PER_TASK')), transform)
+# 3. Build the model using desired Task
 model = resnet50Model()
-
-# 3. Create the trainer
+# 4. Create the trainer
 trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes)
-
-# 4. Train the model
+# 5. Train the model
 trainer.fit(model, datamodule=datamodule)
-
-# 5. Save the model!
+# 6. Save the model!
 trainer.save_checkpoint("image_classification_model.pt")
 ```
 
@@ -423,10 +473,9 @@ trainer.save_checkpoint("image_classification_model.pt")
 
 ```bash
 #!/bin/bash -x
-# SLURM SUBMIT SCRIPT
-#SBATCH --nodes=1             # This needs to match Trainer(num_nodes=...)
+#SBATCH --nodes=1                     # This needs to match Trainer(num_nodes=...)
 #SBATCH --gres=gpu:4
-#SBATCH --ntasks-per-node=4    # This needs to match Trainer(devices=...)
+#SBATCH --ntasks-per-node=4           # When using pl it should always be set to 4
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=24
 #SBATCH --time=00:15:00
@@ -435,12 +484,12 @@ trainer.save_checkpoint("image_classification_model.pt")
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 #SBATCH --reservation=ai_sc_day2
-export CUDA_VISIBLE_DEVICES=0,1,2,3
+
+export CUDA_VISIBLE_DEVICES=0,1,2,3    # Very important for multi node training 
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
-# activate env
-source ../sc_venv_template/activate.sh
-# run script 
-srun python3 ddp.py
+
+source $HOME/course/$USER/sc_venv_template/activate.sh
+srun python3 gpu_training.py
 ```
 
 ```bash
@@ -455,10 +504,9 @@ elapsed: 01 hours 15 min 10 sec
 
 ```bash
 #!/bin/bash -x
-# SLURM SUBMIT SCRIPT
 #SBATCH --nodes=16             # This needs to match Trainer(num_nodes=...)
 #SBATCH --gres=gpu:4
-#SBATCH --ntasks-per-node=4    # This needs to match Trainer(devices=...)
+#SBATCH --ntasks-per-node=4    
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=24
 #SBATCH --time=00:15:00
@@ -467,12 +515,12 @@ elapsed: 01 hours 15 min 10 sec
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 #SBATCH --reservation=ai_sc_day2
+
 export CUDA_VISIBLE_DEVICES=0,1,2,3
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
-# activate env
-source ../sc_venv_template/activate.sh
-# run script 
-srun python3 ddp.py
+
+source $HOME/course/$USER/sc_venv_template/activate.sh
+srun python3 ddp_training.py
 ```
 
 ```bash
@@ -518,18 +566,29 @@ trainer = pl.Trainer(max_epochs=10,  accelerator="gpu")
 ``` 
 - Became 
 - ```python
+nnodes = os.getenv("SLURM_NNODES")
 trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes)
 ```
+
+---
+
+## Data Parallel
+
+<!-- What changed? -->
+
 - It was
 - ```bash
-#SBATCH --nodes=1                # This needs to match Trainer(num_nodes=...)
+#SBATCH --nodes=1                
 #SBATCH --gres=gpu:1
+#SBATCH --ntasks-per-node=1
 ```
 - Became
 - ```bash
-#SBATCH --nodes=32                # This needs to match Trainer(num_nodes=...)
+#SBATCH --nodes=16                
 #SBATCH --gres=gpu:4
+#SBATCH --ntasks-per-node=4 
 ```
+
 ---
 
 ## DEMO
@@ -571,7 +630,7 @@ tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
 
 - Difference between reading from folders and reading from H5 file.
 - Write parallel code.
-- Can submit multi-node multi-gpu training.
+- Can submit single node, multi-gpu and multi-node training.
 - Use TensorBoard on the supercomputer.
 
 ---
