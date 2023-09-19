@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 # SLURM SUBMIT SCRIPT
-#SBATCH --nodes=32             
+#SBATCH --nodes=8             
 #SBATCH --gres=gpu:4
 #SBATCH --ntasks-per-node=4  
 #SBATCH --mem=0
