@@ -106,7 +106,7 @@ time srun python3 gpu_training.py
 ```
 
 ```bash
-elapsed: 04 hours 50 min 39 sec
+real	342m11.864s
 ```
 
 ---
@@ -193,7 +193,7 @@ time srun python3 gpu_training.py
 ```
 
 ```bash
-elapsed: 01 hours 15 min 10 sec
+real	89m15.923s
 ```
 
 ---
@@ -542,25 +542,25 @@ real	6m56.457s
 With 4 nodes: 
 
 ```bash
-elapsed: 00 hours 20 min 01 sec
+real	24m48.169s
 ```
 
 With 8 nodes: 
 
 ```bash
-elapsed: 00 hours 10 min 42 sec
+real	13m10.722s
 ```
 
 With 16 nodes: 
 
 ```bash
-elapsed: 00 hours 06 min 06 sec
+real	6m56.457s
 ```
 
 With 32 nodes: 
 
 ```bash
-elapsed: 00 hours 04 min 21 sec
+real	4m48.313s
 ```
 ---
 
@@ -633,6 +633,12 @@ tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
 ---
 
 ## DEMO
+
+---
+
+## Llview
+
+- ![](images/llview.png)
 
 ---
 

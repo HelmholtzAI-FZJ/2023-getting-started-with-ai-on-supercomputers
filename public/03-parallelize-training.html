@@ -317,7 +317,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># run script from above</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="bu">time</span> srun python3 gpu_training.py</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 04 hours 50 min 39 sec</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">real</span>    342m11.864s</span></code></pre></div>
 </section>
 <section id="demo" class="slide level2">
 <h2>DEMO</h2>
@@ -400,7 +400,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span>/sc_venv_template/activate.sh</span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="bu">time</span> srun python3 gpu_training.py</span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 01 hours 15 min 10 sec</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">real</span>    89m15.923s</span></code></pre></div>
 </section>
 <section id="demo-1" class="slide level2">
 <h2>DEMO</h2>
@@ -722,16 +722,16 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href=
 <h2>DDP training</h2>
 <p>With 4 nodes:</p>
 <div class="sourceCode" id="cb13"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 00 hours 20 min 01 sec</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">real</span>    24m48.169s</span></code></pre></div>
 <p>With 8 nodes:</p>
 <div class="sourceCode" id="cb14"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 00 hours 10 min 42 sec</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">real</span>    13m10.722s</span></code></pre></div>
 <p>With 16 nodes:</p>
 <div class="sourceCode" id="cb15"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 00 hours 06 min 06 sec</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">real</span>    6m56.457s</span></code></pre></div>
 <p>With 32 nodes:</p>
 <div class="sourceCode" id="cb16"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 00 hours 04 min 21 sec</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">real</span>    4m48.313s</span></code></pre></div>
 </section>
 <section id="data-parallel-4" class="slide level2">
 <h2>Data Parallel</h2>
@@ -788,6 +788,12 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href=
 </section>
 <section id="demo-3" class="slide level2">
 <h2>DEMO</h2>
+</section>
+<section id="llview" class="slide level2">
+<h2>Llview</h2>
+<ul>
+<li class="fragment"><img data-src="images/llview.png" /></li>
+</ul>
 </section>
 <section id="day-2-recap" class="slide level2">
 <h2>DAY 2 RECAP</h2>
