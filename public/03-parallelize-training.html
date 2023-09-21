@@ -228,8 +228,8 @@
   <p class="date">September 28, 2023</p>
 </section>
 
-<section id="lightning-data-module" class="slide level2">
-<h2>Lightning Data Module</h2>
+<section id="pytroch-lightning-data-module" class="slide level2">
+<h2>PyTroch Lightning Data Module</h2>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ImageNetDataModule(pl.LightningDataModule):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(</span>
@@ -242,9 +242,9 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a hr
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.data_root <span class="op">=</span> data_root</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.batch_size <span class="op">=</span> batch_size</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.dataset_transforms <span class="op">=</span> dataset_transforms</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.num_workers <span class="op">=</span> num_workers</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.num_workers <span class="op">=</span> num_workers</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.dataset_transforms <span class="op">=</span> dataset_transforms</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        </span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> setup(<span class="va">self</span>, stage: Optional[<span class="bu">str</span>] <span class="op">=</span> <span class="va">None</span>):</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.train <span class="op">=</span> ImageNet(<span class="va">self</span>.data_root, <span class="va">self</span>.dataset_transforms) </span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>            </span>
@@ -252,8 +252,8 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a hr
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> DataLoader(<span class="va">self</span>.train, batch_size<span class="op">=</span><span class="va">self</span>.batch_size, <span class="op">\</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            num_workers<span class="op">=</span><span class="va">self</span>.num_workers, drop_last<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
 </section>
-<section id="lightning-module" class="slide level2">
-<h2>Lightning Module</h2>
+<section id="pytorch-lightning-module" class="slide level2">
+<h2>PyTorch Lightning Module</h2>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> resnet50Model(pl.LightningModule):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
@@ -288,7 +288,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a hr
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Build the model using desired Task</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> resnet50Model()</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Create the trainer</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> pl.Trainer(max_epochs<span class="op">=</span><span class="dv">1</span>,  accelerator<span class="op">=</span><span class="st">&quot;gpu&quot;</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> pl.Trainer(max_epochs<span class="op">=</span><span class="dv">10</span>,  accelerator<span class="op">=</span><span class="st">&quot;gpu&quot;</span>)</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Train the model</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>trainer.fit(model, datamodule<span class="op">=</span>datamodule)</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Save the model!</span></span>
@@ -303,9 +303,9 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=1  </span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=0</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=96</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=04:00:00</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=06:00:00</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=booster</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2321</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2324</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%j.out</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=%j.err</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --reservation=ai_sc_day2</span></span>
@@ -313,9 +313,9 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># To get number of cpu per task</span></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SRUN_CPUS_PER_TASK</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$SLURM_CPUS_PER_TASK</span><span class="st">&quot;</span></span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># activate env</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ../sc_venv_template/activate.sh</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span>/sc_venv_template/activate.sh</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># run script from above</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> python3 gpu_training.py</span></code></pre></div>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="bu">time</span> srun python3 gpu_training.py</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 04 hours 50 min 39 sec</span></code></pre></div>
 </section>
@@ -377,9 +377,38 @@ memory needed</li>
 <li class="fragment">WE DON’T NEED THOSE</li>
 </ul>
 </section>
+<section id="multi-gpu-training" class="slide level2">
+<h2>Multi-GPU training</h2>
+<p>1 node and 4 GPU</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash -x</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=1                     </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:4                  # Use the 4 GPUs available</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=4           # When using pl it should always be set to 4</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=0</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=24            # Divide the number of cpus (96) by the number of GPUs (4)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=02:00:00</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=booster</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2324</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%j.out</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=%j.err</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --reservation=ai_sc_day2</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CUDA_VISIBLE_DEVICES</span><span class="op">=</span>0,1,2,3    <span class="co"># Very important to make the GPUs visible</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SRUN_CPUS_PER_TASK</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$SLURM_CPUS_PER_TASK</span><span class="st">&quot;</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span>/sc_venv_template/activate.sh</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="bu">time</span> srun python3 gpu_training.py</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 01 hours 15 min 10 sec</span></code></pre></div>
+</section>
+<section id="demo-1" class="slide level2">
+<h2>DEMO</h2>
+</section>
 <section id="thats-it-for-data-parallel" class="slide level2">
 <h2>That’s it for data parallel!</h2>
 <ul>
+<li class="fragment">Copy of the model on each GPU</li>
 <li class="fragment">Use different data for each GPU</li>
 <li class="fragment">Everything else is the same</li>
 <li class="fragment">Average after each epoch</li>
@@ -603,8 +632,8 @@ the job.</li>
 <li class="fragment">RANK: the rank of the process in the network.</li>
 <li class="fragment">LOCAL_RANK: the rank of the process on the local
 machine.</li>
-<li class="fragment">MASTER_PORT: free port on machine with rank 0.</li>
-<li class="fragment">MASTER_ADDR: address of rank 0 node.</li>
+<li class="fragment">MASTER_PORT: free port on machine with rank 0.
+<!-- - MASTER_ADDR: address of rank 0 node. --></li>
 </ul>
 </section>
 <section id="ddp-steps" class="slide level2">
@@ -614,15 +643,15 @@ machine.</li>
 distributed mode (WORLD_SIZE, RANK, LOCAL_RANK …)</li>
 </ol>
 <ul>
-<li class="fragment"><div class="sourceCode" id="cb6"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The number of total processes started by Slurm.</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ntasks <span class="op">=</span> os.getenv(<span class="st">&#39;SLURM_NTASKS&#39;</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Index of the current process.</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>rank <span class="op">=</span> os.getenv(<span class="st">&#39;SLURM_PROCID&#39;</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Index of the current process on this node only.</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>local_rank <span class="op">=</span> os.getenv(<span class="st">&#39;SLURM_LOCALID&#39;</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The number of nodes</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>nnodes <span class="op">=</span> os.getenv(<span class="st">&quot;SLURM_NNODES&quot;</span>)</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The number of total processes started by Slurm.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>ntasks <span class="op">=</span> os.getenv(<span class="st">&#39;SLURM_NTASKS&#39;</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Index of the current process.</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>rank <span class="op">=</span> os.getenv(<span class="st">&#39;SLURM_PROCID&#39;</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Index of the current process on this node only.</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>local_rank <span class="op">=</span> os.getenv(<span class="st">&#39;SLURM_LOCALID&#39;</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># The number of nodes</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>nnodes <span class="op">=</span> os.getenv(<span class="st">&quot;SLURM_NNODES&quot;</span>)</span></code></pre></div></li>
 </ul>
 </section>
 <section id="ddp-steps-1" class="slide level2">
@@ -631,74 +660,49 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a hr
 <li class="fragment">Initialize a sampler to specify the sequence of
 indices/keys used in data loading.</li>
 <li class="fragment">Implements data parallelism of the model.</li>
-<li class="fragment">Allow only process to save checkpoints.</li>
+<li class="fragment">Allow only one process to save checkpoints.</li>
 </ol>
 <ul>
-<li class="fragment"><div class="sourceCode" id="cb7"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>datamodule <span class="op">=</span> ImageNetDataModule(<span class="st">&quot;/p/scratch/training2324/data/&quot;</span>, <span class="dv">256</span>, <span class="op">\</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">int</span>(os.getenv(<span class="st">&#39;SLURM_CPUS_PER_TASK&#39;</span>)), transform)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> pl.Trainer(max_epochs<span class="op">=</span><span class="dv">10</span>,  accelerator<span class="op">=</span><span class="st">&quot;gpu&quot;</span>, num_nodes<span class="op">=</span>nnodes)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>trainer.fit(model, datamodule<span class="op">=</span>datamodule)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>trainer.save_checkpoint(<span class="st">&quot;image_classification_model.pt&quot;</span>)</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>datamodule <span class="op">=</span> ImageNetDataModule(<span class="st">&quot;/p/scratch/training2324/data/&quot;</span>, <span class="dv">256</span>, <span class="op">\</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">int</span>(os.getenv(<span class="st">&#39;SLURM_CPUS_PER_TASK&#39;</span>)), transform)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> pl.Trainer(max_epochs<span class="op">=</span><span class="dv">10</span>,  accelerator<span class="op">=</span><span class="st">&quot;gpu&quot;</span>, num_nodes<span class="op">=</span>nnodes)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>trainer.fit(model, datamodule<span class="op">=</span>datamodule)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>trainer.save_checkpoint(<span class="st">&quot;image_classification_model.pt&quot;</span>)</span></code></pre></div></li>
 </ul>
 </section>
 <section id="ddp-steps-2" class="slide level2">
 <h2>DDP steps</h2>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>transform <span class="op">=</span> transforms.Compose([</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    transforms.ToTensor(),</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    transforms.Resize((<span class="dv">256</span>, <span class="dv">256</span>))</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. The number of nodes</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>nnodes <span class="op">=</span> os.getenv(<span class="st">&quot;SLURM_NNODES&quot;</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Organize the data</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>datamodule <span class="op">=</span> ImageNetDataModule(<span class="st">&quot;/p/scratch/training2324/data/&quot;</span>, <span class="dv">128</span>, <span class="op">\</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">int</span>(os.getenv(<span class="st">&#39;SLURM_CPUS_PER_TASK&#39;</span>)), transform)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Build the model using desired Task</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> resnet50Model()</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Create the trainer</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> pl.Trainer(max_epochs<span class="op">=</span><span class="dv">10</span>,  accelerator<span class="op">=</span><span class="st">&quot;gpu&quot;</span>, num_nodes<span class="op">=</span>nnodes)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Train the model</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>trainer.fit(model, datamodule<span class="op">=</span>datamodule)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Save the model!</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>trainer.save_checkpoint(<span class="st">&quot;image_classification_model.pt&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>transform <span class="op">=</span> transforms.Compose([</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    transforms.ToTensor(),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    transforms.Resize((<span class="dv">256</span>, <span class="dv">256</span>))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. The number of nodes</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>nnodes <span class="op">=</span> os.getenv(<span class="st">&quot;SLURM_NNODES&quot;</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Organize the data</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>datamodule <span class="op">=</span> ImageNetDataModule(<span class="st">&quot;/p/scratch/training2324/data/&quot;</span>, <span class="dv">128</span>, <span class="op">\</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">int</span>(os.getenv(<span class="st">&#39;SLURM_CPUS_PER_TASK&#39;</span>)), transform)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Build the model using desired Task</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> resnet50Model()</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Create the trainer</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> pl.Trainer(max_epochs<span class="op">=</span><span class="dv">10</span>,  accelerator<span class="op">=</span><span class="st">&quot;gpu&quot;</span>, num_nodes<span class="op">=</span>nnodes)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Train the model</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>trainer.fit(model, datamodule<span class="op">=</span>datamodule)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Save the model!</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>trainer.save_checkpoint(<span class="st">&quot;image_classification_model.pt&quot;</span>)</span></code></pre></div>
 </section>
 <section id="ddp-training" class="slide level2">
-<h2>DDP training</h2>
-<p>1 node and 4 GPU</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash -x</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=1                     # This needs to match Trainer(num_nodes=...)</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:4</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=4           # When using pl it should always be set to 4</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=0</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=24</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=00:15:00</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=booster</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2324</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=%j.out</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=%j.err</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --reservation=ai_sc_day2</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CUDA_VISIBLE_DEVICES</span><span class="op">=</span>0,1,2,3    <span class="co"># Very important for multi node training </span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SRUN_CPUS_PER_TASK</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$SLURM_CPUS_PER_TASK</span><span class="st">&quot;</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span>/sc_venv_template/activate.sh</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> python3 gpu_training.py</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 01 hours 15 min 10 sec</span></code></pre></div>
-</section>
-<section id="ddp-training-1" class="slide level2">
 <h2>DDP training</h2>
 <p>16 nodes and 4 GPU each</p>
 <div class="sourceCode" id="cb11"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash -x</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=16             # This needs to match Trainer(num_nodes=...)</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:4</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=4    </span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=16                     # This needs to match Trainer(num_nodes=...)</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:4                   # Use the 4 GPUs available</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=4            # When using pl it should always be set to 4</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mem=0</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=24</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=24             # Divide the number of cpus (96) by the number of GPUs (4)</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=00:15:00</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=booster</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2324</span></span>
@@ -706,15 +710,15 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href=
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=%j.err</span></span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --reservation=ai_sc_day2</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CUDA_VISIBLE_DEVICES</span><span class="op">=</span>0,1,2,3</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CUDA_VISIBLE_DEVICES</span><span class="op">=</span>0,1,2,3    <span class="co"># Very important to make the GPUs visible</span></span>
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">SRUN_CPUS_PER_TASK</span><span class="op">=</span><span class="st">&quot;</span><span class="va">$SLURM_CPUS_PER_TASK</span><span class="st">&quot;</span></span>
 <span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span>/sc_venv_template/activate.sh</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> python3 ddp_training.py</span></code></pre></div>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="bu">time</span> srun python3 ddp_training.py</span></code></pre></div>
 <div class="sourceCode" id="cb12"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">elapsed:</span> 00 hours 06 min 06 sec</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">real</span>    6m56.457s</span></code></pre></div>
 </section>
-<section id="ddp-training-2" class="slide level2">
+<section id="ddp-training-1" class="slide level2">
 <h2>DDP training</h2>
 <p>With 4 nodes:</p>
 <div class="sourceCode" id="cb13"><pre
@@ -753,22 +757,24 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href=
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=1</span></span></code></pre></div></li>
 <li class="fragment">Became</li>
 <li class="fragment"><div class="sourceCode" id="cb20"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=16                </span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:4</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=4 </span></span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=16                   # This needs to match Trainer(num_nodes=...)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:4                 # Use the 4 GPUs available</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=4          # When using pl it should always be set to 4</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=24           # Divide the number of cpus (96) by the number of GPUs (4)</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">CUDA_VISIBLE_DEVICES</span><span class="op">=</span>0,1,2,3  <span class="co"># Very important to make the GPUs visible</span></span></code></pre></div></li>
 </ul>
 </section>
-<section id="demo-1" class="slide level2">
+<section id="demo-2" class="slide level2">
 <h2>DEMO</h2>
 </section>
 <section id="tensorboard" class="slide level2">
 <h2>TensorBoard</h2>
 <div class="sourceCode" id="cb21"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Create the logger </span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>logger <span class="op">=</span> TensorBoardLogger(<span class="st">&quot;tb_logs&quot;</span>, name<span class="op">=</span><span class="st">&quot;my_model&quot;</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>logger <span class="op">=</span> TensorBoardLogger(<span class="st">&quot;tb_logs&quot;</span>, name<span class="op">=</span><span class="st">&quot;resnet50&quot;</span>)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Create the trainer and pass the logger </span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> flash.Trainer(max_epochs<span class="op">=</span><span class="dv">10</span>,  accelerator<span class="op">=</span><span class="st">&quot;gpu&quot;</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> pl.Trainer(max_epochs<span class="op">=</span><span class="dv">10</span>,  accelerator<span class="op">=</span><span class="st">&quot;gpu&quot;</span>, <span class="op">\</span></span>
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    num_nodes<span class="op">=</span>nnodes, logger<span class="op">=</span>logger)</span></code></pre></div>
 </section>
 <section id="tensorboard-1" class="slide level2">
@@ -780,14 +786,12 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href=
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tensorboard</span> <span class="at">--logdir</span><span class="op">=</span><span class="pp">[</span><span class="ss">PATH_TO_TENSOR_BOARD</span><span class="pp">]</span> <span class="at">--port</span><span class="op">=</span>16000</span></code></pre></div>
 <p><img data-src="images/tb.png" width="750" /></p>
 </section>
-<section id="demo-2" class="slide level2">
+<section id="demo-3" class="slide level2">
 <h2>DEMO</h2>
 </section>
 <section id="day-2-recap" class="slide level2">
 <h2>DAY 2 RECAP</h2>
 <ul>
-<li class="fragment">Difference between reading from folders and reading
-from H5 file.</li>
 <li class="fragment">Write parallel code.</li>
 <li class="fragment">Can submit single node, multi-gpu and multi-node
 training.</li>

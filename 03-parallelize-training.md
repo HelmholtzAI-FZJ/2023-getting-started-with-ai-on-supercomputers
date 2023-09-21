@@ -5,7 +5,7 @@ subtitle: Parallelize Training
 date: September 28, 2023
 ---
 
-## Lightning Data Module 
+## PyTroch Lightning Data Module 
 
 ```python
 class ImageNetDataModule(pl.LightningDataModule):
@@ -19,9 +19,9 @@ class ImageNetDataModule(pl.LightningDataModule):
         super().__init__()
         self.data_root = data_root
         self.batch_size = batch_size
-        self.dataset_transforms = dataset_transforms
         self.num_workers = num_workers
-
+        self.dataset_transforms = dataset_transforms
+        
     def setup(self, stage: Optional[str] = None):
         self.train = ImageNet(self.data_root, self.dataset_transforms) 
             
@@ -32,7 +32,7 @@ class ImageNetDataModule(pl.LightningDataModule):
 
 ---
 
-## Lightning Module
+## PyTorch Lightning Module
 
 ``` python
 class resnet50Model(pl.LightningModule):
@@ -72,7 +72,7 @@ datamodule = ImageNetDataModule("/p/scratch/training2324/data/", 256, \
 # 2. Build the model using desired Task
 model = resnet50Model()
 # 3. Create the trainer
-trainer = pl.Trainer(max_epochs=1,  accelerator="gpu")
+trainer = pl.Trainer(max_epochs=10,  accelerator="gpu")
 # 4. Train the model
 trainer.fit(model, datamodule=datamodule)
 # 5. Save the model!
@@ -90,9 +90,9 @@ trainer.save_checkpoint("image_classification_model.pt")
 #SBATCH --ntasks-per-node=1  
 #SBATCH --mem=0
 #SBATCH --cpus-per-task=96
-#SBATCH --time=04:00:00
+#SBATCH --time=06:00:00
 #SBATCH --partition=booster
-#SBATCH --account=training2321
+#SBATCH --account=training2324
 #SBATCH --output=%j.out
 #SBATCH --error=%j.err
 #SBATCH --reservation=ai_sc_day2
@@ -100,9 +100,9 @@ trainer.save_checkpoint("image_classification_model.pt")
 # To get number of cpu per task
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 # activate env
-source ../sc_venv_template/activate.sh
+source $HOME/course/$USER/sc_venv_template/activate.sh
 # run script from above
-srun python3 gpu_training.py
+time srun python3 gpu_training.py
 ```
 
 ```bash
@@ -164,10 +164,47 @@ elapsed: 04 hours 50 min 39 sec
 
 - WE DON'T NEED THOSE
 
+
+--- 
+
+## Multi-GPU training
+
+1 node and 4 GPU
+
+```bash
+#!/bin/bash -x
+#SBATCH --nodes=1                     
+#SBATCH --gres=gpu:4                  # Use the 4 GPUs available
+#SBATCH --ntasks-per-node=4           # When using pl it should always be set to 4
+#SBATCH --mem=0
+#SBATCH --cpus-per-task=24            # Divide the number of cpus (96) by the number of GPUs (4)
+#SBATCH --time=02:00:00
+#SBATCH --partition=booster
+#SBATCH --account=training2324
+#SBATCH --output=%j.out
+#SBATCH --error=%j.err
+#SBATCH --reservation=ai_sc_day2
+
+export CUDA_VISIBLE_DEVICES=0,1,2,3    # Very important to make the GPUs visible
+export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
+
+source $HOME/course/$USER/sc_venv_template/activate.sh
+time srun python3 gpu_training.py
+```
+
+```bash
+elapsed: 01 hours 15 min 10 sec
+```
+
+---
+
+## DEMO
+
 ---
 
 ## That's it for data parallel!
 
+- Copy of the model on each GPU
 - Use different data for each GPU
 - Everything else is the same
 - Average after each epoch
@@ -387,6 +424,7 @@ elapsed: 04 hours 50 min 39 sec
 
 ---
 
+
 ## Parallel Training with PyTorch DDP
 
 - [PyTorch's DDP (Distributed Data Parallel)](https://lightning.ai/docs/pytorch/stable/accelerators/gpu_intermediate.html) works as follows:
@@ -397,7 +435,8 @@ elapsed: 04 hours 50 min 39 sec
     - The gradients are synced and averaged across all processes.
     - Each process updates its optimizer.
 
----
+--- 
+
 
 ## Terminologies
 
@@ -405,7 +444,7 @@ elapsed: 04 hours 50 min 39 sec
 - RANK: the rank of the process in the network.
 - LOCAL_RANK: the rank of the process on the local machine.
 - MASTER_PORT: free port on machine with rank 0.
-- MASTER_ADDR: address of rank 0 node.
+<!-- - MASTER_ADDR: address of rank 0 node. -->
 
 ---
 
@@ -430,7 +469,7 @@ nnodes = os.getenv("SLURM_NNODES")
 
 2. Initialize a sampler to specify the sequence of indices/keys used in data loading.
 3. Implements data parallelism of the model. 
-4. Allow only process to save checkpoints.
+4. Allow only one process to save checkpoints.
 
 - ```python
 datamodule = ImageNetDataModule("/p/scratch/training2324/data/", 256, \
@@ -469,46 +508,15 @@ trainer.save_checkpoint("image_classification_model.pt")
 
 ## DDP training
 
-1 node and 4 GPU
-
-```bash
-#!/bin/bash -x
-#SBATCH --nodes=1                     # This needs to match Trainer(num_nodes=...)
-#SBATCH --gres=gpu:4
-#SBATCH --ntasks-per-node=4           # When using pl it should always be set to 4
-#SBATCH --mem=0
-#SBATCH --cpus-per-task=24
-#SBATCH --time=00:15:00
-#SBATCH --partition=booster
-#SBATCH --account=training2324
-#SBATCH --output=%j.out
-#SBATCH --error=%j.err
-#SBATCH --reservation=ai_sc_day2
-
-export CUDA_VISIBLE_DEVICES=0,1,2,3    # Very important for multi node training 
-export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
-
-source $HOME/course/$USER/sc_venv_template/activate.sh
-srun python3 gpu_training.py
-```
-
-```bash
-elapsed: 01 hours 15 min 10 sec
-```
-
----
-
-## DDP training
-
 16 nodes and 4 GPU each 
 
 ```bash
 #!/bin/bash -x
-#SBATCH --nodes=16             # This needs to match Trainer(num_nodes=...)
-#SBATCH --gres=gpu:4
-#SBATCH --ntasks-per-node=4    
+#SBATCH --nodes=16                     # This needs to match Trainer(num_nodes=...)
+#SBATCH --gres=gpu:4                   # Use the 4 GPUs available
+#SBATCH --ntasks-per-node=4            # When using pl it should always be set to 4
 #SBATCH --mem=0
-#SBATCH --cpus-per-task=24
+#SBATCH --cpus-per-task=24             # Divide the number of cpus (96) by the number of GPUs (4)
 #SBATCH --time=00:15:00
 #SBATCH --partition=booster
 #SBATCH --account=training2324
@@ -516,15 +524,15 @@ elapsed: 01 hours 15 min 10 sec
 #SBATCH --error=%j.err
 #SBATCH --reservation=ai_sc_day2
 
-export CUDA_VISIBLE_DEVICES=0,1,2,3
+export CUDA_VISIBLE_DEVICES=0,1,2,3    # Very important to make the GPUs visible
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 
 source $HOME/course/$USER/sc_venv_template/activate.sh
-srun python3 ddp_training.py
+time srun python3 ddp_training.py
 ```
 
 ```bash
-elapsed: 00 hours 06 min 06 sec
+real	6m56.457s
 ```
 
 ---
@@ -584,9 +592,11 @@ trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes)
 ```
 - Became
 - ```bash
-#SBATCH --nodes=16                
-#SBATCH --gres=gpu:4
-#SBATCH --ntasks-per-node=4 
+#SBATCH --nodes=16                   # This needs to match Trainer(num_nodes=...)
+#SBATCH --gres=gpu:4                 # Use the 4 GPUs available
+#SBATCH --ntasks-per-node=4          # When using pl it should always be set to 4
+#SBATCH --cpus-per-task=24           # Divide the number of cpus (96) by the number of GPUs (4)
+export CUDA_VISIBLE_DEVICES=0,1,2,3  # Very important to make the GPUs visible
 ```
 
 ---
@@ -599,10 +609,10 @@ trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes)
 
 ```python 
 # 3. Create the logger 
-logger = TensorBoardLogger("tb_logs", name="my_model")
+logger = TensorBoardLogger("tb_logs", name="resnet50")
 
 # 4. Create the trainer and pass the logger 
-trainer = flash.Trainer(max_epochs=10,  accelerator="gpu",
+trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", \
     num_nodes=nnodes, logger=logger)
 ```
 
@@ -628,7 +638,6 @@ tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
 
 ## DAY 2 RECAP 
 
-- Difference between reading from folders and reading from H5 file.
 - Write parallel code.
 - Can submit single node, multi-gpu and multi-node training.
 - Use TensorBoard on the supercomputer.
