@@ -331,4 +331,4 @@ real	8m32.848s
 
 - Please clone the repository provided by the link bellow
 
-- git clone https://gitlab.jsc.fz-juelich.de/MLDL_FZJ/juhaicu/jsc_public/sharedspace/teaching/2023-getting-started-with-ai-on-supercomputers.git  
+- `git clone git@github.com:HelmholtzAI-FZJ/2023-getting-started-with-ai-on-supercomputers.git`

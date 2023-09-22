@@ -5,6 +5,16 @@ subtitle: Parallelize Training
 date: September 28, 2023
 ---
 
+## We need to download some code
+
+```bash
+cd $HOME/course/$USER
+git clone git@github.com:HelmholtzAI-FZJ/2023-getting-started-with-ai-on-supercomputers.git
+
+```
+
+--- 
+
 ## PyTroch Lightning Data Module 
 
 ```python
