@@ -16,6 +16,16 @@ date: September 27, 2023
 
 ---
 
+## Let's talk about DATA
+
+- Some general considerations one should have in mind
+
+---
+
+![Not this data](images/data-and-lore.jpg)
+
+--- 
+
 ## I/O is separate and shared
 
 #### All compute nodes of all supercomputers see the same files
@@ -32,11 +42,22 @@ date: September 27, 2023
 
 ---
 
+## Where do I keep my files?
+
+- **`$PROJECT_projectname`** for code
+    - Most of your work should stay here
+- **`$DATA_projectname`** for big data(*)
+    - Permanent location for big datasets
+- **`$SCRATCH_projectname`** for temporary files (fast, but not permanent)
+    - Files are deleted after 90 days untouched
+
+---
+
 ## Data services
 
 - JSC provides different data services
 - Data projects give massive amounts of storage
-- We use it for ML datasets. Join the project at [Judoor](https://judoor.fz-juelich.de/projects/join/datasets)
+- We use it for ML datasets. Join the project at **[Judoor](https://judoor.fz-juelich.de/projects/join/datasets)**
 - After being approved, connect to the supercomputer and try it:
 - ```bash
 cd $DATA_datasets
@@ -49,6 +70,7 @@ cd $DATA_datasets
 - [LARGEDATA filesystem](https://apps.fz-juelich.de/jsc/hps/juwels/filesystems.html) is not accessible by compute nodes
 - Copy files to an accessible filesystem BEFORE working
 - Imagenet-21K copy alone takes 21+ minutes to $SCRATCH
+- We already copied it to $SCRATCH for you
 
 ---
 
