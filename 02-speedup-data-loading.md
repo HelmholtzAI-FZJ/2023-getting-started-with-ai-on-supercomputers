@@ -68,9 +68,9 @@ cd $DATA_datasets
 ## Data Staging
 
 - [LARGEDATA filesystem](https://apps.fz-juelich.de/jsc/hps/juwels/filesystems.html) is not accessible by compute nodes
-- Copy files to an accessible filesystem BEFORE working
+    - Copy files to an accessible filesystem BEFORE working
 - Imagenet-21K copy alone takes 21+ minutes to $SCRATCH
-- We already copied it to $SCRATCH for you
+    - We already copied it to $SCRATCH for you
 
 ---
 

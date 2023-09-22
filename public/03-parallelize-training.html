@@ -239,10 +239,10 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="
 <h4 id="large-scale-visual-recognition-challenge-ilsvrc">Large Scale
 Visual Recognition Challenge (ILSVRC)</h4>
 <ul>
-<li class="fragment">An image dataset organized according to the WordNet
-hierarchy.</li>
-<li class="fragment">Evaluates algorithms for object detection and image
-classification at large scale.</li>
+<li class="fragment">An image dataset organized according to the <a
+href="https://wordnet.princeton.edu">WordNet hierarchy</a>.</li>
+<li class="fragment">Extensively used in algorithms for object detection
+and image classification at large scale.</li>
 <li class="fragment">It has 1000 classes, that comprises 1.2 million
 images for training, and 5,000 images for the validation set.</li>
 </ul>
@@ -455,43 +455,6 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href=
 <section id="data-parallel---averaging" class="slide level2">
 <h2>Data Parallel - Averaging</h2>
 <p><img data-src="images/data-parallel-averaging.svg" /></p>
-</section>
-<section id="data-parallel-2" class="slide level2">
-<h2>Data Parallel</h2>
-<h3 id="there-are-other-approaches-too">There are other approaches
-too!</h3>
-<ul>
-<li class="fragment">For the sake of completeness:
-<ul>
-<li class="fragment">Asynchronous Stochastic Gradient Descent
-<ul>
-<li class="fragment">Don’t average the parameters, but send the updates
-(gradients post learning rate and momentum) asynchronously</li>
-<li class="fragment">Advantageous for slow networks</li>
-<li class="fragment">Problem: stale gradient (things might change while
-calculating gradients)</li>
-<li class="fragment">The more nodes, the worse it gets</li>
-<li class="fragment">Won’t talk about it anymore</li>
-</ul></li>
-</ul></li>
-</ul>
-</section>
-<section id="data-parallel-3" class="slide level2">
-<h2>Data Parallel</h2>
-<h3 id="there-are-other-approaches-too-1">There are other approaches
-too!</h3>
-<ul>
-<li class="fragment">Decentralized Asychronous Stochastic Gradient
-Descent
-<ul>
-<li class="fragment">Updates are peer-to-peer</li>
-<li class="fragment">The updates are heavily compressed and
-quantized</li>
-<li class="fragment">Disadvantage: extra computation per minibatch, more
-memory needed</li>
-</ul></li>
-<li class="fragment">WE DON’T NEED THOSE</li>
-</ul>
 </section>
 <section id="multi-gpu-training" class="slide level2">
 <h2>Multi-GPU training</h2>
@@ -847,7 +810,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href=
 <div class="sourceCode" id="cb22"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">real</span>    4m48.313s</span></code></pre></div>
 </section>
-<section id="data-parallel-4" class="slide level2">
+<section id="data-parallel-2" class="slide level2">
 <h2>Data Parallel</h2>
 <!-- What changed? -->
 <ul>
@@ -860,7 +823,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a h
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> pl.Trainer(max_epochs<span class="op">=</span><span class="dv">10</span>,  accelerator<span class="op">=</span><span class="st">&quot;gpu&quot;</span>, num_nodes<span class="op">=</span>nnodes)</span></code></pre></div></li>
 </ul>
 </section>
-<section id="data-parallel-5" class="slide level2">
+<section id="data-parallel-3" class="slide level2">
 <h2>Data Parallel</h2>
 <!-- What changed? -->
 <ul>

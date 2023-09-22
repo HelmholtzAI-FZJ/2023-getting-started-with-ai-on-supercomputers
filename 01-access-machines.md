@@ -96,9 +96,9 @@ Please open this document on your own browser! We will need it for the exercises
   - For compute! With GPUs! 🤩
 - High-speed, ultra-low-latency network
 - Shared networked file systems
-- Key stats:
-    - Number of Nodes
-    - CPUs, Number of Cores, Single-core Performance
+- Some numbers we should (more or less) know about them:
+    - Nodes
+    - Cores, Single-core Performance
     - RAM
     - Network: Bandwidth, Latency
     - Accelerators (e.g. GPUs)
@@ -108,23 +108,12 @@ Please open this document on your own browser! We will need it for the exercises
 ### JUWELS Booster Compute Nodes
 
 - 936 Nodes
-- AMD EPYC Rome 7402 CPU 2.7 GHz (2 × 24 cores x 2 threads = 96 virtual cores/node)
+- 2x AMD EPYC Rome 7402 CPU 2.7 GHz (48 cores x 2 threads = 96 virtual cores/node)
 - 512 GiB memory
 - Network Mellanox HDR infiniband (FAST💨 and EXPENSIVE💸)
 - 4x NVIDIA A100 with 40gb 😻
 - TL;DR: 89856 cores, 3744 GPUs, 468 TB RAM 💪
 - Way deeper technical info at [Juwels Booster Overview](https://apps.fz-juelich.de/jsc/hps/juwels/booster-overview.html)
-
----
-
-### JUSUF
-
-- 205 Nodes
-- AMD EPYC Rome 7742 CPU 2.25 GHz (2 × 64 cores / node)
-- 256 GiB memory
-- 61 nodes with 4x NVIDIA V100 with 16gb.
-- TL;DR: Smaller than JUWELS Booster, but still packs a punch 🤜
-- Way deeper technical info at [JUSUF Overview](https://apps.fz-juelich.de/jsc/hps/jusuf/cluster/configuration.html)
 
 ---
 
@@ -231,7 +220,7 @@ Please open this document on your own browser! We will need it for the exercises
 - Join the course project `training2324`
 - Sign the Usage Agreements ([Video](https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view))
 - Compute time allocation is based on compute projects. For every compute job, a compute project pays.
-- Time is measured in core-hours. One hour of Juwels BOOSTER is 48 core-hours. One hour of Jusuf is 128 core-h.
+- Time is measured in core-hours. One hour of Juwels BOOSTER is 48 core-hours.
 - Example: Job runs for 8 hours on 64 nodes of Juwels BOOSTER: 8 * 64 * 48 = 24576 core-h!
 
 ---
@@ -255,7 +244,28 @@ Please open this document on your own browser! We will need it for the exercises
 
 ---
 
-### Connecting to JUWELS BOOSTER and JUSUF
+## Connecting to JUWELS BOOSTER
+
+---
+
+## VSCode
+
+- [Download VScode: code.visualstudio.com](https://code.visualstudio.com/download)
+- Install and run it
+  - On the local terminal, type `code`
+- Install [Remote Development Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
+- Install [Remote: SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
+- If you have Windows, you need WSL as explained on the email.
+
+---
+
+## VSCode
+
+### Now with the remote explorer tab
+![](images/vscode-welcome.png)
+
+
+---
 
 #### SSH
 - SSH is a secure shell (terminal) connection to another computer
@@ -270,7 +280,7 @@ Please open this document on your own browser! We will need it for the exercises
 
 ### SSH
 
-#### Create key
+#### Create key in VSCode's Terminal (menu View->Terminal)
 
 ```bash
 mkdir ~/.ssh/
@@ -302,24 +312,6 @@ The keys randomart image is:
 
 ---
 
-## VSCode
-
-- [Download VScode: code.visualstudio.com](https://code.visualstudio.com/download)
-- Install and run it
-  - On the local terminal, type `code`
-- Install [Remote Development Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-- Install [Remote: SSH](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh)
-
----
-
-## VSCode
-
-### Now with the remote explorer tab
-![](images/vscode-welcome.png)
-
-
----
-
 ### SSH
 
 #### Configure SSH session
@@ -335,25 +327,22 @@ code $HOME/.ssh/config
 #### Configure SSH session
 
 ```bash
-Host jusuf
-        HostName jusuf.fz-juelich.de
-        User [MY_USERNAME]
-        IdentityFile ~/.ssh/id_ed25519-JSC
-
 Host booster
         HostName juwels-booster.fz-juelich.de
-        User [MY_USERNAME]
+        User [MY_USERNAME]   # Here goes your username, not the word MY_USERNAME.
+        AddressFamily inet
         IdentityFile ~/.ssh/id_ed25519-JSC
-
 ```
 
-Copy contents to the config file and save it.
+Copy contents to the config file and save it 
+
+**REPLACE [MY_USERNAME] WITH YOUR USERNAME!!! 🤦‍♂️**
 
 ---
 
 ### SSH
 
-####  Jülich Supercomputing Centre restricts where you can login from
+####  JSC restricts from where you can login
 #### So we need to:
 1. Find our ip range
 2. Add the range and key to [Judoor](https://judoor.fz-juelich.de)
@@ -364,24 +353,7 @@ Copy contents to the config file and save it.
 
 #### Find your ip/name range
 
-- Terminal: `curl ifconfig.me`
-
-- ```bash
-$ curl ifconfig.me 
-93.199.55.160%
-```
-
-- (Ignore the `%` sign)
-
-- Let's keep this inside vscode: `code key.txt` and paste the number you got
-
----
-
-### SSH
-
-#### Find your ip/name range
-
-- Browser: [https://www.whatismyip.com](https://www.whatismyip.com)
+Open **[https://www.whatismyip.com](https://www.whatismyip.com)**
 
 ---
 
@@ -397,15 +369,22 @@ $ curl ifconfig.me
 
 ### SSH
 
-Did everyone get the ip address?
-
+Did everyone get their **own** ip address?
 
 ---
 
-### SSH - Example: `93.199.55.160`
+### SSH - EXAMPLE
+
+- I will use the number `93.199.55.163`
+- **YOUR NUMBER IS DIFFERENT**
+- Seriously
+
+---
+
+### SSH - Example: `93.199.55.163`
 
 - Go to VSCode and make it simpler, replace the 2nd half with `"0.0/16"`:
-  - It was `93.199.55.160`
+  - It was `93.199.55.163`
   - Becomes `93.199.0.0/16` (with YOUR number, not with the example)
 - Add a `from=""` around it
 - So, it looks like this, now: `from="93.199.0.0/16"`
@@ -419,11 +398,13 @@ Did everyone get the ip address?
 ### SSH - Example: `93.199.0.0/16`
 
 #### Copy your ssh key
-- Terminal: `cat ~/.ssh/id_ed25519-JSC.pub`
+- Terminal: `code ~/.ssh/id_ed25519-JSC.pub`
+- Something like this will open:
+
 - ```bash
-$ cat ~/.ssh/id_ed25519-JSC.pub
 ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de
 ```
+
 - Paste this line at the same `key.txt` which you just opened
 
 ---
@@ -443,7 +424,7 @@ from="93.199.0.0/16,10.0.0.0/8" ssh-ed25519 AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd
 
 - Let's add it on [Judoor](https://judoor.fz-juelich.de)
 - ![](images/manage-ssh-keys.png)
-- Do it for JUWELS, JUSUF and JUDAC with the same key
+- Do it for JUWELS and JUDAC with the same key
 
 ---
 
@@ -462,17 +443,17 @@ This might take some minutes
 That's it! Give it a try (and answer yes)
 
 ```bash
-$ ssh jusuf
-The authenticity of host 'jusuf.fz-juelich.de (134.94.0.185)' cannot be established.
+$ ssh booster
+The authenticity of host 'juwels22.fz-juelich.de (134.94.0.185)' cannot be established.
 ED25519 key fingerprint is SHA256:ASeu9MJbkFx3kL1FWrysz6+paaznGenChgEkUW8nRQU.
 This key is not known by any other names
 Are you sure you want to continue connecting (yes/no/[fingerprint])? Yes
 **************************************************************************
-*                            Welcome to JUSUF                            *
+*                            Welcome to JUWELS BOOSTER                   *
 **************************************************************************
 ...
 ...
-strube1@jusuf ~ $ 
+strube1@juwels22~ $ 
 ```
 
 ---
@@ -579,7 +560,7 @@ Search with the version - it will suggest the hierarchy
 
 ## Example: PyTorch
 
-(make sure you are still connected to JUSUF)
+(make sure you are still connected to Juwels BOOSTER)
 
 ```bash
 $ python
@@ -672,7 +653,7 @@ pwd
 ---
 
 ### Demo code
-#### Create a new file "`matrix.py`" on VSCode on Jusuf
+#### Create a new file "`matrix.py`" on VSCode on Juwels BOOSTER
 
 ```bash
 code matrix.py
@@ -795,7 +776,6 @@ squeue --me
 
 - Some partitions have reservations, which means that only certain users can use them at certain times.
 - For this course, we have:
-- Jusuf: `tr2321-20230627-gpu` and `tr2321-20230628-gpu`
 - Juwels Booster: `ai_sc_day1` and `ai_sc_day2`
 
 --- 
@@ -978,9 +958,9 @@ The following modules were not unloaded:
 - If you run it longer, you will get the actual error
 - Long error message which ends with
 - ```python
-  File "/p/software/jusuf/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py", line 1391, in https_open
+  File "/p/software/juwelsbooster/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py", line 1391, in https_open
     return self.do_open(http.client.HTTPSConnection, req,
-  File "/p/software/jusuf/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py", line 1351, in do_open
+  File "/p/software/juwelsbooster/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py", line 1351, in do_open
     raise URLError(err)
 urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
 srun: error: jsfc013: task 0: Exited with exit code 1
@@ -1211,12 +1191,6 @@ Host *.booster
         StrictHostKeyChecking no
         IdentityFile ~/.ssh/id_ed25519-JSC
         ProxyJump booster
-Host *.jusuf
-        User [ADD YOUR USERNAME HERE]
-        StrictHostKeyChecking no
-        IdentityFile ~/.ssh/id_ed25519-JSC
-        ProxyJump jusuf
-
 ```        
 
 ---

@@ -17,8 +17,8 @@ git clone https://gitlab.jsc.fz-juelich.de/MLDL_FZJ/juhaicu/jsc_public/sharedspa
 
 ## The ImageNet dataset
 #### Large Scale Visual Recognition Challenge (ILSVRC)
-- An image dataset organized according to the WordNet hierarchy. 
-- Evaluates algorithms for object detection and image classification at large scale. 
+- An image dataset organized according to the [WordNet hierarchy](https://wordnet.princeton.edu). 
+- Extensively used in algorithms for object detection and image classification at large scale. 
 - It has 1000 classes, that comprises 1.2 million images for training, and 5,000 images for the validation set.
 
 ![](images/imagenet_banner.jpeg)
@@ -267,34 +267,6 @@ real	342m11.864s
 ![](images/data-parallel-averaging.svg)
 
 ---
-
-## Data Parallel
-
-### There are other approaches too!
-
-- For the sake of completeness:
-    - Asynchronous Stochastic Gradient Descent
-        - Don't average the parameters, but send the updates (gradients post learning rate and momentum) asynchronously
-        - Advantageous for slow networks
-        - Problem: stale gradient (things might change while calculating gradients)
-        - The more nodes, the worse it gets
-        - Won't talk about it anymore
-
----
-
-## Data Parallel
-
-### There are other approaches too!
-
-- Decentralized Asychronous Stochastic Gradient Descent
-    - Updates are peer-to-peer
-    - The updates are heavily compressed and quantized
-    - Disadvantage: extra computation per minibatch, more memory needed
-
-- WE DON'T NEED THOSE
-
-
---- 
 
 ## Multi-GPU training
 

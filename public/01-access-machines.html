@@ -391,10 +391,11 @@ transfer, scripting, etc. No GPUs.</li>
 </ul></li>
 <li class="fragment">High-speed, ultra-low-latency network</li>
 <li class="fragment">Shared networked file systems</li>
-<li class="fragment">Key stats:
+<li class="fragment">Some numbers we should (more or less) know about
+them:
 <ul>
-<li class="fragment">Number of Nodes</li>
-<li class="fragment">CPUs, Number of Cores, Single-core Performance</li>
+<li class="fragment">Nodes</li>
+<li class="fragment">Cores, Single-core Performance</li>
 <li class="fragment">RAM</li>
 <li class="fragment">Network: Bandwidth, Latency</li>
 <li class="fragment">Accelerators (e.g. GPUs)</li>
@@ -406,7 +407,7 @@ transfer, scripting, etc. No GPUs.</li>
 <h3 id="juwels-booster-compute-nodes">JUWELS Booster Compute Nodes</h3>
 <ul>
 <li class="fragment">936 Nodes</li>
-<li class="fragment">AMD EPYC Rome 7402 CPU 2.7 GHz (2 × 24 cores x 2
+<li class="fragment">2x AMD EPYC Rome 7402 CPU 2.7 GHz (48 cores x 2
 threads = 96 virtual cores/node)</li>
 <li class="fragment">512 GiB memory</li>
 <li class="fragment">Network Mellanox HDR infiniband (FAST💨 and
@@ -416,22 +417,6 @@ EXPENSIVE💸)</li>
 <li class="fragment">Way deeper technical info at <a
 href="https://apps.fz-juelich.de/jsc/hps/juwels/booster-overview.html">Juwels
 Booster Overview</a></li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="jusuf">JUSUF</h3>
-<ul>
-<li class="fragment">205 Nodes</li>
-<li class="fragment">AMD EPYC Rome 7742 CPU 2.25 GHz (2 × 64 cores /
-node)</li>
-<li class="fragment">256 GiB memory</li>
-<li class="fragment">61 nodes with 4x NVIDIA V100 with 16gb.</li>
-<li class="fragment">TL;DR: Smaller than JUWELS Booster, but still packs
-a punch 🤜</li>
-<li class="fragment">Way deeper technical info at <a
-href="https://apps.fz-juelich.de/jsc/hps/jusuf/cluster/configuration.html">JUSUF
-Overview</a></li>
 </ul>
 </section>
 <section id="how-do-i-use-a-supercomputer" class="slide level2">
@@ -550,7 +535,7 @@ href="https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view">Vi
 <li class="fragment">Compute time allocation is based on compute
 projects. For every compute job, a compute project pays.</li>
 <li class="fragment">Time is measured in core-hours. One hour of Juwels
-BOOSTER is 48 core-hours. One hour of Jusuf is 128 core-h.</li>
+BOOSTER is 48 core-hours.</li>
 <li class="fragment">Example: Job runs for 8 hours on 64 nodes of Juwels
 BOOSTER: 8 * 64 * 48 = 24576 core-h!</li>
 </ul>
@@ -576,10 +561,37 @@ id="pay-attention-to-the-partition---dont-run-it-on-the-login-node">Pay
 attention to the partition - DON’T RUN IT ON THE LOGIN NODE!!!</h4>
 <p><img data-src="images/jupyter-partition.png" /></p>
 </section>
+<section id="connecting-to-juwels-booster-1" class="slide level2">
+<h2>Connecting to JUWELS BOOSTER</h2>
+</section>
+<section id="vscode" class="slide level2">
+<h2>VSCode</h2>
+<ul>
+<li class="fragment"><a
+href="https://code.visualstudio.com/download">Download VScode:
+code.visualstudio.com</a></li>
+<li class="fragment">Install and run it
+<ul>
+<li class="fragment">On the local terminal, type <code>code</code></li>
+</ul></li>
+<li class="fragment">Install <a
+href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack">Remote
+Development Tools</a></li>
+<li class="fragment">Install <a
+href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh">Remote:
+SSH</a></li>
+<li class="fragment">If you have Windows, you need WSL as explained on
+the email.</li>
+</ul>
+</section>
+<section id="vscode-1" class="slide level2">
+<h2>VSCode</h2>
+<h3 id="now-with-the-remote-explorer-tab">Now with the remote explorer
+tab</h3>
+<p><img data-src="images/vscode-welcome.png" /></p>
+</section>
 <section class="slide level2">
 
-<h3 id="connecting-to-juwels-booster-and-jusuf">Connecting to JUWELS
-BOOSTER and JUSUF</h3>
 <h4 id="ssh">SSH</h4>
 <ul>
 <li class="fragment">SSH is a secure shell (terminal) connection to
@@ -598,7 +610,8 @@ NODE</li>
 <section class="slide level2">
 
 <h3 id="ssh-1">SSH</h3>
-<h4 id="create-key">Create key</h4>
+<h4 id="create-key-in-vscodes-terminal-menu-view-terminal">Create key in
+VSCode’s Terminal (menu View-&gt;Terminal)</h4>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/.ssh/</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh-keygen</span> <span class="at">-a</span> 100 <span class="at">-t</span> ed25519 <span class="at">-f</span> ~/.ssh/id_ed25519-JSC</span></code></pre></div>
@@ -624,30 +637,6 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span>            <span class="bu">.</span>    <span class="kw">|</span></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="ex">+----[SHA256]-----+</span></span></code></pre></div>
 </section>
-<section id="vscode" class="slide level2">
-<h2>VSCode</h2>
-<ul>
-<li class="fragment"><a
-href="https://code.visualstudio.com/download">Download VScode:
-code.visualstudio.com</a></li>
-<li class="fragment">Install and run it
-<ul>
-<li class="fragment">On the local terminal, type <code>code</code></li>
-</ul></li>
-<li class="fragment">Install <a
-href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack">Remote
-Development Tools</a></li>
-<li class="fragment">Install <a
-href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh">Remote:
-SSH</a></li>
-</ul>
-</section>
-<section id="vscode-1" class="slide level2">
-<h2>VSCode</h2>
-<h3 id="now-with-the-remote-explorer-tab">Now with the remote explorer
-tab</h3>
-<p><img data-src="images/vscode-welcome.png" /></p>
-</section>
 <section class="slide level2">
 
 <h3 id="ssh-2">SSH</h3>
@@ -660,23 +649,19 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <h3 id="ssh-3">SSH</h3>
 <h4 id="configure-ssh-session-1">Configure SSH session</h4>
 <div class="sourceCode" id="cb4"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> jusuf</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="ex">HostName</span> jusuf.fz-juelich.de</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User</span> <span class="pp">[</span><span class="ss">MY_USERNAME</span><span class="pp">]</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">IdentityFile</span> ~/.ssh/id_ed25519-JSC</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> booster</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="ex">HostName</span> juwels-booster.fz-juelich.de</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User</span> <span class="pp">[</span><span class="ss">MY_USERNAME</span><span class="pp">]</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="ex">IdentityFile</span> ~/.ssh/id_ed25519-JSC</span></code></pre></div>
-<p>Copy contents to the config file and save it.</p>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Host</span> booster</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>        <span class="ex">HostName</span> juwels-booster.fz-juelich.de</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="ex">User</span> <span class="pp">[</span><span class="ss">MY_USERNAME</span><span class="pp">]</span>   <span class="co"># Here goes your username, not the word MY_USERNAME.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="ex">AddressFamily</span> inet</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="ex">IdentityFile</span> ~/.ssh/id_ed25519-JSC</span></code></pre></div>
+<p>Copy contents to the config file and save it</p>
+<p><strong>REPLACE [MY_USERNAME] WITH YOUR USERNAME!!! 🤦‍♂️</strong></p>
 </section>
 <section class="slide level2">
 
 <h3 id="ssh-4">SSH</h3>
-<h4
-id="jülich-supercomputing-centre-restricts-where-you-can-login-from">Jülich
-Supercomputing Centre restricts where you can login from</h4>
+<h4 id="jsc-restricts-from-where-you-can-login">JSC restricts from where
+you can login</h4>
 <h4 id="so-we-need-to">So we need to:</h4>
 <ol type="1">
 <li class="fragment">Find our ip range</li>
@@ -688,29 +673,13 @@ href="https://judoor.fz-juelich.de">Judoor</a></li>
 
 <h3 id="ssh-5">SSH</h3>
 <h4 id="find-your-ipname-range">Find your ip/name range</h4>
-<ul>
-<li class="fragment"><p>Terminal: <code>curl ifconfig.me</code></p></li>
-<li class="fragment"><div class="sourceCode" id="cb5"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl ifconfig.me </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">93.199.55.160%</span></span></code></pre></div></li>
-<li class="fragment"><p>(Ignore the <code>%</code> sign)</p></li>
-<li class="fragment"><p>Let’s keep this inside vscode:
-<code>code key.txt</code> and paste the number you got</p></li>
-</ul>
+<p>Open <strong><a
+href="https://www.whatismyip.com">https://www.whatismyip.com</a></strong></p>
 </section>
 <section class="slide level2">
 
 <h3 id="ssh-6">SSH</h3>
 <h4 id="find-your-ipname-range-1">Find your ip/name range</h4>
-<ul>
-<li class="fragment">Browser: <a
-href="https://www.whatismyip.com">https://www.whatismyip.com</a></li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="ssh-7">SSH</h3>
-<h4 id="find-your-ipname-range-2">Find your ip/name range</h4>
 <p><img data-src="images/whatismyip.png" /></p>
 <ul>
 <li class="fragment">Let’s keep this inside vscode:
@@ -719,18 +688,28 @@ href="https://www.whatismyip.com">https://www.whatismyip.com</a></li>
 </section>
 <section class="slide level2">
 
-<h3 id="ssh-8">SSH</h3>
-<p>Did everyone get the ip address?</p>
+<h3 id="ssh-7">SSH</h3>
+<p>Did everyone get their <strong>own</strong> ip address?</p>
 </section>
 <section class="slide level2">
 
-<h3 id="ssh---example-93.199.55.160">SSH - Example:
-<code>93.199.55.160</code></h3>
+<h3 id="ssh---example">SSH - EXAMPLE</h3>
+<ul>
+<li class="fragment">I will use the number
+<code>93.199.55.163</code></li>
+<li class="fragment"><strong>YOUR NUMBER IS DIFFERENT</strong></li>
+<li class="fragment">Seriously</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="ssh---example-93.199.55.163">SSH - Example:
+<code>93.199.55.163</code></h3>
 <ul>
 <li class="fragment">Go to VSCode and make it simpler, replace the 2nd
 half with <code>"0.0/16"</code>:
 <ul>
-<li class="fragment">It was <code>93.199.55.160</code></li>
+<li class="fragment">It was <code>93.199.55.163</code></li>
 <li class="fragment">Becomes <code>93.199.0.0/16</code> (with YOUR
 number, not with the example)</li>
 </ul></li>
@@ -751,39 +730,38 @@ number, not with the example)</li>
 <code>93.199.0.0/16</code></h3>
 <h4 id="copy-your-ssh-key">Copy your ssh key</h4>
 <ul>
-<li class="fragment">Terminal:
-<code>cat ~/.ssh/id_ed25519-JSC.pub</code></li>
+<li class="fragment"><p>Terminal:
+<code>code ~/.ssh/id_ed25519-JSC.pub</code></p></li>
+<li class="fragment"><p>Something like this will open:</p></li>
+<li class="fragment"><div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-ed25519</span> AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de</span></code></pre></div></li>
+<li class="fragment"><p>Paste this line at the same <code>key.txt</code>
+which you just opened</p></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<h3 id="ssh-8">SSH</h3>
+<h4 id="example-93.199.0.016">Example: <code>93.199.0.0/16</code></h4>
+<ul>
+<li class="fragment">Put them together and copy again:</li>
 <li class="fragment"><div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat ~/.ssh/id_ed25519-JSC.pub</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh-ed25519</span> AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de</span></code></pre></div></li>
-<li class="fragment">Paste this line at the same <code>key.txt</code>
-which you just opened</li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">from</span><span class="op">=</span><span class="st">&quot;93.199.0.0/16,10.0.0.0/8&quot;</span> <span class="ex">ssh-ed25519</span> AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de</span></code></pre></div></li>
 </ul>
 </section>
 <section class="slide level2">
 
 <h3 id="ssh-9">SSH</h3>
-<h4 id="example-93.199.0.016">Example: <code>93.199.0.0/16</code></h4>
 <ul>
-<li class="fragment">Put them together and copy again:</li>
-<li class="fragment"><div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">from</span><span class="op">=</span><span class="st">&quot;93.199.0.0/16,10.0.0.0/8&quot;</span> <span class="ex">ssh-ed25519</span> AAAAC3NzaC1lZDE1NTA4AAAAIHaoOJF3gqXd7CV6wncoob0DL2OJNfvjgnHLKEniHV6F strube@demonstration.fz-juelich.de</span></code></pre></div></li>
+<li class="fragment">Let’s add it on <a
+href="https://judoor.fz-juelich.de">Judoor</a></li>
+<li class="fragment"><img data-src="images/manage-ssh-keys.png" /></li>
+<li class="fragment">Do it for JUWELS and JUDAC with the same key</li>
 </ul>
 </section>
 <section class="slide level2">
 
 <h3 id="ssh-10">SSH</h3>
-<ul>
-<li class="fragment">Let’s add it on <a
-href="https://judoor.fz-juelich.de">Judoor</a></li>
-<li class="fragment"><img data-src="images/manage-ssh-keys.png" /></li>
-<li class="fragment">Do it for JUWELS, JUSUF and JUDAC with the same
-key</li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="ssh-11">SSH</h3>
 <h4 id="add-new-key-to-judoor">Add new key to <a
 href="https://judoor.fz-juelich.de">Judoor</a></h4>
 <p><img data-src="images/manage-ssh-keys-from-and-key.png"
@@ -794,45 +772,45 @@ width="850" /></p>
 
 <h3 id="ssh-exercise">SSH: Exercise</h3>
 <p>That’s it! Give it a try (and answer yes)</p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ssh jusuf</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> authenticity of host <span class="st">&#39;jusuf.fz-juelich.de (134.94.0.185)&#39;</span> cannot be established.</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ED25519</span> key fingerprint is SHA256:ASeu9MJbkFx3kL1FWrysz6+paaznGenChgEkUW8nRQU.</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">This</span> key is not known by any other names</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Are</span> you sure you want to continue connecting <span class="er">(</span><span class="ex">yes/no/[fingerprint]</span><span class="kw">)</span><span class="ex">?</span> Yes</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">**************************************************************************</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ex">*</span>                            Welcome to JUSUF                            <span class="pp">*</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">**************************************************************************</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1@jusuf</span> ~ $ </span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ssh booster</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> authenticity of host <span class="st">&#39;juwels22.fz-juelich.de (134.94.0.185)&#39;</span> cannot be established.</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ED25519</span> key fingerprint is SHA256:ASeu9MJbkFx3kL1FWrysz6+paaznGenChgEkUW8nRQU.</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">This</span> key is not known by any other names</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Are</span> you sure you want to continue connecting <span class="er">(</span><span class="ex">yes/no/[fingerprint]</span><span class="kw">)</span><span class="ex">?</span> Yes</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">**************************************************************************</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">*</span>                            Welcome to JUWELS BOOSTER                   <span class="pp">*</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">**************************************************************************</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1@juwels22~</span> $ </span></code></pre></div>
 </section>
 <section class="slide level2">
 
 <h3 id="ssh-exercise-1">SSH: Exercise</h3>
 <h4 id="make-sure-you-are-connected-to-the-supercomputer">Make sure you
 are connected to the supercomputer</h4>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a shortcut for the project on the home folder</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="va">$PROJECT_training2324</span> ~/course</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a folder for myself</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> course/<span class="va">$USER</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Enter course folder and</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/course/<span class="va">$USER</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Where am I?</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># We well need those later</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/course/<span class="va">$USER</span>/.cache</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/course/<span class="va">$USER</span>/.config</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/course/<span class="va">$USER</span>/.fastai</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> ~/course/<span class="va">$USER</span>/.cache <span class="va">$HOME</span>/</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> ~/course/<span class="va">$USER</span>/.config <span class="va">$HOME</span>/</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> ~/course/<span class="va">$USER</span>/.fastai <span class="va">$HOME</span>/</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a shortcut for the project on the home folder</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="va">$PROJECT_training2324</span> ~/course</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a folder for myself</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> course/<span class="va">$USER</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Enter course folder and</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/course/<span class="va">$USER</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Where am I?</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># We well need those later</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/course/<span class="va">$USER</span>/.cache</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/course/<span class="va">$USER</span>/.config</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/course/<span class="va">$USER</span>/.fastai</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> ~/course/<span class="va">$USER</span>/.cache <span class="va">$HOME</span>/</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> ~/course/<span class="va">$USER</span>/.config <span class="va">$HOME</span>/</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> ~/course/<span class="va">$USER</span>/.fastai <span class="va">$HOME</span>/</span></code></pre></div>
 </section>
 <section id="working-with-the-supercomputers-software"
 class="slide level2">
@@ -852,23 +830,23 @@ documentation</a></li>
 <h2>Software</h2>
 <h4 id="tool-for-finding-software-module-spider">Tool for finding
 software: <code>module spider</code></h4>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1$</span> module spider PyTorch</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PyTorch:</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Description:</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">Tensors</span> and Dynamic neural networks in Python with strong GPU acceleration. </span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>      <span class="ex">PyTorch</span> is a deep learning framework that puts Python first.</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Versions:</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.7.0-Python-3.8.5</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.8.1-Python-3.8.5</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.11-CUDA-11.5</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.12.0-CUDA-11.7</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Other</span> possible modules matches:</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch-Geometric</span>  PyTorch-Lightning</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">strube1$</span> module spider PyTorch</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PyTorch:</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Description:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      <span class="ex">Tensors</span> and Dynamic neural networks in Python with strong GPU acceleration. </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      <span class="ex">PyTorch</span> is a deep learning framework that puts Python first.</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Versions:</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.7.0-Python-3.8.5</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.8.1-Python-3.8.5</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.11-CUDA-11.5</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch/1.12.0-CUDA-11.7</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>     <span class="ex">Other</span> possible modules matches:</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>        <span class="ex">PyTorch-Geometric</span>  PyTorch-Lightning</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span></code></pre></div>
 </section>
 <section id="what-do-we-have" class="slide level2">
 <h2>What do we have?</h2>
@@ -904,32 +882,32 @@ such software?</h4>
 </section>
 <section id="example-pytorch-2" class="slide level2">
 <h2>Example: PyTorch</h2>
-<p>(make sure you are still connected to JUSUF)</p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-bash:</span> python: command not found</span></code></pre></div>
+<p>(make sure you are still connected to Juwels BOOSTER)</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-bash:</span> python: command not found</span></code></pre></div>
 <p>Oh noes! 🙈</p>
 <p>Let’s bring Python together with PyTorch!</p>
 </section>
 <section id="example-pytorch-3" class="slide level2">
 <h2>Example: PyTorch</h2>
 <p>Copy and paste these lines</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This command fails, as we have no proper python</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># So, we load the correct modules...</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load Stages/2023</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load GCC OpenMPI Python PyTorch</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># And we run a small test: import pytorch and ask its version</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">&quot;import torch ; print(torch.__version__)&quot;</span> </span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This command fails, as we have no proper python</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># So, we load the correct modules...</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load Stages/2023</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> load GCC OpenMPI Python PyTorch</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># And we run a small test: import pytorch and ask its version</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">&quot;import torch ; print(torch.__version__)&quot;</span> </span></code></pre></div>
 <p>Should look like this:</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-bash:</span> python: command not found</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> module load Stages/2023</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> module load GCC OpenMPI Python PyTorch</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python <span class="at">-c</span> <span class="st">&quot;import torch ; print(torch.__version__)&quot;</span> </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="ex">1.12.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-bash:</span> python: command not found</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> module load Stages/2023</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> module load GCC OpenMPI Python PyTorch</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python <span class="at">-c</span> <span class="st">&quot;import torch ; print(torch.__version__)&quot;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="ex">1.12.0</span></span></code></pre></div>
 </section>
 <section id="python-modules" class="slide level2">
 <h2>Python Modules</h2>
@@ -937,22 +915,22 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href=
 id="some-of-the-python-softwares-are-part-of-python-itself-or-of-other-softwares.-use-module-key">Some
 of the python softwares are part of Python itself, or of other
 softwares. Use “<code>module key</code>”</h4>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> key toml</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> following modules match your search criteria: <span class="st">&quot;toml&quot;</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Jupyter:</span> Jupyter/2020.2.5-Python-3.8.5, Jupyter/2021.3.1-Python-3.8.5, Jupyter/2021.3.2-Python-3.8.5, Jupyter/2022.3.3, Jupyter/2022.3.4</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Project</span> Jupyter exists to develop open-source software, open-standards, and services for interactive computing across dozens of programming languages.</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PyQuil:</span> PyQuil/3.0.1</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">PyQuil</span> is a library for generating and executing Quil programs on the Rigetti Forest platform.</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Python:</span> Python/3.8.5, Python/3.9.6, Python/3.10.4</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Python</span> is a programming language that lets you work more quickly and integrate your systems more effectively.</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> key toml</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> following modules match your search criteria: <span class="st">&quot;toml&quot;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Jupyter:</span> Jupyter/2020.2.5-Python-3.8.5, Jupyter/2021.3.1-Python-3.8.5, Jupyter/2021.3.2-Python-3.8.5, Jupyter/2022.3.3, Jupyter/2022.3.4</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Project</span> Jupyter exists to develop open-source software, open-standards, and services for interactive computing across dozens of programming languages.</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="ex">PyQuil:</span> PyQuil/3.0.1</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="ex">PyQuil</span> is a library for generating and executing Quil programs on the Rigetti Forest platform.</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="ex">Python:</span> Python/3.8.5, Python/3.9.6, Python/3.10.4</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="ex">Python</span> is a programming language that lets you work more quickly and integrate your systems more effectively.</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="ex">------------------------------------------------------------------------------------</span></span></code></pre></div>
 </section>
 <section id="vscode-2" class="slide level2">
 <h2>VSCode</h2>
@@ -976,9 +954,9 @@ menu View-&gt;Terminal</li>
 <ul>
 <li class="fragment"><p>From the ssh connection, navigate to your
 “course” folder and to the name you created earlier.</p></li>
-<li class="fragment"><div class="sourceCode" id="cb15"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div></li>
 <li class="fragment"><p>This is out working directory. We do everything
 here.</p></li>
 </ul>
@@ -986,22 +964,22 @@ here.</p></li>
 <section class="slide level2">
 
 <h3 id="demo-code">Demo code</h3>
-<h4 id="create-a-new-file-matrix.py-on-vscode-on-jusuf">Create a new
-file “<code>matrix.py</code>” on VSCode on Jusuf</h4>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> matrix.py</span></code></pre></div>
+<h4 id="create-a-new-file-matrix.py-on-vscode-on-juwels-booster">Create
+a new file “<code>matrix.py</code>” on VSCode on Juwels BOOSTER</h4>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> matrix.py</span></code></pre></div>
 <p>Paste this into the file:</p>
-<div class="sourceCode" id="cb17"><pre
-class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="im">import</span> torch</span>
-<span id="cb17-2"><a href="#cb17-2"></a></span>
-<span id="cb17-3"><a href="#cb17-3"></a>matrix1 <span class="op">=</span> torch.randn(<span class="dv">3</span>,<span class="dv">3</span>)</span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="bu">print</span>(<span class="st">&quot;The first matrix is&quot;</span>, matrix1)</span>
-<span id="cb17-5"><a href="#cb17-5"></a></span>
-<span id="cb17-6"><a href="#cb17-6"></a>matrix2 <span class="op">=</span> torch.randn(<span class="dv">3</span>,<span class="dv">3</span>)</span>
-<span id="cb17-7"><a href="#cb17-7"></a><span class="bu">print</span>(<span class="st">&quot;The second matrix is&quot;</span>, matrix2)</span>
-<span id="cb17-8"><a href="#cb17-8"></a></span>
-<span id="cb17-9"><a href="#cb17-9"></a>result <span class="op">=</span> torch.matmul(matrix1,matrix2)</span>
-<span id="cb17-10"><a href="#cb17-10"></a><span class="bu">print</span>(<span class="st">&quot;The result is:</span><span class="ch">\n</span><span class="st">&quot;</span>, result)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode numberSource python number-lines"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="im">import</span> torch</span>
+<span id="cb16-2"><a href="#cb16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3"></a>matrix1 <span class="op">=</span> torch.randn(<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="bu">print</span>(<span class="st">&quot;The first matrix is&quot;</span>, matrix1)</span>
+<span id="cb16-5"><a href="#cb16-5"></a></span>
+<span id="cb16-6"><a href="#cb16-6"></a>matrix2 <span class="op">=</span> torch.randn(<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="bu">print</span>(<span class="st">&quot;The second matrix is&quot;</span>, matrix2)</span>
+<span id="cb16-8"><a href="#cb16-8"></a></span>
+<span id="cb16-9"><a href="#cb16-9"></a>result <span class="op">=</span> torch.matmul(matrix1,matrix2)</span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="bu">print</span>(<span class="st">&quot;The result is:</span><span class="ch">\n</span><span class="st">&quot;</span>, result)</span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -1041,31 +1019,31 @@ how much of it, for how long, and what to do with the results</li>
 <h3 id="slurm-submission-file-example">Slurm submission file
 example</h3>
 <p><code>code juwelsbooster-matrix.sbatch</code></p>
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="co">#SBATCH --account=training2324           # Who pays?</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="co">#SBATCH --nodes=1                        # How many compute nodes</span></span>
-<span id="cb19-4"><a href="#cb19-4"></a><span class="co">#SBATCH --job-name=matrix-multiplication</span></span>
-<span id="cb19-5"><a href="#cb19-5"></a><span class="co">#SBATCH --ntasks-per-node=1              # How many mpi processes/node</span></span>
-<span id="cb19-6"><a href="#cb19-6"></a><span class="co">#SBATCH --cpus-per-task=1                # How many cpus per mpi proc</span></span>
-<span id="cb19-7"><a href="#cb19-7"></a><span class="co">#SBATCH --output=output.%j        # Where to write results</span></span>
-<span id="cb19-8"><a href="#cb19-8"></a><span class="co">#SBATCH --error=error.%j</span></span>
-<span id="cb19-9"><a href="#cb19-9"></a><span class="co">#SBATCH --time=00:01:00          # For how long can it run?</span></span>
-<span id="cb19-10"><a href="#cb19-10"></a><span class="co">#SBATCH --partition=booster         # Machine partition</span></span>
-<span id="cb19-11"><a href="#cb19-11"></a><span class="co">#SBATCH --reservation=ai_sc_day1 # For today only</span></span>
-<span id="cb19-12"><a href="#cb19-12"></a></span>
-<span id="cb19-13"><a href="#cb19-13"></a><span class="ex">module</span> load Stages/2023</span>
-<span id="cb19-14"><a href="#cb19-14"></a><span class="ex">module</span> load GCC OpenMPI PyTorch  <span class="co"># Load the correct modules on the compute node(s)</span></span>
-<span id="cb19-15"><a href="#cb19-15"></a></span>
-<span id="cb19-16"><a href="#cb19-16"></a><span class="ex">srun</span> python matrix.py            <span class="co"># srun tells the supercomputer how to run it</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co">#SBATCH --account=training2324           # Who pays?</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="co">#SBATCH --nodes=1                        # How many compute nodes</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="co">#SBATCH --job-name=matrix-multiplication</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="co">#SBATCH --ntasks-per-node=1              # How many mpi processes/node</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="co">#SBATCH --cpus-per-task=1                # How many cpus per mpi proc</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="co">#SBATCH --output=output.%j        # Where to write results</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="co">#SBATCH --error=error.%j</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a><span class="co">#SBATCH --time=00:01:00          # For how long can it run?</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a><span class="co">#SBATCH --partition=booster         # Machine partition</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a><span class="co">#SBATCH --reservation=ai_sc_day1 # For today only</span></span>
+<span id="cb18-12"><a href="#cb18-12"></a></span>
+<span id="cb18-13"><a href="#cb18-13"></a><span class="ex">module</span> load Stages/2023</span>
+<span id="cb18-14"><a href="#cb18-14"></a><span class="ex">module</span> load GCC OpenMPI PyTorch  <span class="co"># Load the correct modules on the compute node(s)</span></span>
+<span id="cb18-15"><a href="#cb18-15"></a></span>
+<span id="cb18-16"><a href="#cb18-16"></a><span class="ex">srun</span> python matrix.py            <span class="co"># srun tells the supercomputer how to run it</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
 <h3 id="submitting-a-job-sbatch">Submitting a job: SBATCH</h3>
-<div class="sourceCode" id="cb20"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> juwelsbooster-matrix.sbatch</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Submitted</span> batch job 412169</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> juwelsbooster-matrix.sbatch</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Submitted</span> batch job 412169</span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -1076,10 +1054,10 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href=
 
 <h3 id="are-we-there-yet-1">Are we there yet? 🐴</h3>
 <p><code>squeue --me</code></p>
-<div class="sourceCode" id="cb21"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">JOBID</span>  PARTITION    NAME      USER    ST       TIME  NODES NODELIST<span class="er">(</span><span class="ex">REASON</span><span class="kw">)</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>   <span class="ex">412169</span> gpus         matrix-m  strube1 CF       0:02      1 jsfc013</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">squeue</span> <span class="at">--me</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>   <span class="ex">JOBID</span>  PARTITION    NAME      USER    ST       TIME  NODES NODELIST<span class="er">(</span><span class="ex">REASON</span><span class="kw">)</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>   <span class="ex">412169</span> gpus         matrix-m  strube1 CF       0:02      1 jsfc013</span></code></pre></div>
 <h4 id="st-is-status">ST is status:</h4>
 <ul>
 <li class="fragment">PD (pending),</li>
@@ -1096,8 +1074,6 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href=
 <li class="fragment">Some partitions have reservations, which means that
 only certain users can use them at certain times.</li>
 <li class="fragment">For this course, we have:</li>
-<li class="fragment">Jusuf: <code>tr2321-20230627-gpu</code> and
-<code>tr2321-20230628-gpu</code></li>
 <li class="fragment">Juwels Booster: <code>ai_sc_day1</code> and
 <code>ai_sc_day2</code></li>
 </ul>
@@ -1105,8 +1081,8 @@ only certain users can use them at certain times.</li>
 <section class="slide level2">
 
 <h3 id="job-is-wrong-need-to-cancel">Job is wrong, need to cancel</h3>
-<div class="sourceCode" id="cb22"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="op">&lt;</span>JOBID<span class="op">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">scancel</span> <span class="op">&lt;</span>JOBID<span class="op">&gt;</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -1115,10 +1091,10 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href=
 id="by-now-you-should-have-output-and-error-log-files-on-your-directory.-check-them">By
 now you should have output and error log files on your directory. Check
 them!</h4>
-<div class="sourceCode" id="cb23"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Notice that this number is the job id. It&#39;s different for every job</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> output.412169 </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> error.412169 </span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Notice that this number is the job id. It&#39;s different for every job</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> output.412169 </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> error.412169 </span></code></pre></div>
 <p>Or simply open it on VSCode!</p>
 </section>
 <section id="extra-software-modules-and-kernels" class="slide level2">
@@ -1128,9 +1104,9 @@ software from <code>pip</code>….</h4>
 <p><a
 href="https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template">Venv/Kernel
 template</a></p>
-<div class="sourceCode" id="cb24"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> sc_venv_template</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> sc_venv_template</span></code></pre></div>
 </section>
 <section id="example-lets-install-some-software" class="slide level2">
 <h2>Example: Let’s install some software!</h2>
@@ -1148,11 +1124,11 @@ some software!</h3>
 <ul>
 <li class="fragment"><p>Edit the file requirements.txt</p></li>
 <li class="fragment"><p>Add these lines at the end:</p></li>
-<li class="fragment"><div class="sourceCode" id="cb25"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fastai</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">lightning-flash[image]</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="ex">gym</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="ex">wandb</span></span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fastai</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">lightning-flash[image]</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="ex">gym</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="ex">wandb</span></span></code></pre></div></li>
 <li class="fragment"><p>Run on the terminal:
 <code>./setup.sh</code></p></li>
 </ul>
@@ -1163,21 +1139,21 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href=
 the virtual environment</h3>
 <ul>
 <li class="fragment"><code>source ./activate.sh</code></li>
-<li class="fragment"><div class="sourceCode" id="cb26"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>source .<span class="op">/</span>activate.sh </span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>The activation script must be sourced, otherwise the virtual environment will <span class="kw">not</span> work.</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>Setting <span class="bu">vars</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>The following modules were <span class="kw">not</span> unloaded:</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>(Use <span class="st">&quot;module --force purge&quot;</span> to unload <span class="bu">all</span>):</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>) Stages<span class="op">/</span><span class="dv">2023</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>The following have been reloaded <span class="cf">with</span> a version change:</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>) HDF5<span class="op">/</span><span class="fl">1.12.2</span><span class="op">-</span>serial <span class="op">=&gt;</span> HDF5<span class="op">/</span><span class="fl">1.12.2</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>python</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>Python <span class="fl">3.10.4</span> (main, Oct  <span class="dv">4</span> <span class="dv">2022</span>, <span class="dv">0</span><span class="er">8</span>:<span class="dv">48</span>:<span class="dv">14</span>) [GCC <span class="fl">11.3.0</span>] on linux</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>Type <span class="st">&quot;help&quot;</span>, <span class="st">&quot;copyright&quot;</span>, <span class="st">&quot;credits&quot;</span> <span class="kw">or</span> <span class="st">&quot;license&quot;</span> <span class="cf">for</span> more information.</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> fastai</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> fastai.__version__</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;2.7.12&#39;</span></span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb25"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>source .<span class="op">/</span>activate.sh </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>The activation script must be sourced, otherwise the virtual environment will <span class="kw">not</span> work.</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>Setting <span class="bu">vars</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>The following modules were <span class="kw">not</span> unloaded:</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>(Use <span class="st">&quot;module --force purge&quot;</span> to unload <span class="bu">all</span>):</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>) Stages<span class="op">/</span><span class="dv">2023</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>The following have been reloaded <span class="cf">with</span> a version change:</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>) HDF5<span class="op">/</span><span class="fl">1.12.2</span><span class="op">-</span>serial <span class="op">=&gt;</span> HDF5<span class="op">/</span><span class="fl">1.12.2</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>python</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>Python <span class="fl">3.10.4</span> (main, Oct  <span class="dv">4</span> <span class="dv">2022</span>, <span class="dv">0</span><span class="er">8</span>:<span class="dv">48</span>:<span class="dv">14</span>) [GCC <span class="fl">11.3.0</span>] on linux</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>Type <span class="st">&quot;help&quot;</span>, <span class="st">&quot;copyright&quot;</span>, <span class="st">&quot;credits&quot;</span> <span class="kw">or</span> <span class="st">&quot;license&quot;</span> <span class="cf">for</span> more information.</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> fastai</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> fastai.__version__</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co">&#39;2.7.12&#39;</span></span></code></pre></div></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -1187,26 +1163,26 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a h
 <li class="fragment">This is a minimal demo, to show some quirks of the
 supercomputer</li>
 <li class="fragment">Save it as cats.py</li>
-<li class="fragment"><div class="sourceCode" id="cb27"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.callback.tensorboard <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Downloading dataset...&quot;</span>)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> untar_data(URLs.PETS)<span class="op">/</span><span class="st">&#39;images&#39;</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Finished downloading dataset&quot;</span>)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_cat(x): <span class="cf">return</span> x[<span class="dv">0</span>].isupper()</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the dataloaders and resize the images</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> ImageDataLoaders.from_name_func(</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    path, get_image_files(path), valid_pct<span class="op">=</span><span class="fl">0.2</span>, seed<span class="op">=</span><span class="dv">42</span>,</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    label_func<span class="op">=</span>is_cat, item_tfms<span class="op">=</span>Resize(<span class="dv">224</span>))</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;On the login node, this will download resnet34&quot;</span>)</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(dls, resnet34, metrics<span class="op">=</span>accuracy)</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Trains the model for 3 epochs with this dataset</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>learn.unfreeze()</span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">3</span>, cbs<span class="op">=</span>TensorBoardCallback(<span class="st">&#39;runs&#39;</span>, trace_model<span class="op">=</span><span class="va">True</span>))</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb26"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.callback.tensorboard <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Downloading dataset...&quot;</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> untar_data(URLs.PETS)<span class="op">/</span><span class="st">&#39;images&#39;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Finished downloading dataset&quot;</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_cat(x): <span class="cf">return</span> x[<span class="dv">0</span>].isupper()</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the dataloaders and resize the images</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> ImageDataLoaders.from_name_func(</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    path, get_image_files(path), valid_pct<span class="op">=</span><span class="fl">0.2</span>, seed<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    label_func<span class="op">=</span>is_cat, item_tfms<span class="op">=</span>Resize(<span class="dv">224</span>))</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;On the login node, this will download resnet34&quot;</span>)</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(dls, resnet34, metrics<span class="op">=</span>accuracy)</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Trains the model for 3 epochs with this dataset</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>learn.unfreeze()</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">3</span>, cbs<span class="op">=</span>TensorBoardCallback(<span class="st">&#39;runs&#39;</span>, trace_model<span class="op">=</span><span class="va">True</span>))</span></code></pre></div></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -1215,25 +1191,25 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a h
 classifier</h3>
 <h4 id="save-this-as-fastai.sbatch">Save this as
 <code>fastai.sbatch</code></h4>
-<div class="sourceCode" id="cb28"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2324</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-user=MYUSER@fz-juelich.de</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-type=ALL</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=1</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=matrix-multiplication</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=1</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=1</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=output.%j</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=error.%j</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=00:10:00</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=booster</span></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --reservation=ai_sc_day1 # For today only</span></span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /p/home/jusers/<span class="va">$USER</span>/juwels/course/<span class="va">$USER</span></span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh <span class="co"># Now we finally use the fastai module</span></span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> python cats.py</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2324</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-user=MYUSER@fz-juelich.de</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-type=ALL</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=1</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=matrix-multiplication</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=1</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=1</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=output.%j</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=error.%j</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=00:10:00</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=booster</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --reservation=ai_sc_day1 # For today only</span></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /p/home/jusers/<span class="va">$USER</span>/juwels/course/<span class="va">$USER</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh <span class="co"># Now we finally use the fastai module</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> python cats.py</span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -1251,17 +1227,17 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href=
 
 <h3 id="probably-not-much-happening">Probably not much happening…</h3>
 <ul>
+<li class="fragment"><div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat output.7948496 </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> activation script must be sourced, otherwise the virtual environment will not work.</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Setting</span> vars</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Downloading</span> dataset...</span></code></pre></div></li>
 <li class="fragment"><div class="sourceCode" id="cb29"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat output.7948496 </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> activation script must be sourced, otherwise the virtual environment will not work.</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Setting</span> vars</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Downloading</span> dataset...</span></code></pre></div></li>
-<li class="fragment"><div class="sourceCode" id="cb30"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat err.7948496 </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> following modules were not unloaded:</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">Use</span> <span class="st">&quot;module --force purge&quot;</span> to unload all<span class="kw">)</span><span class="bu">:</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="ex">1</span><span class="er">)</span> <span class="ex">Stages/2023</span></span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat err.7948496 </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> following modules were not unloaded:</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="kw">(</span><span class="ex">Use</span> <span class="st">&quot;module --force purge&quot;</span> to unload all<span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="ex">1</span><span class="er">)</span> <span class="ex">Stages/2023</span></span></code></pre></div></li>
 </ul>
 </section>
 <section id="section" class="slide level2">
@@ -1276,13 +1252,13 @@ to give up</li>
 <li class="fragment">If you run it longer, you will get the actual
 error</li>
 <li class="fragment">Long error message which ends with</li>
-<li class="fragment"><div class="sourceCode" id="cb31"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>  File <span class="st">&quot;/p/software/jusuf/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py&quot;</span>, line <span class="dv">1391</span>, <span class="kw">in</span> https_open</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.do_open(http.client.HTTPSConnection, req,</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  File <span class="st">&quot;/p/software/jusuf/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py&quot;</span>, line <span class="dv">1351</span>, <span class="kw">in</span> do_open</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> URLError(err)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>urllib.error.URLError: <span class="op">&lt;</span>urlopen error [Errno <span class="dv">111</span>] Connection refused<span class="op">&gt;</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>srun: error: jsfc013: task <span class="dv">0</span>: Exited <span class="cf">with</span> exit code <span class="dv">1</span></span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb30"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>  File <span class="st">&quot;/p/software/juwelsbooster/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py&quot;</span>, line <span class="dv">1391</span>, <span class="kw">in</span> https_open</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.do_open(http.client.HTTPSConnection, req,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  File <span class="st">&quot;/p/software/juwelsbooster/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py&quot;</span>, line <span class="dv">1351</span>, <span class="kw">in</span> do_open</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> URLError(err)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>urllib.error.URLError: <span class="op">&lt;</span>urlopen error [Errno <span class="dv">111</span>] Connection refused<span class="op">&gt;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>srun: error: jsfc013: task <span class="dv">0</span>: Exited <span class="cf">with</span> exit code <span class="dv">1</span></span></code></pre></div></li>
 </ul>
 </section>
 <section id="section-1" class="slide level2">
@@ -1293,12 +1269,12 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a h
 <h3 id="what-is-it-doing">What is it doing?</h3>
 <ul>
 <li class="fragment">This downloads the dataset:</li>
-<li class="fragment"><div class="sourceCode" id="cb32"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> untar_data(URLs.PETS)<span class="op">/</span><span class="st">&#39;images&#39;</span></span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb31"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> untar_data(URLs.PETS)<span class="op">/</span><span class="st">&#39;images&#39;</span></span></code></pre></div></li>
 <li class="fragment">And this one downloads the pre-trained
 weights:</li>
-<li class="fragment"><div class="sourceCode" id="cb33"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(dls, resnet34, metrics<span class="op">=</span>error_rate)</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb32"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(dls, resnet34, metrics<span class="op">=</span>error_rate)</span></code></pre></div></li>
 </ul>
 </section>
 <section id="remember-remember" class="slide level2">
@@ -1321,61 +1297,61 @@ class="slide level2">
 <h2>On the login node:</h2>
 <ul>
 <li class="fragment">Comment out the line which does AI training:</li>
-<li class="fragment"><div class="sourceCode" id="cb34"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># learn.fit_one_cycle(3, cbs=TensorBoardCallback(&#39;runs&#39;, trace_model=True))</span></span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb33"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># learn.fit_one_cycle(3, cbs=TensorBoardCallback(&#39;runs&#39;, trace_model=True))</span></span></code></pre></div></li>
 <li class="fragment">Call our code on the login node!</li>
-<li class="fragment"><div class="sourceCode" id="cb35"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh <span class="co"># So that we have fast.ai library</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> cats.py</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb34"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh <span class="co"># So that we have fast.ai library</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> cats.py</span></code></pre></div></li>
 </ul>
 </section>
 <section id="run-the-downloader-on-the-login-node" class="slide level2">
 <h2>Run the downloader on the login node</h2>
-<div class="sourceCode" id="cb36"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> source sc_venv_template/activate.sh</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python fastai-demo.py </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Downloading</span> dataset...</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">|</span><span class="ex">████████-------------------------------</span><span class="kw">|</span> <span class="ex">23.50%</span> [190750720/811706944 00:08<span class="op">&lt;</span>00:26]</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a> <span class="ex">Downloading:</span> <span class="st">&quot;https://download.pytorch.org/models/resnet34-b627a593.pth&quot;</span> to /p/project/ccstao/cstao05/.cache/torch/hub/checkpoints/resnet34-b627a593.pth</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="ex">100%</span><span class="kw">|</span><span class="ex">█████████████████████████████████████</span><span class="kw">|</span> <span class="ex">83.3M/83.3M</span> [00:00<span class="op">&lt;</span>00:00, 266MB/s]</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> source sc_venv_template/activate.sh</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> python fastai-demo.py </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Downloading</span> dataset...</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">|</span><span class="ex">████████-------------------------------</span><span class="kw">|</span> <span class="ex">23.50%</span> [190750720/811706944 00:08<span class="op">&lt;</span>00:26]</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a> <span class="ex">Downloading:</span> <span class="st">&quot;https://download.pytorch.org/models/resnet34-b627a593.pth&quot;</span> to /p/project/ccstao/cstao05/.cache/torch/hub/checkpoints/resnet34-b627a593.pth</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="ex">100%</span><span class="kw">|</span><span class="ex">█████████████████████████████████████</span><span class="kw">|</span> <span class="ex">83.3M/83.3M</span> [00:00<span class="op">&lt;</span>00:00, 266MB/s]</span></code></pre></div>
 </section>
 <section id="run-it-again-on-the-compute-nodes" class="slide level2">
 <h2>Run it again on the compute nodes!</h2>
 <ul>
 <li class="fragment">Un-comment back the line that does training:</li>
-<li class="fragment"><div class="sourceCode" id="cb37"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">learn.fit_one_cycle</span><span class="er">(</span><span class="ex">3,</span> cbs=TensorBoardCallback<span class="er">(</span><span class="st">&#39;runs&#39;</span><span class="ex">,</span> trace_model=True<span class="kw">))</span></span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb36"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">learn.fit_one_cycle</span><span class="er">(</span><span class="ex">3,</span> cbs=TensorBoardCallback<span class="er">(</span><span class="st">&#39;runs&#39;</span><span class="ex">,</span> trace_model=True<span class="kw">))</span></span></code></pre></div></li>
 <li class="fragment">Submit the job!</li>
-<li class="fragment"><div class="sourceCode" id="cb38"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> fastai.sbatch</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb37"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> fastai.sbatch</span></code></pre></div></li>
 </ul>
 </section>
 <section id="masoquistically-waiting-for-the-job-to-run"
 class="slide level2">
 <h2>Masoquistically waiting for the job to run?</h2>
-<div class="sourceCode" id="cb39"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">watch</span> squeue <span class="at">--me</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">watch</span> squeue <span class="at">--me</span></span></code></pre></div>
 <p>(To exit, type CTRL-C)</p>
 </section>
 <section id="check-output-files" class="slide level2">
 <h2>Check output files</h2>
 <ul>
 <li class="fragment">You can see them within VSCode</li>
-<li class="fragment"><div class="sourceCode" id="cb40"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> activation script must be sourced, otherwise the virtual environment will not work.</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Setting</span> vars</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Downloading</span> dataset...</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Finished</span> downloading dataset</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="ex">epoch</span>     train_loss  valid_loss  error_rate  time    </span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">-----------------------------------</span><span class="kw">|</span> <span class="ex">0.00%</span> [0/92 00:00<span class="op">&lt;</span><span class="pp">?</span>]</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">-----------------------------------</span><span class="kw">|</span> <span class="ex">2.17%</span> [2/92 00:14<span class="op">&lt;</span>10:35 1.7452]</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">█----------------------------------</span><span class="kw">|</span> <span class="ex">3.26%</span> [3/92 00:14<span class="op">&lt;</span>07:01 1.6413]</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">██---------------------------------</span><span class="kw">|</span> <span class="ex">5.43%</span> [5/92 00:15<span class="op">&lt;</span>04:36 1.6057]</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="ex">....</span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 :</span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="ex">epoch</span>     train_loss  valid_loss  error_rate  time    </span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span>         0.049855    0.021369    0.007442    00:42     </span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb39"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> activation script must be sourced, otherwise the virtual environment will not work.</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Setting</span> vars</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Downloading</span> dataset...</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Finished</span> downloading dataset</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="ex">epoch</span>     train_loss  valid_loss  error_rate  time    </span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">-----------------------------------</span><span class="kw">|</span> <span class="ex">0.00%</span> [0/92 00:00<span class="op">&lt;</span><span class="pp">?</span>]</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">-----------------------------------</span><span class="kw">|</span> <span class="ex">2.17%</span> [2/92 00:14<span class="op">&lt;</span>10:35 1.7452]</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">█----------------------------------</span><span class="kw">|</span> <span class="ex">3.26%</span> [3/92 00:14<span class="op">&lt;</span>07:01 1.6413]</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 : <span class="kw">|</span><span class="ex">██---------------------------------</span><span class="kw">|</span> <span class="ex">5.43%</span> [5/92 00:15<span class="op">&lt;</span>04:36 1.6057]</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="ex">....</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="ex">Epoch</span> 1/1 :</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="ex">epoch</span>     train_loss  valid_loss  error_rate  time    </span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="ex">0</span>         0.049855    0.021369    0.007442    00:42     </span></code></pre></div></li>
 <li class="fragment">🎉</li>
 <li class="fragment">🥳</li>
 </ul>
@@ -1389,8 +1365,8 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href=
 Tensorboard</li>
 <li class="fragment">And we already have the code for it on our
 example!</li>
-<li class="fragment"><div class="sourceCode" id="cb41"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">3</span>, cbs<span class="op">=</span>TensorBoardCallback(<span class="st">&#39;runs&#39;</span>, trace_model<span class="op">=</span><span class="va">True</span>))</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb40"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">3</span>, cbs<span class="op">=</span>TensorBoardCallback(<span class="st">&#39;runs&#39;</span>, trace_model<span class="op">=</span><span class="va">True</span>))</span></code></pre></div></li>
 </ul>
 </section>
 <section id="example-tensorboard" class="slide level2">
@@ -1426,13 +1402,13 @@ supercomputer’s port 3000 as port 1234 locally</figcaption>
 <ul>
 <li class="fragment">On local computer, open a new terminal and
 paste:</li>
-<li class="fragment"><div class="sourceCode" id="cb42"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-L</span> :1234:localhost:9999 booster</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb41"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-L</span> :1234:localhost:9999 booster</span></code></pre></div></li>
 <li class="fragment">As soon as you connect, paste this:</li>
-<li class="fragment"><div class="sourceCode" id="cb43"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tensorboard</span> <span class="at">--logdir</span><span class="op">=</span>runs  <span class="at">--port</span><span class="op">=</span>9999 serve</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb42"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tensorboard</span> <span class="at">--logdir</span><span class="op">=</span>runs  <span class="at">--port</span><span class="op">=</span>9999 serve</span></code></pre></div></li>
 <li class="fragment">On the browser: <a
 href="http://localhost:1234">http://localhost:1234</a></li>
 </ul>
@@ -1494,13 +1470,7 @@ Host *.booster
         User [ADD YOUR USERNAME HERE]
         StrictHostKeyChecking no
         IdentityFile ~/.ssh/id_ed25519-JSC
-        ProxyJump booster
-Host *.jusuf
-        User [ADD YOUR USERNAME HERE]
-        StrictHostKeyChecking no
-        IdentityFile ~/.ssh/id_ed25519-JSC
-        ProxyJump jusuf
-</code></pre>
+        ProxyJump booster</code></pre>
 </section>
 <section id="proxy-jump-connecting-to-a-node" class="slide level2">
 <h2>Proxy Jump: Connecting to a node</h2>
@@ -1509,27 +1479,27 @@ Host *.jusuf
 1234</li>
 </ul>
 <p>On the supercomputer:</p>
-<div class="sourceCode" id="cb45"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="dt">\</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="dt">\</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">--partition</span><span class="op">=</span>gpus <span class="dt">\</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2324 <span class="dt">\</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="dt">\</span></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">--pty</span> /bin/bash <span class="at">-i</span></span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> hostname <span class="co"># This is running on a compute node of the supercomputer</span></span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="ex">jwb0002</span></span>
-<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> cd <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
-<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> source sc_venv_template/activate.sh</span>
-<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> tensorboard <span class="at">--logdir</span><span class="op">=</span>runs  <span class="at">--port</span><span class="op">=</span>9999 serve</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="dt">\</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="dt">\</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">--partition</span><span class="op">=</span>gpus <span class="dt">\</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2324 <span class="dt">\</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="dt">\</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">--pty</span> /bin/bash <span class="at">-i</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> hostname <span class="co"># This is running on a compute node of the supercomputer</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="ex">jwb0002</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> cd <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> source sc_venv_template/activate.sh</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> tensorboard <span class="at">--logdir</span><span class="op">=</span>runs  <span class="at">--port</span><span class="op">=</span>9999 serve</span></code></pre></div>
 </section>
 <section id="proxy-jump-1" class="slide level2">
 <h2>Proxy Jump</h2>
 <p>On your machine:</p>
 <ul>
-<li class="fragment"><div class="sourceCode" id="cb46"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-L</span> :3334:localhost:9999 jwb002i.booster</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb45"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-L</span> :3334:localhost:9999 jwb002i.booster</span></code></pre></div></li>
 <li class="fragment"><p>Mind the <code>i</code> letter I added at the
 end of the hostname</p></li>
 <li class="fragment"><p>Now you can access the service on your local
