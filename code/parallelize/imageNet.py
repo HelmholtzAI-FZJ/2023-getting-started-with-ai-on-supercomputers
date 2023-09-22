@@ -1,5 +1,6 @@
 import os 
 import pickle 
+import time
 
 import click
 from PIL import Image
@@ -8,7 +9,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 
 class ImageNet(Dataset):
-    
+
     def __init__(self, root, transform=None):
         self.root = root
 
@@ -42,11 +43,15 @@ def main(data_root):
         ])
 
     image_datasets = ImageNet(data_root, transform) 
-    dataloaders = DataLoader(image_datasets, batch_size=1024, num_workers=int(os.getenv('SLURM_CPUS_PER_TASK')))
+    dataloaders = DataLoader(image_datasets, batch_size=128, num_workers=int(os.getenv('SLURM_CPUS_PER_TASK')), pin_memory=True)
 
+    start_time = time.time()
     for _ in dataloaders:
         pass
-
+    end_time = time.time()
+    
+    td = (end_time - start_time)
+    print(time.strftime("%H:%M:%S", time.gmtime(td)))
 
 if __name__ == "__main__":
     main()
