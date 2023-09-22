@@ -5,7 +5,130 @@ subtitle: Parallelize Training
 date: September 28, 2023
 ---
 
-## PyTroch Lightning Data Module 
+## We need to download some code
+
+```bash
+cd $HOME/course/$USER
+git clone git@github.com:HelmholtzAI-FZJ/2023-getting-started-with-ai-on-supercomputers.git
+
+```
+
+---
+
+## The ImageNet dataset
+#### Large Scale Visual Recognition Challenge (ILSVRC)
+- An image dataset organized according to the WordNet hierarchy. 
+- Evaluates algorithms for object detection and image classification at large scale. 
+- It has 1000 classes, that comprises 1.2 million images for training, and 5,000 images for the validation set.
+
+![](images/imagenet_banner.jpeg)
+
+---
+
+## The ImageNet dataset
+
+```bash
+ILSVRC
+|-- Data/
+    `-- CLS-LOC
+        |-- imagenet_labels.pkl
+        |-- imagenet_val.pkl
+        |-- test
+        |-- train
+        |   |-- n01440764
+        |   |   |-- n01440764_10026.JPEG
+        |   |   |-- n01440764_10027.JPEG
+        |   |   |-- n01440764_10029.JPEG
+        |   |-- n01695060
+        |   |   |-- n01695060_10009.JPEG
+        |   |   |-- n01695060_10022.JPEG
+        |   |   |-- n01695060_10028.JPEG
+        |   |   |-- ...
+```
+---
+
+## The ImageNet dataset
+
+```python
+data = {}
+syn_to_class = {}
+
+with open(os.path.join(root, "imagenet_class_index.json"), "rb") as f:
+    json_file = json.load(f)
+    for class_id, v in json_file.items():
+        syn_to_class[v[0]] = int(class_id)
+
+samples_dir = os.path.join(root, "ILSVRC/Data/CLS-LOC", split)
+
+for entry in os.listdir(samples_dir):
+    if split == "train":
+        syn_id = entry
+        target = syn_to_class[syn_id]
+        syn_folder = os.path.join(samples_dir, syn_id)
+        for sample in os.listdir(syn_folder):
+            sample_path = os.path.join("ILSVRC/Data/CLS-LOC", split, syn_id, sample)
+            data[sample_path] = target
+
+with open("/p/scratch/training2324/data/train_data.pkl", "wb") as f:
+    pickle.dump(data, f)
+```
+
+---
+
+## ImageNet class
+
+```python
+root = "/p/scratch/training2324/data/"
+
+with open(os.path.join(root, "train_data.pkl"), "rb") as f:
+    train_data = pickle.load(f)
+
+train_samples = list(train_data.keys())
+train_targets = list(train_data.values())
+```
+
+```python
+train_samples = ['ILSVRC/Data/CLS-LOC/train/n03146219/n03146219_8050.JPEG',
+ 'ILSVRC/Data/CLS-LOC/train/n03146219/n03146219_12728.JPEG',
+ 'ILSVRC/Data/CLS-LOC/train/n03146219/n03146219_9736.JPEG',
+ 'ILSVRC/Data/CLS-LOC/train/n03146219/n03146219_22069.JPEG',
+ ...]
+
+train_targets = [524,
+ 524,
+ 524,
+ 524,
+ ...]
+```
+
+---
+
+## ImageNet class
+
+```python
+class ImageNet(Dataset):
+    
+    def __init__(self, root, transform=None):
+        self.root = root
+        with open(os.path.join(self.root, "train_data.pkl"), "rb") as f:
+            train_data = pickle.load(f)
+        self.samples = list(train_data.keys())
+        self.targets = list(train_data.values())
+        self.transform = transform
+        
+    def __len__(self):
+        return len(self.samples)
+
+    def __getitem__(self, idx):
+        x = Image.open(os.path.join(self.root, self.samples[idx])).convert("RGB")
+        if self.transform:
+            x = self.transform(x)
+        return x, self.targets[idx]
+```
+
+--- 
+
+## PyTorch Lightning Data Module 
 
 ```python
 class ImageNetDataModule(pl.LightningDataModule):
