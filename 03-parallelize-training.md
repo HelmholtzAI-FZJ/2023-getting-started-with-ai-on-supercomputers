@@ -9,7 +9,7 @@ date: September 28, 2023
 
 ```bash
 cd $HOME/course/$USER
-git clone git@github.com:HelmholtzAI-FZJ/2023-getting-started-with-ai-on-supercomputers.git
+git clone https://gitlab.jsc.fz-juelich.de/MLDL_FZJ/juhaicu/jsc_public/sharedspace/teaching/2023-getting-started-with-ai-on-supercomputers.git
 
 ```
 
@@ -28,6 +28,7 @@ git clone git@github.com:HelmholtzAI-FZJ/2023-getting-started-with-ai-on-superco
 ## The ImageNet dataset
 
 ```bash
+imagenet_class_index.json
 ILSVRC
 |-- Data/
     `-- CLS-LOC
@@ -44,6 +45,12 @@ ILSVRC
         |   |   |-- n01695060_10022.JPEG
         |   |   |-- n01695060_10028.JPEG
         |   |   |-- ...
+        |   |...
+        |-- val
+            |-- ILSVRC2012_val_00000001.JPEG  
+            |-- ILSVRC2012_val_00016668.JPEG  
+            |-- ILSVRC2012_val_00033335.JPEG      
+            |-- ...
 ```
 ---
 
@@ -211,7 +218,6 @@ trainer.save_checkpoint("image_classification_model.pt")
 #SBATCH --nodes=1            
 #SBATCH --gres=gpu:1
 #SBATCH --ntasks-per-node=1  
-#SBATCH --mem=0
 #SBATCH --cpus-per-task=96
 #SBATCH --time=06:00:00
 #SBATCH --partition=booster
@@ -299,7 +305,6 @@ real	342m11.864s
 #SBATCH --nodes=1                     
 #SBATCH --gres=gpu:4                  # Use the 4 GPUs available
 #SBATCH --ntasks-per-node=4           # When using pl it should always be set to 4
-#SBATCH --mem=0
 #SBATCH --cpus-per-task=24            # Divide the number of cpus (96) by the number of GPUs (4)
 #SBATCH --time=02:00:00
 #SBATCH --partition=booster
@@ -638,7 +643,6 @@ trainer.save_checkpoint("image_classification_model.pt")
 #SBATCH --nodes=16                     # This needs to match Trainer(num_nodes=...)
 #SBATCH --gres=gpu:4                   # Use the 4 GPUs available
 #SBATCH --ntasks-per-node=4            # When using pl it should always be set to 4
-#SBATCH --mem=0
 #SBATCH --cpus-per-task=24             # Divide the number of cpus (96) by the number of GPUs (4)
 #SBATCH --time=00:15:00
 #SBATCH --partition=booster
