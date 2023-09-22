@@ -1,12 +1,8 @@
-import sys
 import pytorch_lightning as pl
 from torch.utils.data import DataLoader
 from typing import Optional
 
-sys.path.append("..")
-sys.path.append("2023-getting-started-with-ai-on-supercomputers/code/")
-
-from dataLoading.imageNet import ImageNet
+from imageNet import ImageNet
 
 class ImageNetDataModule(pl.LightningDataModule):
     def __init__(

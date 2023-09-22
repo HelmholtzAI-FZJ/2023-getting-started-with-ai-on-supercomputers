@@ -258,6 +258,20 @@
 </tbody>
 </table>
 </section>
+<section id="lets-talk-about-data" class="slide level2">
+<h2>Let’s talk about DATA</h2>
+<ul>
+<li class="fragment">Some general considerations one should have in
+mind</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<figure>
+<img data-src="images/data-and-lore.jpg" alt="Not this data" />
+<figcaption aria-hidden="true">Not this data</figcaption>
+</figure>
+</section>
 <section id="io-is-separate-and-shared" class="slide level2">
 <h2>I/O is separate and shared</h2>
 <h4 id="all-compute-nodes-of-all-supercomputers-see-the-same-files">All
@@ -281,13 +295,34 @@ itself</li>
 </figure></li>
 </ul>
 </section>
+<section id="where-do-i-keep-my-files" class="slide level2">
+<h2>Where do I keep my files?</h2>
+<ul>
+<li class="fragment"><strong><code>$PROJECT_projectname</code></strong>
+for code
+<ul>
+<li class="fragment">Most of your work should stay here</li>
+</ul></li>
+<li class="fragment"><strong><code>$DATA_projectname</code></strong> for
+big data(*)
+<ul>
+<li class="fragment">Permanent location for big datasets</li>
+</ul></li>
+<li class="fragment"><strong><code>$SCRATCH_projectname</code></strong>
+for temporary files (fast, but not permanent)
+<ul>
+<li class="fragment">Files are deleted after 90 days untouched</li>
+</ul></li>
+</ul>
+</section>
 <section id="data-services" class="slide level2">
 <h2>Data services</h2>
 <ul>
 <li class="fragment">JSC provides different data services</li>
 <li class="fragment">Data projects give massive amounts of storage</li>
-<li class="fragment">We use it for ML datasets. Join the project at <a
-href="https://judoor.fz-juelich.de/projects/join/datasets">Judoor</a></li>
+<li class="fragment">We use it for ML datasets. Join the project at
+<strong><a
+href="https://judoor.fz-juelich.de/projects/join/datasets">Judoor</a></strong></li>
 <li class="fragment">After being approved, connect to the supercomputer
 and try it:</li>
 <li class="fragment"><div class="sourceCode" id="cb1"><pre
@@ -304,6 +339,7 @@ filesystem</a> is not accessible by compute nodes</li>
 working</li>
 <li class="fragment">Imagenet-21K copy alone takes 21+ minutes to
 $SCRATCH</li>
+<li class="fragment">We already copied it to $SCRATCH for you</li>
 </ul>
 </section>
 <section id="data-loading" class="slide level2">
