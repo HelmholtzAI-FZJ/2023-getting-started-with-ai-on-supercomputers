@@ -641,7 +641,7 @@ The following modules match your search criteria: "toml"
 
 ## VSCode
 
-- From the ssh connection, navigate to your "course" folder and to the name you created earlier.
+- From the VSCode's terminal, navigate to your "course" folder and to the name you created earlier.
 
 - ```bash
 cd $HOME/course/$USER
@@ -809,6 +809,7 @@ Or simply open it on VSCode!
 [Venv/Kernel template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
 
 ```bash
+cd $HOME/course/$USER
 git clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git
 cd sc_venv_template
 ```
@@ -1003,6 +1004,7 @@ learn = vision_learner(dls, resnet34, metrics=error_rate)
 
 - But the login nodes do!
 - So we download our dataset before...
+  - On the login nodes!
 
 ---
 
@@ -1118,7 +1120,8 @@ A tunnel which exposes the supercomputer's port 3000 as port 1234 locally](image
 
 ## Port forwarding demo:
 
-- On local computer, open a new terminal and paste:
+- On your computer, open a new terminal and paste:
+- Try using numbers different from 9999, each person should use a different number
 - ```bash
 ssh -L :1234:localhost:9999 booster
 ````
