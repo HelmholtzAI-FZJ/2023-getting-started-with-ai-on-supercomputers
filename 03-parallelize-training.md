@@ -19,7 +19,7 @@ git clone https://gitlab.jsc.fz-juelich.de/MLDL_FZJ/juhaicu/jsc_public/sharedspa
 #### Large Scale Visual Recognition Challenge (ILSVRC)
 - An image dataset organized according to the [WordNet hierarchy](https://wordnet.princeton.edu). 
 - Extensively used in algorithms for object detection and image classification at large scale. 
-- It has 1000 classes, that comprises 1.2 million images for training, and 5,000 images for the validation set.
+- It has 1000 classes, that comprises 1.2 million images for training, and 50,000 images for the validation set.
 
 ![](images/imagenet_banner.jpeg)
 
@@ -157,7 +157,7 @@ class ImageNetDataModule(pl.LightningDataModule):
             
     def train_dataloader(self):
         return DataLoader(self.train, batch_size=self.batch_size, \
-            num_workers=self.num_workers, drop_last=True)
+            num_workers=self.num_workers)
 ```
 
 ---
@@ -518,9 +518,8 @@ real	89m15.923s
 - Model parallelism:
     - Split the model over multiple GPUs
     - Each GPU does the forward/backward pass
-    - The gradients are averaged at the end
 - Model parallelism, multi-node:
-    - Same, but gradients are averaged across nodes
+    - Same, but the model is split over the nodes
 
 ---
 
@@ -706,13 +705,17 @@ export CUDA_VISIBLE_DEVICES=0,1,2,3  # Very important to make the GPUs visible
 
 ## TensorBoard
 
-```python 
+- In tb.py
+- ```python 
 # 3. Create the logger 
 logger = TensorBoardLogger("tb_logs", name="resnet50")
-
 # 4. Create the trainer and pass the logger 
 trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", \
     num_nodes=nnodes, logger=logger)
+```
+- In resnet50.py
+- ```python
+self.log("training_loss", train_loss)
 ```
 
 --- 
@@ -736,8 +739,9 @@ tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
 ---
 
 ## Llview
-
-- ![](images/llview.png)
+- [llview](https://go.fzj.de/llview-juwelsbooster)
+- https://go.fzj.de/llview-juwelsbooster 
+![](images/llview.png)
 
 ---
 
@@ -746,6 +750,7 @@ tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
 - Write parallel code.
 - Can submit single node, multi-gpu and multi-node training.
 - Use TensorBoard on the supercomputer.
+- Usage of llview.
 
 ---
 
