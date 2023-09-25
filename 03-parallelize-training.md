@@ -9,8 +9,7 @@ date: September 28, 2023
 
 ```bash
 cd $HOME/course/$USER
-git clone https://gitlab.jsc.fz-juelich.de/MLDL_FZJ/juhaicu/jsc_public/sharedspace/teaching/2023-getting-started-with-ai-on-supercomputers.git
-
+git clone https://github.com/HelmholtzAI-FZJ/2023-getting-started-with-ai-on-supercomputers.git
 ```
 
 ---
