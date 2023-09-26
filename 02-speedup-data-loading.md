@@ -88,7 +88,7 @@ cd $DATA_datasets
 - Use big files made for parallel computing
     - HDF5, Zarr, mmap() in a parallel fs, LMDB
 - Use specialized data loading libraries
-    - FFCV, DALI
+    - FFCV, DALI, Apache Arrow
 - Compression sush as squashfs 
     - data transfer can be slower than decompression (must be checked case by case)
     - Beneficial in cases where numerous small files are at hand.
@@ -97,6 +97,7 @@ cd $DATA_datasets
 
 ## Libraries
 
+- Apache Arrow [https://arrow.apache.org/](https://arrow.apache.org/)
 - FFCV [https://github.com/libffcv/ffcv](https://github.com/libffcv/ffcv) and [FFCV for PyTorch-Lightning](https://github.com/SerezD/ffcv_pytorch_lightning)
 - Nvidia's DALI [https://developer.nvidia.com/dali](https://developer.nvidia.com/dali)
 

@@ -389,7 +389,7 @@ Did everyone get their **own** ip address?
 - Add a `from=""` around it
 - So, it looks like this, now: `from="93.199.0.0/16"`
 - Add a second magic number, with a comma: `,10.0.0.0/8` 🧙‍♀️
-- I promise, the magic is worth it 🧝‍♂️
+- I promise, the magic is worth it 🧝‍♂️ (If time allows)
 - In the end it looks like this: `from="93.199.0.0/16,10.0.0.0/8"` 🎬
 - Keep it open, we will use it later
 
@@ -635,7 +635,8 @@ The following modules match your search criteria: "toml"
 
 ## VSCode
 
-- You can have a terminal inside VSCode: Go to the menu View->Terminal
+- You can have a terminal inside VSCode: 
+  - Go to the menu View->Terminal
 
 --- 
 
