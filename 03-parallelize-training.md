@@ -28,6 +28,7 @@ git clone https://github.com/HelmholtzAI-FZJ/2023-getting-started-with-ai-on-sup
 
 ```bash
 imagenet_class_index.json
+ILSVRC2012_val_labels.json
 ILSVRC
 |-- Data/
     `-- CLS-LOC
@@ -307,6 +308,7 @@ real	89m15.923s
 - Use different data for each GPU
 - Everything else is the same
 - Average after each epoch
+- Update of the weights
 
 ---
 
@@ -512,6 +514,7 @@ real	89m15.923s
     - Split the data over multiple GPUs
     - Each GPU runs the whole model
     - The gradients are averaged at each step
+    - Update of the model's weights
 - Data parallelism, multi-node:
     - Same, but gradients are averaged across nodes
 - Model parallelism:
@@ -548,7 +551,7 @@ real	89m15.923s
 
 ## DDP steps
 
-1. Set up the environement variable for the distributed mode (WORLD_SIZE, RANK, LOCAL_RANK ...)
+1. Set up the environement variables for the distributed mode (WORLD_SIZE, RANK, LOCAL_RANK ...)
 
 - ```python
 # The number of total processes started by Slurm.
@@ -686,6 +689,7 @@ trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", num_nodes=nnodes)
 #SBATCH --nodes=1                
 #SBATCH --gres=gpu:1
 #SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=96
 ```
 - Became
 - ```bash
@@ -704,18 +708,11 @@ export CUDA_VISIBLE_DEVICES=0,1,2,3  # Very important to make the GPUs visible
 
 ## TensorBoard
 
-- In tb.py
-- ```python 
-# 3. Create the logger 
-logger = TensorBoardLogger("tb_logs", name="resnet50")
-# 4. Create the trainer and pass the logger 
-trainer = pl.Trainer(max_epochs=10,  accelerator="gpu", \
-    num_nodes=nnodes, logger=logger)
-```
 - In resnet50.py
 - ```python
 self.log("training_loss", train_loss)
 ```
+- ![](images/pl_tb.png)
 
 --- 
 
@@ -746,7 +743,7 @@ tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
 
 ## DAY 2 RECAP 
 
-- Write parallel code.
+- Ran parallel code.
 - Can submit single node, multi-gpu and multi-node training.
 - Use TensorBoard on the supercomputer.
 - Usage of llview.

@@ -252,28 +252,29 @@ images for training, and 50,000 images for the validation set.</li>
 <h2>The ImageNet dataset</h2>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">imagenet_class_index.json</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ILSVRC</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span><span class="ex">--</span> Data/</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">`</span><span class="ex">--</span> CLS-LOC</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> imagenet_labels.pkl</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> imagenet_val.pkl</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> test</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> train</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01440764</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01440764_10026.JPEG</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01440764_10027.JPEG</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01440764_10029.JPEG</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01695060</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01695060_10009.JPEG</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01695060_10022.JPEG</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01695060_10028.JPEG</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> ...</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span><span class="ex">...</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> val</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">--</span> ILSVRC2012_val_00000001.JPEG  </span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">--</span> ILSVRC2012_val_00016668.JPEG  </span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">--</span> ILSVRC2012_val_00033335.JPEG      </span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">--</span> ...</span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ILSVRC2012_val_labels.json</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ILSVRC</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span><span class="ex">--</span> Data/</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">`</span><span class="ex">--</span> CLS-LOC</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> imagenet_labels.pkl</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> imagenet_val.pkl</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> test</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> train</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01440764</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01440764_10026.JPEG</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01440764_10027.JPEG</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01440764_10029.JPEG</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01695060</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01695060_10009.JPEG</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01695060_10022.JPEG</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01695060_10028.JPEG</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> ...</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span><span class="ex">...</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> val</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">--</span> ILSVRC2012_val_00000001.JPEG  </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">--</span> ILSVRC2012_val_00016668.JPEG  </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">--</span> ILSVRC2012_val_00033335.JPEG      </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">--</span> ...</span></code></pre></div>
 </section>
 <section id="the-imagenet-dataset-2" class="slide level2">
 <h2>The ImageNet dataset</h2>
@@ -490,6 +491,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href=
 <li class="fragment">Use different data for each GPU</li>
 <li class="fragment">Everything else is the same</li>
 <li class="fragment">Average after each epoch</li>
+<li class="fragment">Update of the weights</li>
 </ul>
 </section>
 <section id="there-are-more-levels" class="slide level2">
@@ -665,6 +667,7 @@ gpus</li>
 <li class="fragment">Split the data over multiple GPUs</li>
 <li class="fragment">Each GPU runs the whole model</li>
 <li class="fragment">The gradients are averaged at each step</li>
+<li class="fragment">Update of the model’s weights</li>
 </ul></li>
 <li class="fragment">Data parallelism, multi-node:
 <ul>
@@ -716,7 +719,7 @@ machine.</li>
 <section id="ddp-steps" class="slide level2">
 <h2>DDP steps</h2>
 <ol type="1">
-<li class="fragment">Set up the environement variable for the
+<li class="fragment">Set up the environement variables for the
 distributed mode (WORLD_SIZE, RANK, LOCAL_RANK …)</li>
 </ol>
 <ul>
@@ -830,7 +833,8 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a h
 <li class="fragment"><div class="sourceCode" id="cb25"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=1                </span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --gres=gpu:1</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=1</span></span></code></pre></div></li>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=1</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=96</span></span></code></pre></div></li>
 <li class="fragment">Became</li>
 <li class="fragment"><div class="sourceCode" id="cb26"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=16                   # This needs to match Trainer(num_nodes=...)</span></span>
@@ -846,25 +850,19 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href=
 <section id="tensorboard" class="slide level2">
 <h2>TensorBoard</h2>
 <ul>
-<li class="fragment">In tb.py</li>
-<li class="fragment"><div class="sourceCode" id="cb27"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Create the logger </span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>logger <span class="op">=</span> TensorBoardLogger(<span class="st">&quot;tb_logs&quot;</span>, name<span class="op">=</span><span class="st">&quot;resnet50&quot;</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Create the trainer and pass the logger </span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>trainer <span class="op">=</span> pl.Trainer(max_epochs<span class="op">=</span><span class="dv">10</span>,  accelerator<span class="op">=</span><span class="st">&quot;gpu&quot;</span>, <span class="op">\</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    num_nodes<span class="op">=</span>nnodes, logger<span class="op">=</span>logger)</span></code></pre></div></li>
 <li class="fragment">In resnet50.py</li>
-<li class="fragment"><div class="sourceCode" id="cb28"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>.log(<span class="st">&quot;training_loss&quot;</span>, train_loss)</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb27"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="va">self</span>.log(<span class="st">&quot;training_loss&quot;</span>, train_loss)</span></code></pre></div></li>
+<li class="fragment"><img data-src="images/pl_tb.png" /></li>
 </ul>
 </section>
 <section id="tensorboard-1" class="slide level2">
 <h2>TensorBoard</h2>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span>  <span class="at">-L</span> 16000:localhost:16000 booster</span></code></pre></div>
 <div class="sourceCode" id="cb29"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span>  <span class="at">-L</span> 16000:localhost:16000 booster</span></code></pre></div>
-<div class="sourceCode" id="cb30"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span>/sc_venv_template/activate.sh</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tensorboard</span> <span class="at">--logdir</span><span class="op">=</span><span class="pp">[</span><span class="ss">PATH_TO_TENSOR_BOARD</span><span class="pp">]</span> <span class="at">--port</span><span class="op">=</span>16000</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span>/sc_venv_template/activate.sh</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tensorboard</span> <span class="at">--logdir</span><span class="op">=</span><span class="pp">[</span><span class="ss">PATH_TO_TENSOR_BOARD</span><span class="pp">]</span> <span class="at">--port</span><span class="op">=</span>16000</span></code></pre></div>
 <p><img data-src="images/tb.png" width="750" /></p>
 </section>
 <section id="demo-3" class="slide level2">
@@ -882,7 +880,7 @@ data-src="images/llview.png" /></li>
 <section id="day-2-recap" class="slide level2">
 <h2>DAY 2 RECAP</h2>
 <ul>
-<li class="fragment">Write parallel code.</li>
+<li class="fragment">Ran parallel code.</li>
 <li class="fragment">Can submit single node, multi-gpu and multi-node
 training.</li>
 <li class="fragment">Use TensorBoard on the supercomputer.</li>
