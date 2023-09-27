@@ -1033,7 +1033,7 @@ class="sourceCode numberSource bash number-lines"><code class="sourceCode bash">
 <span id="cb18-8"><a href="#cb18-8"></a><span class="co">#SBATCH --error=error.%j</span></span>
 <span id="cb18-9"><a href="#cb18-9"></a><span class="co">#SBATCH --time=00:01:00          # For how long can it run?</span></span>
 <span id="cb18-10"><a href="#cb18-10"></a><span class="co">#SBATCH --partition=booster         # Machine partition</span></span>
-<span id="cb18-11"><a href="#cb18-11"></a><span class="co">#SBATCH --reservation=ai_sc_day1 # For today only</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a><span class="co">#SBATCH --reservation=ai_on_sc_day1 # For today only</span></span>
 <span id="cb18-12"><a href="#cb18-12"></a></span>
 <span id="cb18-13"><a href="#cb18-13"></a><span class="ex">module</span> load Stages/2023</span>
 <span id="cb18-14"><a href="#cb18-14"></a><span class="ex">module</span> load GCC OpenMPI PyTorch  <span class="co"># Load the correct modules on the compute node(s)</span></span>
@@ -1077,7 +1077,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href=
 <li class="fragment">Some partitions have reservations, which means that
 only certain users can use them at certain times.</li>
 <li class="fragment">For this course, we have:</li>
-<li class="fragment">Juwels Booster: <code>ai_sc_day1</code> and
+<li class="fragment">Juwels Booster: <code>ai_on_sc_day1</code> and
 <code>ai_sc_day2</code></li>
 </ul>
 </section>
@@ -1208,7 +1208,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href=
 <span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=error.%j</span></span>
 <span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=00:10:00</span></span>
 <span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=booster</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --reservation=ai_sc_day1 # For today only</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --reservation=ai_on_sc_day1 # For today only</span></span>
 <span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /p/home/jusers/<span class="va">$USER</span>/juwels/course/<span class="va">$USER</span></span>
 <span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh <span class="co"># Now we finally use the fastai module</span></span>
