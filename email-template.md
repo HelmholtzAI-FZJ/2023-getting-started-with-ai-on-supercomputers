@@ -9,11 +9,11 @@ Dear colleagues,
 
 the next "Getting started with AI on supercomputers" course is approaching! Thank you all very much for your participation.
 
-The course is online, over zoom. It will be recorded. This is the link:
+The course is online, over zoom. It might be recorded. This is the link:
 https://go.fzj.de/intro-sc-ai-2023-zoom
 
 *********
-IMPORTANT
+IMPORTANT - Please check all steps!
 *********
 
 Checklist for BEFORE the course:
@@ -43,8 +43,7 @@ The course is platform-independent. It can even be followed by a Windows user, b
 - Visual Studio: Remote - SSH: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh
 
 - (WINDOWS ONLY): WSL. This installs the WSL support for Visual Studio Code, which will install WSL itself (And Ubuntu). https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl - This is a long install, take your time.
-
-PLEASE MAKE SURE WSL IS ACTUALLY INSTALLED - Try running it. Check this example: https://pureinfotech.com/install-windows-subsystem-linux-2-windows-10/
+  PLEASE MAKE SURE WSL IS ACTUALLY INSTALLED - Try running it. Check this example: https://pureinfotech.com/install-windows-subsystem-linux-2-windows-10/
 
 - A terminal. On Linux and Mac, it's just called "Terminal". Little familiarity with it is required. On windows, the WSL installs it.
 

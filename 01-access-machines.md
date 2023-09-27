@@ -389,7 +389,7 @@ Did everyone get their **own** ip address?
 - Add a `from=""` around it
 - So, it looks like this, now: `from="93.199.0.0/16"`
 - Add a second magic number, with a comma: `,10.0.0.0/8` 🧙‍♀️
-- I promise, the magic is worth it 🧝‍♂️
+- I promise, the magic is worth it 🧝‍♂️ (If time allows)
 - In the end it looks like this: `from="93.199.0.0/16,10.0.0.0/8"` 🎬
 - Keep it open, we will use it later
 
@@ -635,13 +635,14 @@ The following modules match your search criteria: "toml"
 
 ## VSCode
 
-- You can have a terminal inside VSCode: Go to the menu View->Terminal
+- You can have a terminal inside VSCode: 
+  - Go to the menu View->Terminal
 
 --- 
 
 ## VSCode
 
-- From the ssh connection, navigate to your "course" folder and to the name you created earlier.
+- From the VSCode's terminal, navigate to your "course" folder and to the name you created earlier.
 
 - ```bash
 cd $HOME/course/$USER
@@ -809,6 +810,7 @@ Or simply open it on VSCode!
 [Venv/Kernel template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
 
 ```bash
+cd $HOME/course/$USER
 git clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git
 cd sc_venv_template
 ```
@@ -1003,6 +1005,7 @@ learn = vision_learner(dls, resnet34, metrics=error_rate)
 
 - But the login nodes do!
 - So we download our dataset before...
+  - On the login nodes!
 
 ---
 
@@ -1118,7 +1121,8 @@ A tunnel which exposes the supercomputer's port 3000 as port 1234 locally](image
 
 ## Port forwarding demo:
 
-- On local computer, open a new terminal and paste:
+- On your computer, open a new terminal and paste:
+- Try using numbers different from 9999, each person should use a different number
 - ```bash
 ssh -L :1234:localhost:9999 booster
 ````

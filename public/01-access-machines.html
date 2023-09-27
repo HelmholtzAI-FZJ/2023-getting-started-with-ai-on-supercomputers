@@ -718,7 +718,8 @@ number, not with the example)</li>
 <code>from="93.199.0.0/16"</code></li>
 <li class="fragment">Add a second magic number, with a comma:
 <code>,10.0.0.0/8</code> 🧙‍♀️</li>
-<li class="fragment">I promise, the magic is worth it 🧝‍♂️</li>
+<li class="fragment">I promise, the magic is worth it 🧝‍♂️ (If time
+allows)</li>
 <li class="fragment">In the end it looks like this:
 <code>from="93.199.0.0/16,10.0.0.0/8"</code> 🎬</li>
 <li class="fragment">Keep it open, we will use it later</li>
@@ -945,14 +946,16 @@ supercomputers</h4>
 <section id="vscode-4" class="slide level2">
 <h2>VSCode</h2>
 <ul>
-<li class="fragment">You can have a terminal inside VSCode: Go to the
-menu View-&gt;Terminal</li>
+<li class="fragment">You can have a terminal inside VSCode:
+<ul>
+<li class="fragment">Go to the menu View-&gt;Terminal</li>
+</ul></li>
 </ul>
 </section>
 <section id="vscode-5" class="slide level2">
 <h2>VSCode</h2>
 <ul>
-<li class="fragment"><p>From the ssh connection, navigate to your
+<li class="fragment"><p>From the VSCode’s terminal, navigate to your
 “course” folder and to the name you created earlier.</p></li>
 <li class="fragment"><div class="sourceCode" id="cb14"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
@@ -1105,8 +1108,9 @@ software from <code>pip</code>….</h4>
 href="https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template">Venv/Kernel
 template</a></p>
 <div class="sourceCode" id="cb23"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> sc_venv_template</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> sc_venv_template</span></code></pre></div>
 </section>
 <section id="example-lets-install-some-software" class="slide level2">
 <h2>Example: Let’s install some software!</h2>
@@ -1290,7 +1294,10 @@ class="slide level2">
 <h2>Compute nodes have no internet connection</h2>
 <ul>
 <li class="fragment">But the login nodes do!</li>
-<li class="fragment">So we download our dataset before…</li>
+<li class="fragment">So we download our dataset before…
+<ul>
+<li class="fragment">On the login nodes!</li>
+</ul></li>
 </ul>
 </section>
 <section id="on-the-login-node" class="slide level2">
@@ -1400,8 +1407,10 @@ supercomputer’s port 3000 as port 1234 locally</figcaption>
 <section id="port-forwarding-demo" class="slide level2">
 <h2>Port forwarding demo:</h2>
 <ul>
-<li class="fragment">On local computer, open a new terminal and
+<li class="fragment">On your computer, open a new terminal and
 paste:</li>
+<li class="fragment">Try using numbers different from 9999, each person
+should use a different number</li>
 <li class="fragment"><div class="sourceCode" id="cb41"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-L</span> :1234:localhost:9999 booster</span></code></pre></div></li>
 <li class="fragment">As soon as you connect, paste this:</li>
