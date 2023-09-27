@@ -1207,7 +1207,7 @@ On the supercomputer:
 ```bash
 srun --time=00:05:00 \
      --nodes=1 --ntasks=1 \
-     --partition=gpus \
+     --partition=booster \
      --account training2324 \
      --cpu_bind=none \
      --pty /bin/bash -i
