@@ -521,7 +521,7 @@ real	89m15.923s
     - Split the model over multiple GPUs
     - Each GPU does the forward/backward pass
 - Model parallelism, multi-node:
-    - Same, but the model is split over the nodes
+    - Same, but gradients are averaged across nodes
 
 ---
 
