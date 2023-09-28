@@ -16,7 +16,7 @@ the code we provided, and to hopefully integrate some of what you learned on you
 codes! Let's make those GPUs scream! 😱
 
 We were asked for certificates for the course. Don’t worry, we will prepare them. Meanwhile, 
-it would be very nice if you would give us some feedback, here: https://indico3-jsc.fz-juelich.de/event/114/surveys/37
+it would be very nice if you would give us some feedback, here: https://go.fzj.de/intro-sc-ai-2023-survey
 
 Again, thanks for your time!
 
