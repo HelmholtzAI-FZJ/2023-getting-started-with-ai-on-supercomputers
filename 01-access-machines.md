@@ -1121,18 +1121,14 @@ A tunnel which exposes the supercomputer's port 3000 as port 1234 locally](image
 
 ## Port forwarding demo:
 
-- On your computer, open a new terminal and paste:
-- Try using numbers different from 9999, each person should use a different number
-- ```bash
-ssh -L :1234:localhost:9999 booster
-````
-- As soon as you connect, paste this: 
+- On VSCode's terminal:
 - ```bash
 cd $HOME/course/$USER
 source sc_venv_template/activate.sh
-tensorboard --logdir=runs  --port=9999 serve
+tensorboard --logdir=runs  --port=12345 serve
 ```
-- On the browser: [http://localhost:1234](http://localhost:1234)
+- Note the tab `PORTS` next to the terminal 
+- On the browser: [http://localhost:12345](http://localhost:12345)
 
 ---
 

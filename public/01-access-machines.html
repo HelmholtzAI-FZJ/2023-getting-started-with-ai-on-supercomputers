@@ -1407,19 +1407,15 @@ supercomputer’s port 3000 as port 1234 locally</figcaption>
 <section id="port-forwarding-demo" class="slide level2">
 <h2>Port forwarding demo:</h2>
 <ul>
-<li class="fragment">On your computer, open a new terminal and
-paste:</li>
-<li class="fragment">Try using numbers different from 9999, each person
-should use a different number</li>
+<li class="fragment">On VSCode’s terminal:</li>
 <li class="fragment"><div class="sourceCode" id="cb41"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-L</span> :1234:localhost:9999 booster</span></code></pre></div></li>
-<li class="fragment">As soon as you connect, paste this:</li>
-<li class="fragment"><div class="sourceCode" id="cb42"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tensorboard</span> <span class="at">--logdir</span><span class="op">=</span>runs  <span class="at">--port</span><span class="op">=</span>9999 serve</span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tensorboard</span> <span class="at">--logdir</span><span class="op">=</span>runs  <span class="at">--port</span><span class="op">=</span>12345 serve</span></code></pre></div></li>
+<li class="fragment">Note the tab <code>PORTS</code> next to the
+terminal</li>
 <li class="fragment">On the browser: <a
-href="http://localhost:1234">http://localhost:1234</a></li>
+href="http://localhost:12345">http://localhost:12345</a></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -1488,27 +1484,27 @@ Host *.booster
 1234</li>
 </ul>
 <p>On the supercomputer:</p>
-<div class="sourceCode" id="cb44"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="dt">\</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="dt">\</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">--partition</span><span class="op">=</span>booster <span class="dt">\</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2324 <span class="dt">\</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="dt">\</span></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">--pty</span> /bin/bash <span class="at">-i</span></span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> hostname <span class="co"># This is running on a compute node of the supercomputer</span></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="ex">jwb0002</span></span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> cd <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> source sc_venv_template/activate.sh</span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> tensorboard <span class="at">--logdir</span><span class="op">=</span>runs  <span class="at">--port</span><span class="op">=</span>9999 serve</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="dt">\</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="dt">\</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">--partition</span><span class="op">=</span>booster <span class="dt">\</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2324 <span class="dt">\</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="dt">\</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">--pty</span> /bin/bash <span class="at">-i</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> hostname <span class="co"># This is running on a compute node of the supercomputer</span></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="ex">jwb0002</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> cd <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> source sc_venv_template/activate.sh</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="ex">bash-4.4$</span> tensorboard <span class="at">--logdir</span><span class="op">=</span>runs  <span class="at">--port</span><span class="op">=</span>9999 serve</span></code></pre></div>
 </section>
 <section id="proxy-jump-1" class="slide level2">
 <h2>Proxy Jump</h2>
 <p>On your machine:</p>
 <ul>
-<li class="fragment"><div class="sourceCode" id="cb45"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-L</span> :3334:localhost:9999 jwb002i.booster</span></code></pre></div></li>
+<li class="fragment"><div class="sourceCode" id="cb44"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-L</span> :3334:localhost:9999 jwb002i.booster</span></code></pre></div></li>
 <li class="fragment"><p>Mind the <code>i</code> letter I added at the
 end of the hostname</p></li>
 <li class="fragment"><p>Now you can access the service on your local
