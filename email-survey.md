@@ -1,6 +1,6 @@
 ---
 author: Alexandre Strube // Sabrina Benassou
-title: Getting Started with AI on Supercomputers 
+title: Survey on the course "Getting Started with AI on Supercomputers"
 # subtitle: A primer in supercomputers`
 date: February 28, 2023
 ---
