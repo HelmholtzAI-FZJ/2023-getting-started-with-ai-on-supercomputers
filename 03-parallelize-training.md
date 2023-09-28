@@ -719,10 +719,6 @@ self.log("training_loss", train_loss)
 ## TensorBoard
 
 ```bash
-ssh  -L 16000:localhost:16000 booster
-```
-
-```bash
 source $HOME/course/$USER/sc_venv_template/activate.sh
 tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
 ```
