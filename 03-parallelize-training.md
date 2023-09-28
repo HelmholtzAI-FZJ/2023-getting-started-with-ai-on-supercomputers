@@ -521,7 +521,7 @@ real	89m15.923s
     - Split the model over multiple GPUs
     - Each GPU does the forward/backward pass
 - Model parallelism, multi-node:
-    - Same, but the model is split over the nodes
+    - Same, but gradients are averaged across nodes
 
 ---
 
@@ -717,10 +717,6 @@ self.log("training_loss", train_loss)
 --- 
 
 ## TensorBoard
-
-```bash
-ssh  -L 16000:localhost:16000 booster
-```
 
 ```bash
 source $HOME/course/$USER/sc_venv_template/activate.sh
