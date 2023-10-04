@@ -17,7 +17,7 @@ Links for the complimentary parts of this course:
 - [Survey at the end of the course](https://go.fzj.de/intro-sc-ai-2023-survey)
 - [Virtual Environment template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
 - [SOURCE CODE OF THE WHOLE COURSE on Github - Including presentations](https://go.fzj.de/intro-sc-ai-2023-repo)
-
+- [Other courses at JSC](https://go.fzj.de/intro-sc-ai-2023-other-courses)
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
 
 
