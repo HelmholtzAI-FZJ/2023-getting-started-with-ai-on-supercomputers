@@ -2,7 +2,7 @@
 author: Alexandre Strube // Sabrina Benassou
 title: Getting Started with AI on Supercomputers 
 subtitle: Parallelize Training
-date: September 28, 2023
+date: December 13, 2023
 ---
 
 ## We need to download some code

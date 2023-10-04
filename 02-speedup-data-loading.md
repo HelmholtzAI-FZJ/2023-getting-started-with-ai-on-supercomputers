@@ -2,7 +2,7 @@
 author: Alexandre Strube // Sabrina Benassou
 title: Getting Started with AI on Supercomputers 
 subtitle: Speedup Data loading
-date: September 27, 2023
+date: December 13, 2023
 ---
 
 ### Schedule for day 2
