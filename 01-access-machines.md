@@ -727,7 +727,7 @@ Simple Linux Utility for Resource Management
 #SBATCH --error=error.%j
 #SBATCH --time=00:01:00          # For how long can it run?
 #SBATCH --partition=booster         # Machine partition
-#SBATCH --reservation=ai_on_sc_day1 # For today only
+#SBATCH --reservation=training2338-day1 # For today only
 
 module load Stages/2023
 module load GCC OpenMPI PyTorch  # Load the correct modules on the compute node(s)
@@ -777,7 +777,7 @@ squeue --me
 
 - Some partitions have reservations, which means that only certain users can use them at certain times.
 - For this course, we have:
-- Juwels Booster: `ai_on_sc_day1` and `ai_sc_day2`
+- Juwels Booster: `training2338-day1` and `training2338-day2`
 
 --- 
 
@@ -909,7 +909,7 @@ learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
 #SBATCH --error=error.%j
 #SBATCH --time=00:10:00
 #SBATCH --partition=booster
-#SBATCH --reservation=ai_on_sc_day1 # For today only
+#SBATCH --reservation=training2338-day1 # For today only
 
 cd /p/home/jusers/$USER/juwels/course/$USER
 source sc_venv_template/activate.sh # Now we finally use the fastai module
