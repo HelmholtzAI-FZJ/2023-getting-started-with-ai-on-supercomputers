@@ -907,7 +907,7 @@ learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
 #SBATCH --cpus-per-task=1
 #SBATCH --output=output.%j
 #SBATCH --error=error.%j
-#SBATCH --time=00:10:00
+#SBATCH --time=00:20:00
 #SBATCH --partition=booster
 #SBATCH --reservation=training2338-day1 # For today only
 
