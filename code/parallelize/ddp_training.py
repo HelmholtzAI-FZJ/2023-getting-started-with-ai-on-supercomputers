@@ -15,7 +15,7 @@ transform = transforms.Compose([
 nnodes = os.getenv("SLURM_NNODES")
 
 # 1. Organize the data
-datamodule = ImageNetDataModule("/p/scratch/training2324/data/", 128, \
+datamodule = ImageNetDataModule("/p/scratch/training2338/data/", 128, \
     int(os.getenv('SLURM_CPUS_PER_TASK')), transform)
 
 # 2. Build the model using desired Task
