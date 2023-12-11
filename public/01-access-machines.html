@@ -255,8 +255,8 @@ the course</a></li>
 href="https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template">Virtual
 Environment template</a></li>
 <li class="fragment"><a
-href="https://go.fzj.de/intro-sc-ai-2023-repo">SOURCE CODE OF THE WHOLE
-COURSE on Github - Including presentations</a></li>
+href="https://go.fzj.de/intro-sc-ai-2023-repo">SOURCE of the
+course/slides on Github</a></li>
 <li class="fragment"><a
 href="https://go.fzj.de/intro-sc-ai-2023-other-courses">Other courses at
 JSC</a></li>
@@ -1185,17 +1185,16 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a h
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Finished downloading dataset&quot;</span>)</span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
 <span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_cat(x): <span class="cf">return</span> x[<span class="dv">0</span>].isupper()</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the dataloaders and resize the images</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> ImageDataLoaders.from_name_func(</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    path, get_image_files(path), valid_pct<span class="op">=</span><span class="fl">0.2</span>, seed<span class="op">=</span><span class="dv">42</span>,</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    label_func<span class="op">=</span>is_cat, item_tfms<span class="op">=</span>Resize(<span class="dv">224</span>))</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;On the login node, this will download resnet34&quot;</span>)</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(dls, resnet34, metrics<span class="op">=</span>accuracy)</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Trains the model for 3 epochs with this dataset</span></span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>learn.unfreeze()</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">3</span>, cbs<span class="op">=</span>TensorBoardCallback(<span class="st">&#39;runs&#39;</span>, trace_model<span class="op">=</span><span class="va">True</span>))</span></code></pre></div></li>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the dataloaders and resize the images</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> ImageDataLoaders.from_name_func(</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    path, get_image_files(path), valid_pct<span class="op">=</span><span class="fl">0.2</span>, seed<span class="op">=</span><span class="dv">42</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    label_func<span class="op">=</span>is_cat, item_tfms<span class="op">=</span>Resize(<span class="dv">224</span>))</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;On the login node, this will download resnet34&quot;</span>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(dls, resnet34, metrics<span class="op">=</span>accuracy)</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>cbs<span class="op">=</span>[SaveModelCallback(), TensorBoardCallback(<span class="st">&#39;runs&#39;</span>, trace_model<span class="op">=</span><span class="va">True</span>)]</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Trains the model for 6 epochs with this dataset</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>learn.unfreeze()</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">6</span>, cbs<span class="op">=</span>cbs)</span></code></pre></div></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -1210,7 +1209,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href=
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-user=MYUSER@fz-juelich.de</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-type=ALL</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=1</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=matrix-multiplication</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --job-name=cat-classifier</span></span>
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --ntasks-per-node=1</span></span>
 <span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --cpus-per-task=1</span></span>
 <span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --output=output.%j</span></span>
@@ -1263,15 +1262,16 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href=
 to give up</li>
 <li class="fragment">Check the <code>error.${JOBID}</code> file</li>
 <li class="fragment">If you run it longer, you will get the actual
-error</li>
-<li class="fragment">Long error message which ends with</li>
+error:</li>
 <li class="fragment"><div class="sourceCode" id="cb30"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>  File <span class="st">&quot;/p/software/juwelsbooster/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py&quot;</span>, line <span class="dv">1391</span>, <span class="kw">in</span> https_open</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">self</span>.do_open(http.client.HTTPSConnection, req,</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  File <span class="st">&quot;/p/software/juwelsbooster/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py&quot;</span>, line <span class="dv">1351</span>, <span class="kw">in</span> do_open</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> URLError(err)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>urllib.error.URLError: <span class="op">&lt;</span>urlopen error [Errno <span class="dv">111</span>] Connection refused<span class="op">&gt;</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>srun: error: jsfc013: task <span class="dv">0</span>: Exited <span class="cf">with</span> exit code <span class="dv">1</span></span></code></pre></div></li>
+class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>Traceback (most recent call last):</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  File <span class="st">&quot;/p/project/training2338/strube1/cats.py&quot;</span>, line <span class="dv">5</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> untar_data(URLs.PETS)<span class="op">/</span><span class="st">&#39;images&#39;</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> URLError(err)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>urllib.error.URLError: <span class="op">&lt;</span>urlopen error [Errno <span class="dv">110</span>] Connection timed out<span class="op">&gt;</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>srun: error: jwb0160: task <span class="dv">0</span>: Exited <span class="cf">with</span> exit code <span class="dv">1</span></span></code></pre></div></li>
 </ul>
 </section>
 <section id="section-1" class="slide level2">
@@ -1336,7 +1336,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href=
 <ul>
 <li class="fragment">Un-comment back the line that does training:</li>
 <li class="fragment"><div class="sourceCode" id="cb36"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">learn.fit_one_cycle</span><span class="er">(</span><span class="ex">3,</span> cbs=TensorBoardCallback<span class="er">(</span><span class="st">&#39;runs&#39;</span><span class="ex">,</span> trace_model=True<span class="kw">))</span></span></code></pre></div></li>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">learn.fit_one_cycle</span><span class="er">(</span><span class="ex">6,</span> cbs=cbs<span class="kw">)</span></span></code></pre></div></li>
 <li class="fragment">Submit the job!</li>
 <li class="fragment"><div class="sourceCode" id="cb37"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> fastai.sbatch</span></code></pre></div></li>
@@ -1382,7 +1382,7 @@ Tensorboard</li>
 <li class="fragment">And we already have the code for it on our
 example!</li>
 <li class="fragment"><div class="sourceCode" id="cb40"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">3</span>, cbs<span class="op">=</span>TensorBoardCallback(<span class="st">&#39;runs&#39;</span>, trace_model<span class="op">=</span><span class="va">True</span>))</span></code></pre></div></li>
+class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>cbs<span class="op">=</span>[SaveModelCallback(), TensorBoardCallback(<span class="st">&#39;runs&#39;</span>, trace_model<span class="op">=</span><span class="va">True</span>)]</span></code></pre></div></li>
 </ul>
 </section>
 <section id="example-tensorboard" class="slide level2">

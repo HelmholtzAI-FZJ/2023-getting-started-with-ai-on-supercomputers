@@ -16,7 +16,7 @@ Links for the complimentary parts of this course:
 - Our mailing list for [AI news](https://lists.fz-juelich.de/mailman/listinfo/ml)
 - [Survey at the end of the course](https://go.fzj.de/intro-sc-ai-2023-survey)
 - [Virtual Environment template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
-- [SOURCE CODE OF THE WHOLE COURSE on Github - Including presentations](https://go.fzj.de/intro-sc-ai-2023-repo)
+- [SOURCE of the course/slides on Github](https://go.fzj.de/intro-sc-ai-2023-repo)
 - [Other courses at JSC](https://go.fzj.de/intro-sc-ai-2023-other-courses)
 
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
@@ -878,17 +878,16 @@ path = untar_data(URLs.PETS)/'images'
 print("Finished downloading dataset")
 #
 def is_cat(x): return x[0].isupper()
-#
 # Create the dataloaders and resize the images
 dls = ImageDataLoaders.from_name_func(
     path, get_image_files(path), valid_pct=0.2, seed=42,
     label_func=is_cat, item_tfms=Resize(224))
 print("On the login node, this will download resnet34")
 learn = vision_learner(dls, resnet34, metrics=accuracy)
-#
-# Trains the model for 3 epochs with this dataset
+cbs=[SaveModelCallback(), TensorBoardCallback('runs', trace_model=True)]
+# Trains the model for 6 epochs with this dataset
 learn.unfreeze()
-learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
+learn.fit_one_cycle(6, cbs=cbs)
 ```
 
 ---
@@ -903,7 +902,7 @@ learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
 #SBATCH --mail-user=MYUSER@fz-juelich.de
 #SBATCH --mail-type=ALL
 #SBATCH --nodes=1
-#SBATCH --job-name=matrix-multiplication
+#SBATCH --job-name=cat-classifier
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
 #SBATCH --output=output.%j
@@ -958,15 +957,16 @@ The following modules were not unloaded:
 
 - It might be that it's not enough time for the job to give up
 - Check the `error.${JOBID}` file
-- If you run it longer, you will get the actual error
-- Long error message which ends with
+- If you run it longer, you will get the actual error:
 - ```python
-  File "/p/software/juwelsbooster/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py", line 1391, in https_open
-    return self.do_open(http.client.HTTPSConnection, req,
-  File "/p/software/juwelsbooster/stages/2023/software/Python/3.10.4-GCCcore-11.3.0/lib/python3.10/urllib/request.py", line 1351, in do_open
+Traceback (most recent call last):
+  File "/p/project/training2338/strube1/cats.py", line 5, in <module>
+    path = untar_data(URLs.PETS)/'images'
+    ...
+    ...
     raise URLError(err)
-urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
-srun: error: jsfc013: task 0: Exited with exit code 1
+urllib.error.URLError: <urlopen error [Errno 110] Connection timed out>
+srun: error: jwb0160: task 0: Exited with exit code 1
 ```
 
 ---
@@ -1042,7 +1042,7 @@ Downloading dataset...
 
 - Un-comment back the line that does training:
 - ```bash
-learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
+learn.fit_one_cycle(6, cbs=cbs)
 ```
 - Submit the job!
 - ```bash
@@ -1091,7 +1091,7 @@ epoch     train_loss  valid_loss  error_rate  time
 - To analyze them, there's a neat tool called Tensorboard
 - And we already have the code for it on our example!
 - ```python
-learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
+cbs=[SaveModelCallback(), TensorBoardCallback('runs', trace_model=True)]
 ```
 
 ---
