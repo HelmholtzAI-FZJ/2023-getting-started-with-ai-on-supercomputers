@@ -393,6 +393,7 @@ Did everyone get their **own** ip address?
 - I promise, the magic is worth it 🧝‍♂️ (If time allows)
 - In the end it looks like this: `from="93.199.0.0/16,10.0.0.0/8"` 🎬
 - Keep it open, we will use it later
+- If you are from FZJ, also add "134.94.0.0/16" with a comma
 
 ---
 
@@ -467,7 +468,7 @@ strube1@juwels22~ $
 ln -s $PROJECT_training2338 ~/course
 
 # Create a folder for myself
-mkdir course/$USER
+mkdir ~/course/$USER
 
 # Enter course folder and
 cd ~/course/$USER
@@ -813,7 +814,6 @@ Or simply open it on VSCode!
 ```bash
 cd $HOME/course/$USER
 git clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git
-cd sc_venv_template
 ```
 
 ---
@@ -828,7 +828,7 @@ cd sc_venv_template
 
 ### Example: Let's install some software!
 
-- Edit the file requirements.txt
+- Edit the file sc_venv_template/requirements.txt
 
 - Add these lines at the end: 
 -
@@ -839,15 +839,15 @@ gym
 wandb
 ```
 
-- Run on the terminal: `./setup.sh`
+- Run on the terminal: `sc_venv_template/setup.sh`
 
 ---
 
 ### Example: Activating the virtual environment
 
-- `source ./activate.sh`
+- `source sc_venv_template/activate.sh`
 - ```python
-source ./activate.sh 
+source sc_venv_template/activate.sh 
 The activation script must be sourced, otherwise the virtual environment will not work.
 Setting vars
 The following modules were not unloaded:

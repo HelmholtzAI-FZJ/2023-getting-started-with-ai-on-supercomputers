@@ -729,6 +729,8 @@ allows)</li>
 <li class="fragment">In the end it looks like this:
 <code>from="93.199.0.0/16,10.0.0.0/8"</code> 🎬</li>
 <li class="fragment">Keep it open, we will use it later</li>
+<li class="fragment">If you are from FZJ, also add “134.94.0.0/16” with
+a comma</li>
 </ul>
 </section>
 <section class="slide level2">
@@ -802,7 +804,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="va">$PROJECT_training2338</span> ~/course</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a folder for myself</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> course/<span class="va">$USER</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/course/<span class="va">$USER</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Enter course folder and</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/course/<span class="va">$USER</span></span>
@@ -1115,8 +1117,7 @@ href="https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template">Venv/Kernel
 template</a></p>
 <div class="sourceCode" id="cb23"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> sc_venv_template</span></code></pre></div>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git</span></code></pre></div>
 </section>
 <section id="example-lets-install-some-software" class="slide level2">
 <h2>Example: Let’s install some software!</h2>
@@ -1132,7 +1133,8 @@ Lightning Flash</li>
 <h3 id="example-lets-install-some-software-1">Example: Let’s install
 some software!</h3>
 <ul>
-<li class="fragment"><p>Edit the file requirements.txt</p></li>
+<li class="fragment"><p>Edit the file
+sc_venv_template/requirements.txt</p></li>
 <li class="fragment"><p>Add these lines at the end:</p></li>
 <li class="fragment"><div class="sourceCode" id="cb24"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">fastai</span></span>
@@ -1140,7 +1142,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href=
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="ex">gym</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="ex">wandb</span></span></code></pre></div></li>
 <li class="fragment"><p>Run on the terminal:
-<code>./setup.sh</code></p></li>
+<code>sc_venv_template/setup.sh</code></p></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -1148,9 +1150,10 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href=
 <h3 id="example-activating-the-virtual-environment">Example: Activating
 the virtual environment</h3>
 <ul>
-<li class="fragment"><code>source ./activate.sh</code></li>
+<li
+class="fragment"><code>source sc_venv_template/activate.sh</code></li>
 <li class="fragment"><div class="sourceCode" id="cb25"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>source .<span class="op">/</span>activate.sh </span>
+class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>source sc_venv_template<span class="op">/</span>activate.sh </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>The activation script must be sourced, otherwise the virtual environment will <span class="kw">not</span> work.</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>Setting <span class="bu">vars</span></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>The following modules were <span class="kw">not</span> unloaded:</span>
