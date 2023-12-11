@@ -18,6 +18,7 @@ Links for the complimentary parts of this course:
 - [Virtual Environment template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
 - [SOURCE CODE OF THE WHOLE COURSE on Github - Including presentations](https://go.fzj.de/intro-sc-ai-2023-repo)
 - [Other courses at JSC](https://go.fzj.de/intro-sc-ai-2023-other-courses)
+
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
 
 
@@ -217,7 +218,7 @@ Please open this document on your own browser! We will need it for the exercises
 
 #### Getting compute time
 - Go to [https://go.fzj.de/intro-sc-ai-2023-project-join](https://go.fzj.de/intro-sc-ai-2023-project-join)
-- Join the course project `training2324`
+- Join the course project `training2338`
 - Sign the Usage Agreements ([Video](https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view))
 - Compute time allocation is based on compute projects. For every compute job, a compute project pays.
 - Time is measured in core-hours. One hour of Juwels BOOSTER is 48 core-hours.
@@ -463,7 +464,7 @@ strube1@juwels22~ $
 
 ```bash
 # Create a shortcut for the project on the home folder
-ln -s $PROJECT_training2324 ~/course
+ln -s $PROJECT_training2338 ~/course
 
 # Create a folder for myself
 mkdir course/$USER
@@ -718,7 +719,7 @@ Simple Linux Utility for Resource Management
 
 ``` {.bash .number-lines}
 #!/bin/bash
-#SBATCH --account=training2324           # Who pays?
+#SBATCH --account=training2338           # Who pays?
 #SBATCH --nodes=1                        # How many compute nodes
 #SBATCH --job-name=matrix-multiplication
 #SBATCH --ntasks-per-node=1              # How many mpi processes/node
@@ -898,7 +899,7 @@ learn.fit_one_cycle(3, cbs=TensorBoardCallback('runs', trace_model=True))
 
 ```bash
 #!/bin/bash
-#SBATCH --account=training2324
+#SBATCH --account=training2338
 #SBATCH --mail-user=MYUSER@fz-juelich.de
 #SBATCH --mail-type=ALL
 #SBATCH --nodes=1
@@ -1204,7 +1205,7 @@ On the supercomputer:
 srun --time=00:05:00 \
      --nodes=1 --ntasks=1 \
      --partition=booster \
-     --account training2324 \
+     --account training2338 \
      --cpu_bind=none \
      --pty /bin/bash -i
 

@@ -259,9 +259,10 @@ href="https://go.fzj.de/intro-sc-ai-2023-repo">SOURCE CODE OF THE WHOLE
 COURSE on Github - Including presentations</a></li>
 <li class="fragment"><a
 href="https://go.fzj.de/intro-sc-ai-2023-other-courses">Other courses at
-JSC</a> <img
-data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></li>
+JSC</a></li>
 </ul>
+<p><img
+data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
 </section>
 <section id="goals-for-this-course" class="slide level2">
 <h2>Goals for this course:</h2>
@@ -534,7 +535,7 @@ compile, etc</li>
 <li class="fragment">Go to <a
 href="https://go.fzj.de/intro-sc-ai-2023-project-join">https://go.fzj.de/intro-sc-ai-2023-project-join</a></li>
 <li class="fragment">Join the course project
-<code>training2324</code></li>
+<code>training2338</code></li>
 <li class="fragment">Sign the Usage Agreements (<a
 href="https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view">Video</a>)</li>
 <li class="fragment">Compute time allocation is based on compute
@@ -798,7 +799,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="
 are connected to the supercomputer</h4>
 <div class="sourceCode" id="cb8"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a shortcut for the project on the home folder</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="va">$PROJECT_training2324</span> ~/course</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="va">$PROJECT_training2338</span> ~/course</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a folder for myself</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> course/<span class="va">$USER</span></span>
@@ -1029,7 +1030,7 @@ example</h3>
 <p><code>code juwelsbooster-matrix.sbatch</code></p>
 <div class="sourceCode" id="cb18"><pre
 class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="co">#SBATCH --account=training2324           # Who pays?</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co">#SBATCH --account=training2338           # Who pays?</span></span>
 <span id="cb18-3"><a href="#cb18-3"></a><span class="co">#SBATCH --nodes=1                        # How many compute nodes</span></span>
 <span id="cb18-4"><a href="#cb18-4"></a><span class="co">#SBATCH --job-name=matrix-multiplication</span></span>
 <span id="cb18-5"><a href="#cb18-5"></a><span class="co">#SBATCH --ntasks-per-node=1              # How many mpi processes/node</span></span>
@@ -1202,7 +1203,7 @@ classifier</h3>
 <code>fastai.sbatch</code></h4>
 <div class="sourceCode" id="cb27"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2324</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2338</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-user=MYUSER@fz-juelich.de</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-type=ALL</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=1</span></span>
@@ -1493,7 +1494,7 @@ Host *.booster
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="dt">\</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="dt">\</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">--partition</span><span class="op">=</span>booster <span class="dt">\</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2324 <span class="dt">\</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2338 <span class="dt">\</span></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="dt">\</span></span>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">--pty</span> /bin/bash <span class="at">-i</span></span>
 <span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
