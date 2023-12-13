@@ -168,7 +168,7 @@ class ImageNetDataModule(pl.LightningDataModule):
 class resnet50Model(pl.LightningModule):
     def __init__(self):
         super().__init__()
-        self.model = resnet50(pretrained=False)
+        self.model = resnet50(pretrained=True)
 
     def forward(self, x):
         return self.model(x)
@@ -720,7 +720,7 @@ self.log("training_loss", train_loss)
 
 ```bash
 source $HOME/course/$USER/sc_venv_template/activate.sh
-tensorboard --logdir=[PATH_TO_TENSOR_BOARD] --port=16000
+tensorboard --logdir=[PATH_TO_TENSOR_BOARD] 
 ```
 ![](images/tb.png){ width=750px }
 

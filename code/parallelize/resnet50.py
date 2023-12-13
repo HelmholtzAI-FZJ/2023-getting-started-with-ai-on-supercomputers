@@ -6,7 +6,7 @@ from torchvision.models import resnet50
 class resnet50Model(pl.LightningModule):
     def __init__(self):
         super().__init__()
-        self.model = resnet50(pretrained=False)
+        self.model = resnet50(pretrained=True)
 
     def forward(self, x):
         return self.model(x)
