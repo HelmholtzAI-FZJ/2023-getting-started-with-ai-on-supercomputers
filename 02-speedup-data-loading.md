@@ -9,10 +9,10 @@ date: December 13, 2023
 
 | Time          | Title                |
 | ------------- | -----------          |
-| 09:00 - 09:15 | Welcome, questions   |
-| 09:15 - 10:30 | Speedup data loading |
-| 10:30 - 11:00 | Coffee Break (flexible) |
-| 10:30 - 13:00 | Parallelize Training |
+| 10:00 - 10:15 | Welcome, questions   |
+| 10:15 - 11:30 | Speedup data loading |
+| 11:30 - 12:00 | Coffee Break (flexible) |
+| 12:30 - 14:00 | Parallelize Training |
 
 ---
 
