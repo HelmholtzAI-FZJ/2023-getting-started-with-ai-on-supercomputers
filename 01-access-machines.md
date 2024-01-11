@@ -333,6 +333,7 @@ Host booster
         User [MY_USERNAME]   # Here goes your username, not the word MY_USERNAME.
         AddressFamily inet
         IdentityFile ~/.ssh/id_ed25519-JSC
+        MACs hmac-sha2-512-etm@openssh.com
 ```
 
 Copy contents to the config file and save it 
