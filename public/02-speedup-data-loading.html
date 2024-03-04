@@ -380,6 +380,12 @@ at hand.</li>
 </ul></li>
 </ul>
 </section>
+<section id="we-need-to-download-some-code" class="slide level2">
+<h2>We need to download some code</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="va">$HOME</span>/course/<span class="va">$USER</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/HelmholtzAI-FZJ/2023-getting-started-with-ai-on-supercomputers.git</span></code></pre></div>
+</section>
 <section id="libraries" class="slide level2">
 <h2>Libraries</h2>
 <ul>
@@ -393,169 +399,214 @@ PyTorch-Lightning</a></li>
 href="https://developer.nvidia.com/dali">https://developer.nvidia.com/dali</a></li>
 </ul>
 </section>
+<section id="the-imagenet-dataset" class="slide level2">
+<h2>The ImageNet dataset</h2>
+<h4 id="large-scale-visual-recognition-challenge-ilsvrc">Large Scale
+Visual Recognition Challenge (ILSVRC)</h4>
+<ul>
+<li class="fragment">An image dataset organized according to the <a
+href="https://wordnet.princeton.edu">WordNet hierarchy</a>.</li>
+<li class="fragment">Extensively used in algorithms for object detection
+and image classification at large scale.</li>
+<li class="fragment">It has 1000 classes, that comprises 1.2 million
+images for training, and 50,000 images for the validation set.</li>
+</ul>
+<p><img data-src="images/imagenet_banner.jpeg" /></p>
+</section>
+<section id="the-imagenet-dataset-1" class="slide level2">
+<h2>The ImageNet dataset</h2>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">imagenet_class_index.json</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ILSVRC2012_val_labels.json</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ILSVRC</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span><span class="ex">--</span> Data/</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">`</span><span class="ex">--</span> CLS-LOC</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> imagenet_labels.pkl</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> imagenet_val.pkl</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> test</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> train</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01440764</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01440764_10026.JPEG</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01440764_10027.JPEG</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01440764_10029.JPEG</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01695060</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01695060_10009.JPEG</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01695060_10022.JPEG</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> n01695060_10028.JPEG</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span>   <span class="kw">|</span><span class="ex">--</span> ...</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span>   <span class="kw">|</span><span class="ex">...</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        <span class="kw">|</span><span class="ex">--</span> val</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">--</span> ILSVRC2012_val_00000001.JPEG  </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">--</span> ILSVRC2012_val_00016668.JPEG  </span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">--</span> ILSVRC2012_val_00033335.JPEG      </span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            <span class="kw">|</span><span class="ex">--</span> ...</span></code></pre></div>
+</section>
 <section id="access-file-system" class="slide level2">
 <h2>Access File System</h2>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ImageNet(Dataset):</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, root, split, transform<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.samples <span class="op">=</span> []</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.targets <span class="op">=</span> []</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.transform <span class="op">=</span> transform</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.syn_to_class <span class="op">=</span> {}</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(os.path.join(root, <span class="st">&quot;imagenet_class_index.json&quot;</span>), <span class="st">&quot;rb&quot;</span>) <span class="im">as</span> f:</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                    json_file <span class="op">=</span> json.load(f)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">for</span> class_id, v <span class="kw">in</span> json_file.items():</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                        <span class="va">self</span>.syn_to_class[v[<span class="dv">0</span>]] <span class="op">=</span> <span class="bu">int</span>(class_id)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(os.path.join(root, <span class="st">&quot;ILSVRC2012_val_labels.json&quot;</span>), <span class="st">&quot;rb&quot;</span>) <span class="im">as</span> f:</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.val_to_syn <span class="op">=</span> json.load(f)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        samples_dir <span class="op">=</span> os.path.join(root, <span class="st">&quot;ILSVRC/Data/CLS-LOC&quot;</span>, split)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> entry <span class="kw">in</span> os.listdir(samples_dir):</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> split <span class="op">==</span> <span class="st">&quot;train&quot;</span>:</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                syn_id <span class="op">=</span> entry</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                target <span class="op">=</span> <span class="va">self</span>.syn_to_class[syn_id]</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                syn_folder <span class="op">=</span> os.path.join(samples_dir, syn_id)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> sample <span class="kw">in</span> os.listdir(syn_folder):</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                    sample_path <span class="op">=</span> os.path.join(syn_folder, sample)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.samples.append(sample_path)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.targets.append(target)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> split <span class="op">==</span> <span class="st">&quot;val&quot;</span>:</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                syn_id <span class="op">=</span> <span class="va">self</span>.val_to_syn[entry]</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                target <span class="op">=</span> <span class="va">self</span>.syn_to_class[syn_id]</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                sample_path <span class="op">=</span> os.path.join(samples_dir, entry)</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.samples.append(sample_path)</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.targets.append(target)    </span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>                </span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.samples)    </span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> Image.<span class="bu">open</span>(<span class="va">self</span>.samples[idx]).convert(<span class="st">&quot;RGB&quot;</span>)</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.transform:</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> <span class="va">self</span>.transform(x)</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x, <span class="va">self</span>.targets[idx]</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>   </span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ImageNet(Dataset):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, root, split, transform<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.samples <span class="op">=</span> []</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.targets <span class="op">=</span> []</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.transform <span class="op">=</span> transform</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.syn_to_class <span class="op">=</span> {}</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(os.path.join(root, <span class="st">&quot;imagenet_class_index.json&quot;</span>), <span class="st">&quot;rb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                    json_file <span class="op">=</span> json.load(f)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">for</span> class_id, v <span class="kw">in</span> json_file.items():</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                        <span class="va">self</span>.syn_to_class[v[<span class="dv">0</span>]] <span class="op">=</span> <span class="bu">int</span>(class_id)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(os.path.join(root, <span class="st">&quot;ILSVRC2012_val_labels.json&quot;</span>), <span class="st">&quot;rb&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.val_to_syn <span class="op">=</span> json.load(f)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        samples_dir <span class="op">=</span> os.path.join(root, <span class="st">&quot;ILSVRC/Data/CLS-LOC&quot;</span>, split)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> entry <span class="kw">in</span> os.listdir(samples_dir):</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> split <span class="op">==</span> <span class="st">&quot;train&quot;</span>:</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                syn_id <span class="op">=</span> entry</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>                target <span class="op">=</span> <span class="va">self</span>.syn_to_class[syn_id]</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>                syn_folder <span class="op">=</span> os.path.join(samples_dir, syn_id)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> sample <span class="kw">in</span> os.listdir(syn_folder):</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                    sample_path <span class="op">=</span> os.path.join(syn_folder, sample)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.samples.append(sample_path)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                    <span class="va">self</span>.targets.append(target)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> split <span class="op">==</span> <span class="st">&quot;val&quot;</span>:</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>                syn_id <span class="op">=</span> <span class="va">self</span>.val_to_syn[entry]</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>                target <span class="op">=</span> <span class="va">self</span>.syn_to_class[syn_id]</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>                sample_path <span class="op">=</span> os.path.join(samples_dir, entry)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.samples.append(sample_path)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.targets.append(target)    </span></code></pre></div>
+</section>
+<section id="access-file-system-1" class="slide level2">
+<h2>Access File System</h2>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.samples)    </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> Image.<span class="bu">open</span>(<span class="va">self</span>.samples[idx]).convert(<span class="st">&quot;RGB&quot;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.transform:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> <span class="va">self</span>.transform(x)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x, <span class="va">self</span>.targets[idx]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>   </span></code></pre></div>
 </section>
 <section id="pyarrow" class="slide level2">
 <h2>Pyarrow</h2>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_arrow(args, splits, train_samples, train_targets, val_samples, val_targets):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    binary_t <span class="op">=</span> pa.binary()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    uint16_t <span class="op">=</span> pa.uint16()</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    schema <span class="op">=</span> pa.schema([</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        pa.field(<span class="st">&#39;image_data&#39;</span>, binary_t),</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        pa.field(<span class="st">&#39;label&#39;</span>, uint16_t),</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ])</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> split <span class="kw">in</span> splits:</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> split <span class="op">==</span> <span class="st">&quot;train&quot;</span>:</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            samples <span class="op">=</span> train_samples</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            targets <span class="op">=</span> train_targets</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            samples <span class="op">=</span> val_samples</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            targets <span class="op">=</span> val_targets</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> pa.OSFile(</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                os.path.join(args.target_folder, <span class="ss">f&#39;ImageNet-</span><span class="sc">{</span>split<span class="sc">}</span><span class="ss">.arrow&#39;</span>),</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;wb&#39;</span>,</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        ) <span class="im">as</span> f:</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> pa.ipc.new_file(f, schema) <span class="im">as</span> writer:</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> (sample, label) <span class="kw">in</span> <span class="bu">zip</span>(samples, targets):</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">with</span> <span class="bu">open</span>(sample, <span class="st">&#39;rb&#39;</span>) <span class="im">as</span> f:</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                        img_string <span class="op">=</span> f.read()</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                    image_data <span class="op">=</span> pa.array([img_string], <span class="bu">type</span><span class="op">=</span>binary_t)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                    label <span class="op">=</span> pa.array([label], <span class="bu">type</span><span class="op">=</span>uint16_t)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                    batch <span class="op">=</span> pa.record_batch([image_data, label], schema<span class="op">=</span>schema)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                    writer.write(batch)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_arrow(args, splits, train_samples, train_targets, val_samples, val_targets):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    binary_t <span class="op">=</span> pa.binary()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    uint16_t <span class="op">=</span> pa.uint16()</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    schema <span class="op">=</span> pa.schema([</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        pa.field(<span class="st">&#39;image_data&#39;</span>, binary_t),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        pa.field(<span class="st">&#39;label&#39;</span>, uint16_t),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> split <span class="kw">in</span> splits:</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> split <span class="op">==</span> <span class="st">&quot;train&quot;</span>:</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            samples <span class="op">=</span> train_samples</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            targets <span class="op">=</span> train_targets</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            samples <span class="op">=</span> val_samples</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            targets <span class="op">=</span> val_targets</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> pa.OSFile(</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                os.path.join(args.target_folder, <span class="ss">f&#39;ImageNet-</span><span class="sc">{</span>split<span class="sc">}</span><span class="ss">.arrow&#39;</span>),</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                <span class="st">&#39;wb&#39;</span>,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        ) <span class="im">as</span> f:</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> pa.ipc.new_file(f, schema) <span class="im">as</span> writer:</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>                <span class="cf">for</span> (sample, label) <span class="kw">in</span> <span class="bu">zip</span>(samples, targets):</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">with</span> <span class="bu">open</span>(sample, <span class="st">&#39;rb&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>                        img_string <span class="op">=</span> f.read()</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>                    image_data <span class="op">=</span> pa.array([img_string], <span class="bu">type</span><span class="op">=</span>binary_t)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>                    label <span class="op">=</span> pa.array([label], <span class="bu">type</span><span class="op">=</span>uint16_t)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>                    batch <span class="op">=</span> pa.record_batch([image_data, label], schema<span class="op">=</span>schema)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>                    writer.write(batch)</span></code></pre></div>
 </section>
 <section id="access-arrow-file" class="slide level2">
 <h2>Access Arrow File</h2>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ImageNetArrow(Dataset):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, data_root, transform):</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.data_root <span class="op">=</span> data_root</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.transform <span class="op">=</span> transform</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.arrowfile <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.reader <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> pa.OSFile(<span class="va">self</span>.data_root, <span class="st">&#39;rb&#39;</span>) <span class="im">as</span> f:</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> pa.ipc.open_file(f) <span class="im">as</span> reader:</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>._len <span class="op">=</span> reader.num_record_batches</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._len</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.arrowfile <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.arrowfile <span class="op">=</span> pa.OSFile(<span class="va">self</span>.data_root, <span class="st">&#39;rb&#39;</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.reader <span class="op">=</span> pa.ipc.open_file(<span class="va">self</span>.arrowfile)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> <span class="va">self</span>.reader.get_batch(idx)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        img_string <span class="op">=</span> row[<span class="st">&#39;image_data&#39;</span>][<span class="dv">0</span>].as_py()</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        target <span class="op">=</span> row[<span class="st">&#39;label&#39;</span>][<span class="dv">0</span>].as_py()</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> io.BytesIO(img_string) <span class="im">as</span> byte_stream:</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> Image.<span class="bu">open</span>(byte_stream) <span class="im">as</span> img:</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>                img <span class="op">=</span> img.convert(<span class="st">&quot;RGB&quot;</span>)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.transform:</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>            img <span class="op">=</span> <span class="va">self</span>.transform(img)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> img, target</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ImageNetArrow(Dataset):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, data_root, transform):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.data_root <span class="op">=</span> data_root</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.transform <span class="op">=</span> transform</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.arrowfile <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.reader <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> pa.OSFile(<span class="va">self</span>.data_root, <span class="st">&#39;rb&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> pa.ipc.open_file(f) <span class="im">as</span> reader:</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>._len <span class="op">=</span> reader.num_record_batches</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._len</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.arrowfile <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.arrowfile <span class="op">=</span> pa.OSFile(<span class="va">self</span>.data_root, <span class="st">&#39;rb&#39;</span>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.reader <span class="op">=</span> pa.ipc.open_file(<span class="va">self</span>.arrowfile)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> <span class="va">self</span>.reader.get_batch(idx)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        img_string <span class="op">=</span> row[<span class="st">&#39;image_data&#39;</span>][<span class="dv">0</span>].as_py()</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        target <span class="op">=</span> row[<span class="st">&#39;label&#39;</span>][<span class="dv">0</span>].as_py()</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> io.BytesIO(img_string) <span class="im">as</span> byte_stream:</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> Image.<span class="bu">open</span>(byte_stream) <span class="im">as</span> img:</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>                img <span class="op">=</span> img.convert(<span class="st">&quot;RGB&quot;</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.transform:</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>            img <span class="op">=</span> <span class="va">self</span>.transform(img)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> img, target</span></code></pre></div>
 </section>
 <section id="hdf5" class="slide level2">
 <h2>HDF5</h2>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_h5(splits, train_samples, train_targets, val_samples, val_targets):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> h5py.File(os.path.join(args.target_folder, <span class="st">&#39;ImageNet.h5&#39;</span>), <span class="st">&quot;w&quot;</span>) <span class="im">as</span> f:</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> split <span class="kw">in</span> splits:</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> split <span class="op">==</span> <span class="st">&quot;train&quot;</span>:</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                samples <span class="op">=</span> train_samples</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                targets <span class="op">=</span> train_targets</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                samples <span class="op">=</span> val_samples</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                targets <span class="op">=</span> val_targets         </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            group <span class="op">=</span> f.create_group(split)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            dt_sample <span class="op">=</span> h5py.vlen_dtype(np.dtype(np.uint8))</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            dt_target <span class="op">=</span> np.dtype(<span class="st">&#39;int16&#39;</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>            dset <span class="op">=</span> group.create_dataset(</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&#39;images&#39;</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                            (<span class="bu">len</span>(samples),),</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                            dtype<span class="op">=</span>dt_sample,</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                        )</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>            dtargets <span class="op">=</span> group.create_dataset(</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;targets&#39;</span>,</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                    (<span class="bu">len</span>(samples),),</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                    dtype<span class="op">=</span>dt_target,</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                )</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> idx, (sample, target) <span class="kw">in</span> tqdm(<span class="bu">enumerate</span>(<span class="bu">zip</span>(samples, targets))):        </span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>                <span class="cf">with</span> <span class="bu">open</span>(sample, <span class="st">&#39;rb&#39;</span>) <span class="im">as</span> f:</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>                    img_string <span class="op">=</span> f.read() </span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>                    dset[idx] <span class="op">=</span> np.array(<span class="bu">list</span>(img_string), dtype<span class="op">=</span>np.uint8)</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>                    dtargets[idx] <span class="op">=</span> target</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>            </span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_h5(splits, train_samples, train_targets, val_samples, val_targets):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> h5py.File(os.path.join(args.target_folder, <span class="st">&#39;ImageNet.h5&#39;</span>), <span class="st">&quot;w&quot;</span>) <span class="im">as</span> f:</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> split <span class="kw">in</span> splits:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> split <span class="op">==</span> <span class="st">&quot;train&quot;</span>:</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                samples <span class="op">=</span> train_samples</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                targets <span class="op">=</span> train_targets</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                samples <span class="op">=</span> val_samples</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                targets <span class="op">=</span> val_targets         </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>            group <span class="op">=</span> f.create_group(split)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            dt_sample <span class="op">=</span> h5py.vlen_dtype(np.dtype(np.uint8))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>            dt_target <span class="op">=</span> np.dtype(<span class="st">&#39;int16&#39;</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>            dset <span class="op">=</span> group.create_dataset(</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>                            <span class="st">&#39;images&#39;</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>                            (<span class="bu">len</span>(samples),),</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>                            dtype<span class="op">=</span>dt_sample,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>            dtargets <span class="op">=</span> group.create_dataset(</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>                    <span class="st">&#39;targets&#39;</span>,</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>                    (<span class="bu">len</span>(samples),),</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>                    dtype<span class="op">=</span>dt_target,</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> idx, (sample, target) <span class="kw">in</span> tqdm(<span class="bu">enumerate</span>(<span class="bu">zip</span>(samples, targets))):        </span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>                <span class="cf">with</span> <span class="bu">open</span>(sample, <span class="st">&#39;rb&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>                    img_string <span class="op">=</span> f.read() </span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>                    dset[idx] <span class="op">=</span> np.array(<span class="bu">list</span>(img_string), dtype<span class="op">=</span>np.uint8)</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>                    dtargets[idx] <span class="op">=</span> target</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>            </span></code></pre></div>
 </section>
 <section id="access-h5-file" class="slide level2">
 <h2>Access h5 File</h2>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ImageNetH5(Dataset):</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, train_data_path, split, transform<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.train_data_path <span class="op">=</span> train_data_path</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.split <span class="op">=</span> split</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.h5file <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.imgs <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.targets <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> h5py.File(train_data_path, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> h5file:</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>._len <span class="op">=</span> <span class="bu">len</span>(h5file[split][<span class="st">&quot;images&quot;</span>])</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.transform <span class="op">=</span> transform</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._len</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.h5file <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.h5file <span class="op">=</span> h5py.File(<span class="va">self</span>.train_data_path, <span class="st">&#39;r&#39;</span>)[<span class="va">self</span>.split]</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.imgs <span class="op">=</span> <span class="va">self</span>.h5file[<span class="st">&quot;images&quot;</span>]</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.targets <span class="op">=</span> <span class="va">self</span>.h5file[<span class="st">&quot;targets&quot;</span>]</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        img_string <span class="op">=</span> <span class="va">self</span>.imgs[idx]</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        target <span class="op">=</span> <span class="va">self</span>.targets[idx]</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> io.BytesIO(img_string) <span class="im">as</span> byte_stream:</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> Image.<span class="bu">open</span>(byte_stream) <span class="im">as</span> img:</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>                img <span class="op">=</span> img.convert(<span class="st">&quot;RGB&quot;</span>)</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.transform:</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>            img <span class="op">=</span> <span class="va">self</span>.transform(img)</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> img, target</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ImageNetH5(Dataset):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, train_data_path, split, transform<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.train_data_path <span class="op">=</span> train_data_path</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.split <span class="op">=</span> split</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.h5file <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.imgs <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.targets <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> h5py.File(train_data_path, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> h5file:</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>._len <span class="op">=</span> <span class="bu">len</span>(h5file[split][<span class="st">&quot;images&quot;</span>])</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.transform <span class="op">=</span> transform</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._len</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.h5file <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.h5file <span class="op">=</span> h5py.File(<span class="va">self</span>.train_data_path, <span class="st">&#39;r&#39;</span>)[<span class="va">self</span>.split]</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.imgs <span class="op">=</span> <span class="va">self</span>.h5file[<span class="st">&quot;images&quot;</span>]</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.targets <span class="op">=</span> <span class="va">self</span>.h5file[<span class="st">&quot;targets&quot;</span>]</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        img_string <span class="op">=</span> <span class="va">self</span>.imgs[idx]</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>        target <span class="op">=</span> <span class="va">self</span>.targets[idx]</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> io.BytesIO(img_string) <span class="im">as</span> byte_stream:</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">with</span> Image.<span class="bu">open</span>(byte_stream) <span class="im">as</span> img:</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>                img <span class="op">=</span> img.convert(<span class="st">&quot;RGB&quot;</span>)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.transform:</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>            img <span class="op">=</span> <span class="va">self</span>.transform(img)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> img, target</span></code></pre></div>
 </section>
 <section id="results-and-conclusion" class="slide level2">
 <h2>Results and Conclusion</h2>
@@ -568,6 +619,9 @@ arrow file is a bit faster than reading the data from the file system,
 it is still useful in cases where you have a lot of small files and not
 enough inodes.</p></li>
 </ul>
+</section>
+<section id="demo" class="slide level2">
+<h2>DEMO</h2>
 </section>
 <section id="exercise" class="slide level2">
 <h2>Exercise</h2>

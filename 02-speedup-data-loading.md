@@ -95,12 +95,61 @@ cd $DATA_datasets
 
 ---
 
+## We need to download some code
+
+```bash
+cd $HOME/course/$USER
+git clone https://github.com/HelmholtzAI-FZJ/2023-getting-started-with-ai-on-supercomputers.git
+```
+
+---
+
 ## Libraries
 
 - Apache Arrow [https://arrow.apache.org/](https://arrow.apache.org/)
 - FFCV [https://github.com/libffcv/ffcv](https://github.com/libffcv/ffcv) and [FFCV for PyTorch-Lightning](https://github.com/SerezD/ffcv_pytorch_lightning)
 - Nvidia's DALI [https://developer.nvidia.com/dali](https://developer.nvidia.com/dali)
 
+---
+
+## The ImageNet dataset
+#### Large Scale Visual Recognition Challenge (ILSVRC)
+- An image dataset organized according to the [WordNet hierarchy](https://wordnet.princeton.edu). 
+- Extensively used in algorithms for object detection and image classification at large scale. 
+- It has 1000 classes, that comprises 1.2 million images for training, and 50,000 images for the validation set.
+
+![](images/imagenet_banner.jpeg)
+
+---
+
+## The ImageNet dataset
+
+```bash
+imagenet_class_index.json
+ILSVRC2012_val_labels.json
+ILSVRC
+|-- Data/
+    `-- CLS-LOC
+        |-- imagenet_labels.pkl
+        |-- imagenet_val.pkl
+        |-- test
+        |-- train
+        |   |-- n01440764
+        |   |   |-- n01440764_10026.JPEG
+        |   |   |-- n01440764_10027.JPEG
+        |   |   |-- n01440764_10029.JPEG
+        |   |-- n01695060
+        |   |   |-- n01695060_10009.JPEG
+        |   |   |-- n01695060_10022.JPEG
+        |   |   |-- n01695060_10028.JPEG
+        |   |   |-- ...
+        |   |...
+        |-- val
+            |-- ILSVRC2012_val_00000001.JPEG  
+            |-- ILSVRC2012_val_00016668.JPEG  
+            |-- ILSVRC2012_val_00033335.JPEG      
+            |-- ...
+```
 ---
 
 ## Access File System
@@ -134,7 +183,12 @@ class ImageNet(Dataset):
                 sample_path = os.path.join(samples_dir, entry)
                 self.samples.append(sample_path)
                 self.targets.append(target)    
-                
+```
+---
+
+## Access File System
+
+```python
     def __len__(self):
         return len(self.samples)    
     
@@ -292,6 +346,10 @@ class ImageNetH5(Dataset):
 - Arrow file access: 00:03:16
 
 * While reading the data from the H5 file or the arrow file is a bit faster than reading the data from the file system, it is still useful in cases where you have a lot of small files and not enough inodes.
+
+---
+
+## DEMO
 
 ---
 

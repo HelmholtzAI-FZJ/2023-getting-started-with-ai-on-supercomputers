@@ -5,113 +5,8 @@ subtitle: Parallelize Training
 date: December 13, 2023
 ---
 
-## We need to download some code
-
-```bash
-cd $HOME/course/$USER
-git clone https://github.com/HelmholtzAI-FZJ/2023-getting-started-with-ai-on-supercomputers.git
-```
-
----
-
 ## The ResNet50 Model
 ![](images/resnet.png)
-
----
-
-## The ImageNet dataset
-#### Large Scale Visual Recognition Challenge (ILSVRC)
-- An image dataset organized according to the [WordNet hierarchy](https://wordnet.princeton.edu). 
-- Extensively used in algorithms for object detection and image classification at large scale. 
-- It has 1000 classes, that comprises 1.2 million images for training, and 50,000 images for the validation set.
-
-![](images/imagenet_banner.jpeg)
-
----
-
-## The ImageNet dataset
-
-```bash
-imagenet_class_index.json
-ILSVRC2012_val_labels.json
-ILSVRC
-|-- Data/
-    `-- CLS-LOC
-        |-- imagenet_labels.pkl
-        |-- imagenet_val.pkl
-        |-- test
-        |-- train
-        |   |-- n01440764
-        |   |   |-- n01440764_10026.JPEG
-        |   |   |-- n01440764_10027.JPEG
-        |   |   |-- n01440764_10029.JPEG
-        |   |-- n01695060
-        |   |   |-- n01695060_10009.JPEG
-        |   |   |-- n01695060_10022.JPEG
-        |   |   |-- n01695060_10028.JPEG
-        |   |   |-- ...
-        |   |...
-        |-- val
-            |-- ILSVRC2012_val_00000001.JPEG  
-            |-- ILSVRC2012_val_00016668.JPEG  
-            |-- ILSVRC2012_val_00033335.JPEG      
-            |-- ...
-```
----
-
-## The ImageNet dataset
-
-```python
-data = {}
-syn_to_class = {}
-
-with open(os.path.join(root, "imagenet_class_index.json"), "rb") as f:
-    json_file = json.load(f)
-    for class_id, v in json_file.items():
-        syn_to_class[v[0]] = int(class_id)
-
-samples_dir = os.path.join(root, "ILSVRC/Data/CLS-LOC", split)
-
-for entry in os.listdir(samples_dir):
-    if split == "train":
-        syn_id = entry
-        target = syn_to_class[syn_id]
-        syn_folder = os.path.join(samples_dir, syn_id)
-        for sample in os.listdir(syn_folder):
-            sample_path = os.path.join("ILSVRC/Data/CLS-LOC", split, syn_id, sample)
-            data[sample_path] = target
-
-with open("/p/scratch/training2402/data/train_data.pkl", "wb") as f:
-    pickle.dump(data, f)
-```
-
----
-
-## ImageNet class
-
-```python
-root = "/p/scratch/training2402/data/"
-
-with open(os.path.join(root, "train_data.pkl"), "rb") as f:
-    train_data = pickle.load(f)
-
-train_samples = list(train_data.keys())
-train_targets = list(train_data.values())
-```
-
-```python
-train_samples = ['ILSVRC/Data/CLS-LOC/train/n03146219/n03146219_8050.JPEG',
- 'ILSVRC/Data/CLS-LOC/train/n03146219/n03146219_12728.JPEG',
- 'ILSVRC/Data/CLS-LOC/train/n03146219/n03146219_9736.JPEG',
- 'ILSVRC/Data/CLS-LOC/train/n03146219/n03146219_22069.JPEG',
- ...]
-
-train_targets = [524,
- 524,
- 524,
- 524,
- ...]
-```
 
 ---
 
@@ -119,20 +14,39 @@ train_targets = [524,
 
 ```python
 class ImageNet(Dataset):
-    
-    def __init__(self, root, transform=None):
-        self.root = root
-        with open(os.path.join(self.root, "train_data.pkl"), "rb") as f:
-            train_data = pickle.load(f)
-        self.samples = list(train_data.keys())
-        self.targets = list(train_data.values())
+    def __init__(self, root, split, transform=None):
+        self.samples = []
+        self.targets = []
         self.transform = transform
-        
+        self.syn_to_class = {}
+        with open(os.path.join(root, "imagenet_class_index.json"), "rb") as f:
+                    json_file = json.load(f)
+                    for class_id, v in json_file.items():
+                        self.syn_to_class[v[0]] = int(class_id)
+        with open(os.path.join(root, "ILSVRC2012_val_labels.json"), "rb") as f:
+                    self.val_to_syn = json.load(f)
+        samples_dir = os.path.join(root, "ILSVRC/Data/CLS-LOC", split)
+        for entry in os.listdir(samples_dir):
+            if split == "train":
+                syn_id = entry
+                target = self.syn_to_class[syn_id]
+                syn_folder = os.path.join(samples_dir, syn_id)
+                for sample in os.listdir(syn_folder):
+                    sample_path = os.path.join(syn_folder, sample)
+                    self.samples.append(sample_path)
+                    self.targets.append(target)
+            elif split == "val":
+                syn_id = self.val_to_syn[entry]
+                target = self.syn_to_class[syn_id]
+                sample_path = os.path.join(samples_dir, entry)
+                self.samples.append(sample_path)
+                self.targets.append(target)    
+                
     def __len__(self):
-        return len(self.samples)
-
+        return len(self.samples)    
+    
     def __getitem__(self, idx):
-        x = Image.open(os.path.join(self.root, self.samples[idx])).convert("RGB")
+        x = Image.open(self.samples[idx]).convert("RGB")
         if self.transform:
             x = self.transform(x)
         return x, self.targets[idx]
@@ -158,7 +72,7 @@ class ImageNetDataModule(pl.LightningDataModule):
         self.dataset_transforms = dataset_transforms
         
     def setup(self, stage: Optional[str] = None):
-        self.train = ImageNet(self.data_root, self.dataset_transforms) 
+        self.train = ImageNet(self.data_root, "train", self.dataset_transforms)
             
     def train_dataloader(self):
         return DataLoader(self.train, batch_size=self.batch_size, \
@@ -312,7 +226,7 @@ real	89m15.923s
 - Copy of the model on each GPU
 - Use different data for each GPU
 - Everything else is the same
-- Average after each epoch
+- Average after each iteration
 - Update of the weights
 
 ---
@@ -744,6 +658,7 @@ tensorboard --logdir=[PATH_TO_TENSOR_BOARD]
 
 ## DAY 2 RECAP 
 
+- Access using FS, Arrow, and H5 files
 - Ran parallel code.
 - Can submit single node, multi-gpu and multi-node training.
 - Use TensorBoard on the supercomputer.
