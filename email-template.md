@@ -1,16 +1,16 @@
 ---
 author: Alexandre Strube // Sabrina Benassou
-title: Getting Started with AI on Supercomputers 
+title: Bringing Deep Learning Workloads to JSC supercomputers
 # subtitle: A primer in supercomputers`
 date: March 12, 2024
 ---
 
 Dear colleagues,
 
-the next "Getting started with AI on supercomputers" course is approaching! Thank you all very much for your participation.
+the next "Bringing Deep Learning Workloads to JSC supercomputers" course is approaching! Thank you all very much for your participation.
 
 The course is online, over zoom. It might be recorded. This is the link:
-https://go.fzj.de/bringing-dl-workloads-to-jsc-zooom
+https://go.fzj.de/bringing-dl-workloads-to-jsc-zoom
 
 
 *********
