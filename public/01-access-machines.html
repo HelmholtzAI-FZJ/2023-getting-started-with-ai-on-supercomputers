@@ -235,31 +235,29 @@
 <p>Links for the complimentary parts of this course:</p>
 <ul>
 <li class="fragment"><a
-href="https://go.fzj.de/intro-sc-ai-2023-zoom">Zoom</a></li>
+href="https://go.fzj.de/bringing-dl-workloads-to-jsc-zoom">Zoom</a></li>
 <li class="fragment"><a
-href="https://go.fzj.de/intro-sc-ai-2023-slack">Slack</a></li>
+href="https://go.fzj.de/bringing-dl-workloads-to-jsc-slack">Slack</a></li>
 <li class="fragment"><a
-href="https://go.fzj.de/intro-sc-ai-2023-course">JSC Training
-Page</a></li>
+href="https://go.fzj.de/bringing-dl-workloads-to-jsc-course">JSC
+Training Page</a></li>
 <li class="fragment"><a
-href="https://go.fzj.de/intro-sc-ai-2023-project-join">Judoor project
-page invite</a></li>
-<li class="fragment"><a href="http://go.fzj.de/intro-sc-ai-2023">This
-document: http://go.fzj.de/intro-sc-ai-2023</a></li>
+href="https://go.fzj.de/bringing-dl-workloads-to-jsc-project-join">Judoor
+project page invite</a></li>
+<li class="fragment"><a
+href="https://go.fzj.de/bringing-dl-workloads-to-jsc">This document:
+https://go.fzj.de/bringing-dl-workloads-to-jsc</a></li>
 <li class="fragment">Our mailing list for <a
 href="https://lists.fz-juelich.de/mailman/listinfo/ml">AI news</a></li>
 <li class="fragment"><a
-href="https://go.fzj.de/intro-sc-ai-2023-survey">Survey at the end of
-the course</a></li>
+href="https://go.fzj.de/bringing-dl-workloads-to-jsc-survey">Survey at
+the end of the course</a></li>
 <li class="fragment"><a
 href="https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template">Virtual
 Environment template</a></li>
 <li class="fragment"><a
-href="https://go.fzj.de/intro-sc-ai-2023-repo">SOURCE of the
+href="https://go.fzj.de/bringing-dl-workloads-to-jsc-repo">SOURCE of the
 course/slides on Github</a></li>
-<li class="fragment"><a
-href="https://go.fzj.de/intro-sc-ai-2023-other-courses">Other courses at
-JSC</a></li>
 </ul>
 <p><img
 data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
@@ -356,9 +354,9 @@ data-src="images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg" /></p>
 <h3 id="note">Note</h3>
 <p>Please open this document on your own browser! We will need it for
 the exercises. <a
-href="http://go.fzj.de/intro-sc-ai-2023">http://go.fzj.de/intro-sc-ai-2023</a></p>
+href="https://go.fzj.de/bringing-dl-workloads-to-jsc">https://go.fzj.de/bringing-dl-workloads-to-jsc</a></p>
 <figure>
-<img data-src="images/intro-sc-ai-2023-qr.png"
+<img data-src="images/bringing-dl-workloads-to-jsc.png"
 alt="Mobile friendly, but you need it on your computer, really" />
 <figcaption aria-hidden="true">Mobile friendly, but you need it on your
 computer, really</figcaption>
@@ -533,9 +531,9 @@ compile, etc</li>
 <h4 id="getting-compute-time">Getting compute time</h4>
 <ul>
 <li class="fragment">Go to <a
-href="https://go.fzj.de/intro-sc-ai-2023-project-join">https://go.fzj.de/intro-sc-ai-2023-project-join</a></li>
+href="https://go.fzj.de/bringing-dl-workloads-to-jsc-project-join">https://go.fzj.de/bringing-dl-workloads-to-jsc-project-join</a></li>
 <li class="fragment">Join the course project
-<code>training2338</code></li>
+<code>training2402</code></li>
 <li class="fragment">Sign the Usage Agreements (<a
 href="https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view">Video</a>)</li>
 <li class="fragment">Compute time allocation is based on compute
@@ -802,7 +800,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="
 are connected to the supercomputer</h4>
 <div class="sourceCode" id="cb8"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a shortcut for the project on the home folder</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="va">$PROJECT_training2338</span> ~/course</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ln</span> <span class="at">-s</span> <span class="va">$PROJECT_training2402</span> ~/course</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a folder for myself</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> ~/course/<span class="va">$USER</span></span>
@@ -1033,7 +1031,7 @@ example</h3>
 <p><code>code juwelsbooster-matrix.sbatch</code></p>
 <div class="sourceCode" id="cb18"><pre
 class="sourceCode numberSource bash number-lines"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="co">#SBATCH --account=training2338           # Who pays?</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co">#SBATCH --account=training2402           # Who pays?</span></span>
 <span id="cb18-3"><a href="#cb18-3"></a><span class="co">#SBATCH --nodes=1                        # How many compute nodes</span></span>
 <span id="cb18-4"><a href="#cb18-4"></a><span class="co">#SBATCH --job-name=matrix-multiplication</span></span>
 <span id="cb18-5"><a href="#cb18-5"></a><span class="co">#SBATCH --ntasks-per-node=1              # How many mpi processes/node</span></span>
@@ -1042,9 +1040,9 @@ class="sourceCode numberSource bash number-lines"><code class="sourceCode bash">
 <span id="cb18-8"><a href="#cb18-8"></a><span class="co">#SBATCH --error=error.%j</span></span>
 <span id="cb18-9"><a href="#cb18-9"></a><span class="co">#SBATCH --time=00:01:00          # For how long can it run?</span></span>
 <span id="cb18-10"><a href="#cb18-10"></a><span class="co">#SBATCH --partition=booster         # Machine partition</span></span>
-<span id="cb18-11"><a href="#cb18-11"></a><span class="co">#SBATCH --reservation=training2338-day1 # For today only</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a><span class="co">#SBATCH --reservation=training-booster-2024-03-12 # For today only</span></span>
 <span id="cb18-12"><a href="#cb18-12"></a></span>
-<span id="cb18-13"><a href="#cb18-13"></a><span class="ex">module</span> load Stages/2023</span>
+<span id="cb18-13"><a href="#cb18-13"></a><span class="ex">module</span> load Stages/2024</span>
 <span id="cb18-14"><a href="#cb18-14"></a><span class="ex">module</span> load GCC OpenMPI PyTorch  <span class="co"># Load the correct modules on the compute node(s)</span></span>
 <span id="cb18-15"><a href="#cb18-15"></a></span>
 <span id="cb18-16"><a href="#cb18-16"></a><span class="ex">srun</span> python matrix.py            <span class="co"># srun tells the supercomputer how to run it</span></span></code></pre></div>
@@ -1086,8 +1084,9 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href=
 <li class="fragment">Some partitions have reservations, which means that
 only certain users can use them at certain times.</li>
 <li class="fragment">For this course, we have:</li>
-<li class="fragment">Juwels Booster: <code>training2338-day1</code> and
-<code>training2338-day2</code></li>
+<li class="fragment">Juwels Booster:
+<code>training-booster-2024-03-12</code> and
+<code>training-booster-2024-03-13</code></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -1206,7 +1205,7 @@ classifier</h3>
 <code>fastai.sbatch</code></h4>
 <div class="sourceCode" id="cb27"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2338</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --account=training2402</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-user=MYUSER@fz-juelich.de</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --mail-type=ALL</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --nodes=1</span></span>
@@ -1217,7 +1216,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href=
 <span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --error=error.%j</span></span>
 <span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --time=00:20:00</span></span>
 <span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --partition=booster</span></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --reservation=training2338-day1 # For today only</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co">#SBATCH --reservation=training-booster-2024-03-13 # For today only</span></span>
 <span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /p/home/jusers/<span class="va">$USER</span>/juwels/course/<span class="va">$USER</span></span>
 <span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> sc_venv_template/activate.sh <span class="co"># Now we finally use the fastai module</span></span>
@@ -1266,7 +1265,7 @@ to give up</li>
 error:</li>
 <li class="fragment"><div class="sourceCode" id="cb30"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>Traceback (most recent call last):</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  File <span class="st">&quot;/p/project/training2338/strube1/cats.py&quot;</span>, line <span class="dv">5</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  File <span class="st">&quot;/p/project/training2402/strube1/cats.py&quot;</span>, line <span class="dv">5</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    path <span class="op">=</span> untar_data(URLs.PETS)<span class="op">/</span><span class="st">&#39;images&#39;</span></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    ...</span>
@@ -1498,7 +1497,7 @@ Host *.booster
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">srun</span> <span class="at">--time</span><span class="op">=</span>00:05:00 <span class="dt">\</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">--nodes</span><span class="op">=</span>1 <span class="at">--ntasks</span><span class="op">=</span>1 <span class="dt">\</span></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">--partition</span><span class="op">=</span>booster <span class="dt">\</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2338 <span class="dt">\</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">--account</span> training2402 <span class="dt">\</span></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">--cpu_bind</span><span class="op">=</span>none <span class="dt">\</span></span>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">--pty</span> /bin/bash <span class="at">-i</span></span>
 <span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>

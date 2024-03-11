@@ -8,16 +8,15 @@ date: March 12, 2024
 
 Links for the complimentary parts of this course: 
 
-- [Zoom](https://go.fzj.de/intro-sc-ai-2023-zoom)
-- [Slack](https://go.fzj.de/intro-sc-ai-2023-slack)
-- [JSC Training Page](https://go.fzj.de/intro-sc-ai-2023-course)
-- [Judoor project page invite](https://go.fzj.de/intro-sc-ai-2023-project-join)
-- [This document: http://go.fzj.de/intro-sc-ai-2023](http://go.fzj.de/intro-sc-ai-2023)
+- [Zoom](https://go.fzj.de/bringing-dl-workloads-to-jsc-zoom)
+- [Slack](https://go.fzj.de/bringing-dl-workloads-to-jsc-slack)
+- [JSC Training Page](https://go.fzj.de/bringing-dl-workloads-to-jsc-course)
+- [Judoor project page invite](https://go.fzj.de/bringing-dl-workloads-to-jsc-project-join)
+- [This document: https://go.fzj.de/bringing-dl-workloads-to-jsc](https://go.fzj.de/bringing-dl-workloads-to-jsc)
 - Our mailing list for [AI news](https://lists.fz-juelich.de/mailman/listinfo/ml)
-- [Survey at the end of the course](https://go.fzj.de/intro-sc-ai-2023-survey)
+- [Survey at the end of the course](https://go.fzj.de/bringing-dl-workloads-to-jsc-survey)
 - [Virtual Environment template](https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template)
-- [SOURCE of the course/slides on Github](https://go.fzj.de/intro-sc-ai-2023-repo)
-- [Other courses at JSC](https://go.fzj.de/intro-sc-ai-2023-other-courses)
+- [SOURCE of the course/slides on Github](https://go.fzj.de/bringing-dl-workloads-to-jsc-repo)
 
 ![](images/Logo_FZ_Juelich_rgb_Schutzzone_transparent.svg)
 
@@ -70,9 +69,9 @@ Links for the complimentary parts of this course:
 ### Note
 
 Please open this document on your own browser! We will need it for the exercises.
-[http://go.fzj.de/intro-sc-ai-2023](http://go.fzj.de/intro-sc-ai-2023)
+[https://go.fzj.de/bringing-dl-workloads-to-jsc](https://go.fzj.de/bringing-dl-workloads-to-jsc)
 
-![Mobile friendly, but you need it on your computer, really](images/intro-sc-ai-2023-qr.png)
+![Mobile friendly, but you need it on your computer, really](images/bringing-dl-workloads-to-jsc.png)
 
 ---
 
@@ -217,8 +216,8 @@ Please open this document on your own browser! We will need it for the exercises
 ### Connecting to JUWELS BOOSTER
 
 #### Getting compute time
-- Go to [https://go.fzj.de/intro-sc-ai-2023-project-join](https://go.fzj.de/intro-sc-ai-2023-project-join)
-- Join the course project `training2338`
+- Go to [https://go.fzj.de/bringing-dl-workloads-to-jsc-project-join](https://go.fzj.de/bringing-dl-workloads-to-jsc-project-join)
+- Join the course project `training2402`
 - Sign the Usage Agreements ([Video](https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view))
 - Compute time allocation is based on compute projects. For every compute job, a compute project pays.
 - Time is measured in core-hours. One hour of Juwels BOOSTER is 48 core-hours.
@@ -466,7 +465,7 @@ strube1@juwels22~ $
 
 ```bash
 # Create a shortcut for the project on the home folder
-ln -s $PROJECT_training2338 ~/course
+ln -s $PROJECT_training2402 ~/course
 
 # Create a folder for myself
 mkdir ~/course/$USER
@@ -721,7 +720,7 @@ Simple Linux Utility for Resource Management
 
 ``` {.bash .number-lines}
 #!/bin/bash
-#SBATCH --account=training2338           # Who pays?
+#SBATCH --account=training2402           # Who pays?
 #SBATCH --nodes=1                        # How many compute nodes
 #SBATCH --job-name=matrix-multiplication
 #SBATCH --ntasks-per-node=1              # How many mpi processes/node
@@ -730,9 +729,9 @@ Simple Linux Utility for Resource Management
 #SBATCH --error=error.%j
 #SBATCH --time=00:01:00          # For how long can it run?
 #SBATCH --partition=booster         # Machine partition
-#SBATCH --reservation=training2338-day1 # For today only
+#SBATCH --reservation=training-booster-2024-03-12 # For today only
 
-module load Stages/2023
+module load Stages/2024
 module load GCC OpenMPI PyTorch  # Load the correct modules on the compute node(s)
 
 srun python matrix.py            # srun tells the supercomputer how to run it
@@ -780,7 +779,7 @@ squeue --me
 
 - Some partitions have reservations, which means that only certain users can use them at certain times.
 - For this course, we have:
-- Juwels Booster: `training2338-day1` and `training2338-day2`
+- Juwels Booster: `training-booster-2024-03-12` and `training-booster-2024-03-13`
 
 --- 
 
@@ -899,7 +898,7 @@ learn.fit_one_cycle(6, cbs=cbs)
 
 ```bash
 #!/bin/bash
-#SBATCH --account=training2338
+#SBATCH --account=training2402
 #SBATCH --mail-user=MYUSER@fz-juelich.de
 #SBATCH --mail-type=ALL
 #SBATCH --nodes=1
@@ -910,7 +909,7 @@ learn.fit_one_cycle(6, cbs=cbs)
 #SBATCH --error=error.%j
 #SBATCH --time=00:20:00
 #SBATCH --partition=booster
-#SBATCH --reservation=training2338-day1 # For today only
+#SBATCH --reservation=training-booster-2024-03-13 # For today only
 
 cd /p/home/jusers/$USER/juwels/course/$USER
 source sc_venv_template/activate.sh # Now we finally use the fastai module
@@ -961,7 +960,7 @@ The following modules were not unloaded:
 - If you run it longer, you will get the actual error:
 - ```python
 Traceback (most recent call last):
-  File "/p/project/training2338/strube1/cats.py", line 5, in <module>
+  File "/p/project/training2402/strube1/cats.py", line 5, in <module>
     path = untar_data(URLs.PETS)/'images'
     ...
     ...
@@ -1206,7 +1205,7 @@ On the supercomputer:
 srun --time=00:05:00 \
      --nodes=1 --ntasks=1 \
      --partition=booster \
-     --account training2338 \
+     --account training2402 \
      --cpu_bind=none \
      --pty /bin/bash -i
 
