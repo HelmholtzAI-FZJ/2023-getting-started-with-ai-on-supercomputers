@@ -1223,7 +1223,7 @@ As of now, I expect you managed to:
       "provider": "openai",
       "contextLength": 16384,
       "model": "alias-code",
-      "apiKey": "glpat-sQE7Damv5GV6W4DTEhFW",
+      "apiKey": "ADD-YOUR-TOKEN-HERE",
       "apiBase": "https://helmholtz-blablador.fz-juelich.de:8000"
     },
 ```
