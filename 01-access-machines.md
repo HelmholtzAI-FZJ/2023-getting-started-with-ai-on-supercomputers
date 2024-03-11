@@ -582,7 +582,7 @@ Copy and paste these lines
 # This command fails, as we have no proper python
 python 
 # So, we load the correct modules...
-module load Stages/2023
+module load Stages/2024
 module load GCC OpenMPI Python PyTorch
 # And we run a small test: import pytorch and ask its version
 python -c "import torch ; print(torch.__version__)" 
@@ -821,7 +821,7 @@ git clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git
 ## Example: Let's install some software!
 
 - Even though we have PyTorch, we don't have PyTorch Lightning Flash
-- Same for fast.ai, gym and wandb
+- Same for fast.ai and wandb
 - We will install them in a virtual environment
 
 ---
@@ -834,8 +834,6 @@ git clone https://gitlab.jsc.fz-juelich.de/kesselheim1/sc_venv_template.git
 -
  ```bash
 fastai
-lightning-flash[image]
-gym
 wandb
 ```
 
@@ -847,20 +845,20 @@ wandb
 
 - `source sc_venv_template/activate.sh`
 - ```python
-source sc_venv_template/activate.sh 
+source ./activate.sh 
 The activation script must be sourced, otherwise the virtual environment will not work.
 Setting vars
 The following modules were not unloaded:
   (Use "module --force purge" to unload all):
-  1) Stages/2023
-The following have been reloaded with a version change:
-  1) HDF5/1.12.2-serial => HDF5/1.12.2
+
+  1) Stages/2024
+
 python
-Python 3.10.4 (main, Oct  4 2022, 08:48:14) [GCC 11.3.0] on linux
+Python 3.11.3 (main, Jun 25 2023, 13:17:30) [GCC 12.3.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>> import fastai
 >>> fastai.__version__
-'2.7.12'
+'2.7.14'
 ```
 
 ---
@@ -909,7 +907,7 @@ learn.fit_one_cycle(6, cbs=cbs)
 #SBATCH --error=error.%j
 #SBATCH --time=00:20:00
 #SBATCH --partition=booster
-#SBATCH --reservation=training-booster-2024-03-13 # For today only
+#SBATCH --reservation=training-booster-2024-03-12 # For today only
 
 cd /p/home/jusers/$USER/juwels/course/$USER
 source sc_venv_template/activate.sh # Now we finally use the fastai module
@@ -944,7 +942,7 @@ $ cat err.7948496
 The following modules were not unloaded:
   (Use "module --force purge" to unload all):
 
-  1) Stages/2023
+  1) Stages/2024
 ```
 
 ---
@@ -1157,6 +1155,88 @@ As of now, I expect you managed to:
 ## ANY QUESTIONS??
 
 #### Feedback is more than welcome!
+
+---
+
+### Helmholtz Blablador
+
+![](images/blablador.png)
+
+---
+
+### Blablador
+
+- Blablador is our Large Language Model inference server (eg. ChatGPT)
+- It's a service for the Helmholtz Association.
+  - It's fast, free and PRIVATE - I don't record your conversations!
+- Anyone here can use it
+
+---
+
+### Blablador 
+
+![https://helmholtz-blablador.fz-juelich.de](images/blablador-qrcode.png){width=500px}
+
+---
+
+## VScode + Continue.dev
+
+![](images/continue-ask-code.png)
+
+---
+
+### Obtaining a token
+
+- Go to helmholtz codebase at [http://codebase.helmholtz.cloud](http://codebase.helmholtz.cloud)
+- Log in with your email
+- On the left side, click on your profile, and then on "Preferences"
+- On "Access tokens", click "Add new token",
+  - give it a name, 
+  - put an expiration date (max 1 year)
+  - and choose "api" in the "scopes" section
+- Click "Create Personal Access Token"
+  - You will see a "............................." - copy this and save somewhere.
+
+---
+
+### Blablador
+
+![](images/blablador-api-scope.png){width=800px}
+
+---
+
+### Blablador on VSCode!
+
+- Add [continue.dev](https://marketplace.visualstudio.com/items?itemName=Continue.continue) extension to VSCode
+- On Continue, choose to add model, choose Other OpenAI-compatible API
+- Click in Open Config.json at the end
+
+---
+
+## Blablador: VScode + Continue.dev
+
+- Inside config.json, add at the `"models"` section:
+
+- ```json
+    {
+      "title": "Mistral helmholtz",
+      "provider": "openai",
+      "contextLength": 16384,
+      "model": "alias-code",
+      "apiKey": "glpat-sQE7Damv5GV6W4DTEhFW",
+      "apiBase": "https://helmholtz-blablador.fz-juelich.de:8000"
+    },
+```
+
+- REPLACE THE APIKEY WITH YOUR OWN TOKEN!!!!
+
+---
+
+### Blablador on VSCode
+
+- Click on the "Continue.dev extension on the left side of VSCode.
+- Select some code from our exercises, select it and send it to continue with cmd-shift-L (or ctrl-shift-L)
+- Ask it to add unit tests, for example.
 
 ---
 
