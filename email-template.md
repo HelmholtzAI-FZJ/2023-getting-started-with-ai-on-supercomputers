@@ -2,7 +2,7 @@
 author: Alexandre Strube // Sabrina Benassou
 title: Getting Started with AI on Supercomputers 
 # subtitle: A primer in supercomputers`
-date: September 27, 2023
+date: March 12, 2024
 ---
 
 Dear colleagues,
@@ -10,7 +10,8 @@ Dear colleagues,
 the next "Getting started with AI on supercomputers" course is approaching! Thank you all very much for your participation.
 
 The course is online, over zoom. It might be recorded. This is the link:
-https://go.fzj.de/intro-sc-ai-2023-zoom
+https://go.fzj.de/bringing-dl-workloads-to-jsc-zooom
+
 
 *********
 IMPORTANT - Please check all steps!
@@ -21,13 +22,13 @@ Checklist for BEFORE the course:
 - If you don't have one, make an account on JuDOOR, our portal: https://judoor.fz-juelich.de/register
 Instruction video: https://drive.google.com/file/d/1-DfiNBP4Gta0av4lQmubkXIXzr2FW4a-/view
 
-- Joining the course's project: https://go.fzj.de/intro-sc-ai-2023-project-join
+- Joining the course's project: https://go.fzj.de/bringing-dl-workloads-to-jsc-project-join
 
 - Sign the usage agreements, as shown in this video: https://drive.google.com/file/d/1mEN1GmWyGFp75uMIi4d6Tpek2NC_X8eY/view
 
 - Install software (see below). On windows you DO need administrator rights. We can't support other softwares during the course.
 
-- We will use Slack for communication. Please log in BEFORE the course: https://go.fzj.de/intro-sc-ai-2023-slack
+- We will use Slack for communication. Please log in BEFORE the course: https://go.fzj.de/bringing-dl-workloads-to-jsc-slack
 
 
 ---
@@ -53,7 +54,7 @@ The course is platform-independent. It can even be followed by a Windows user, b
 
 ---
 
-The course material is available at https://go.fzj.de/intro-sc-ai-2023 - I will be making some final commits to it, so make sure you reload it every now and then.
+The course material is available at https://go.fzj.de/bringing-dl-workloads-to-jsc - I will be making some final commits to it, so make sure you reload it every now and then.
 
 See you soon, 
 

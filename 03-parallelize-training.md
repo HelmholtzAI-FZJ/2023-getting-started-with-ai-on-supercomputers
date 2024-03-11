@@ -2,7 +2,7 @@
 author: Alexandre Strube // Sabrina Benassou
 title: Getting Started with AI on Supercomputers 
 subtitle: Parallelize Training
-date: December 13, 2023
+date: March 13, 2024
 ---
 
 ## The ResNet50 Model
