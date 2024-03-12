@@ -20,7 +20,7 @@ class ImageNetDataModule(pl.LightningDataModule):
 
 
     def setup(self, stage: Optional[str] = None):
-        self.train = ImageNet(self.data_root, self.dataset_transforms) 
+        self.train = ImageNet(self.data_root, "train", self.dataset_transforms)
             
     def train_dataloader(self):
         return DataLoader(self.train, batch_size=self.batch_size, num_workers=self.num_workers)

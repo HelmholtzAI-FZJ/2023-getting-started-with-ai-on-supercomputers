@@ -15,4 +15,6 @@
 export SRUN_CPUS_PER_TASK="$SLURM_CPUS_PER_TASK"
 source $HOME/course/$USER/sc_venv_template/activate.sh
 
-time srun python save_imagenet_files.py  --dset_type "h5" --target_folder "/p/scratch/training2402/data/"
+mkdir -p "/p/scratch/training2402/$USER"
+
+time srun python save_imagenet_files.py  --dset_type "h5" --target_folder "/p/scratch/training2402/$USER"
