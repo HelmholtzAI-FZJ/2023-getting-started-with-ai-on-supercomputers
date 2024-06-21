@@ -1,6 +1,6 @@
 ---
 author: Alexandre Strube // Sabrina Benassou
-title: Survey on the course "Getting Started with AI on Supercomputers"
+title: Survey on the course "Bringing Deep Learning Workloads to JSC supercomputers"
 # subtitle: A primer in supercomputers`
 date: February 28, 2023
 ---
@@ -16,7 +16,7 @@ the code we provided, and to hopefully integrate some of what you learned on you
 codes! Let's make those GPUs scream! 😱
 
 We were asked for certificates for the course. Don’t worry, we will prepare them. Meanwhile, 
-it would be very nice if you would give us some feedback, here: https://go.fzj.de/intro-sc-ai-2023-survey
+it would be very nice if you would give us some feedback, here: http://go.fzj.de/bringing-dl-workloads-to-jsc-survey
 
 Again, thanks for your time!
 

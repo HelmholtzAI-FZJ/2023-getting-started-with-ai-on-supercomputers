@@ -1,6 +1,6 @@
 ---
 author: Alexandre Strube // Sabrina Benassou
-title: Getting Started with AI on Supercomputers 
+title: Bringing Deep Learning Workloads to JSC supercomputers
 # subtitle: A primer in supercomputers`
 date: March 12, 2024
 ---
