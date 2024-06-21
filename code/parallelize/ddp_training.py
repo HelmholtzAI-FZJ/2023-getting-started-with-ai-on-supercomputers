@@ -12,7 +12,7 @@ transform = transforms.Compose([
 ])
 
 # The number of nodes
-nnodes = os.getenv("SLURM_NNODES")
+nnodes = int(os.getenv("SLURM_NNODES"))
 
 # 1. Organize the data
 datamodule = ImageNetDataModule("/p/scratch/training2402/data/", 128, \

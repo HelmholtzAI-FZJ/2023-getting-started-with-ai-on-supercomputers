@@ -95,20 +95,20 @@ cd $DATA_datasets
 
 ---
 
+## Libraries
+
+- Apache Arrow [https://arrow.apache.org/](https://arrow.apache.org/)
+- FFCV [https://github.com/libffcv/ffcv](https://github.com/libffcv/ffcv) and [FFCV for PyTorch-Lightning](https://github.com/SerezD/ffcv_pytorch_lightning)
+- Nvidia's DALI [https://developer.nvidia.com/dali](https://developer.nvidia.com/dali)
+
+---
+
 ## We need to download some code
 
 ```bash
 cd $HOME/course/$USER
 git clone https://github.com/HelmholtzAI-FZJ/2023-getting-started-with-ai-on-supercomputers.git
 ```
-
----
-
-## Libraries
-
-- Apache Arrow [https://arrow.apache.org/](https://arrow.apache.org/)
-- FFCV [https://github.com/libffcv/ffcv](https://github.com/libffcv/ffcv) and [FFCV for PyTorch-Lightning](https://github.com/SerezD/ffcv_pytorch_lightning)
-- Nvidia's DALI [https://developer.nvidia.com/dali](https://developer.nvidia.com/dali)
 
 ---
 
